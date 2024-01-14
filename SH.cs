@@ -69,7 +69,10 @@ public partial class SH : SHData
         return "\n";
     }
 
-
+    public static string RemoveLastWord(string t)
+    {
+        return RemoveAfterLast(t.Trim(), " ");
+    }
 
 
 
@@ -150,7 +153,7 @@ public partial class SH : SHData
                     continue;
                 }
             }
-            DictionaryHelperSE.AddOrPlus(list, item, 1);
+            DictionaryHelper.AddOrPlus(list, item, 1);
         }
 
         return list;

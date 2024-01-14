@@ -3,35 +3,35 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>24.1.7.1</Version>
-	  <Description>A large number of methods for string operations</Description>
+    <Version>24.1.10.1</Version>
+    <Description>A large number of methods for string operations</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Diacritics" Version="3.3.20-pre" />
-    <PackageReference Include="SunamoBts" Version="24.1.5.1" />
-    <PackageReference Include="SunamoChar" Version="24.1.7.1" />
-    <PackageReference Include="SunamoClipboard" Version="24.1.7.1" />
-    <PackageReference Include="SunamoCollections" Version="24.1.7.1" />
-    <PackageReference Include="SunamoCollectionsChangeContent" Version="24.1.7.1" />
-    <PackageReference Include="SunamoCollectionsGeneric" Version="24.1.5.1" />
-    <PackageReference Include="SunamoStringGetLines" Version="24.1.7.1" />
-    <PackageReference Include="SunamoStringJoin" Version="24.1.5.1" />
-    <PackageReference Include="SunamoStringReplace" Version="24.1.5.1" />
-    <PackageReference Include="SunamoStringSplit" Version="24.1.5.1" />
-    <PackageReference Include="SunamoStringSubstring" Version="24.1.7.1" />
-    <PackageReference Include="SunamoStringTrim" Version="24.1.7.1" />
-    <PackageReference Include="SunamoValues" Version="24.1.9.2" />
-    <PackageReference Include="SunamoData" Version="24.1.5.5" />
-    <PackageReference Include="SunamoDictionary" Version="24.1.7.1" />
-    <PackageReference Include="SunamoEnums" Version="24.1.7.2" />
-    <PackageReference Include="SunamoExceptions" Version="24.1.5.1" />
-    <PackageReference Include="SunamoFileIO" Version="24.1.7.1" />
-    <PackageReference Include="SunamoI18N" Version="24.1.9.1" />
-    <PackageReference Include="SunamoLogger" Version="24.1.5.1" />
-    <PackageReference Include="SunamoNumbers" Version="24.1.7.1" />
-    <PackageReference Include="SunamoPercentCalculator" Version="24.1.7.1" />
-    <PackageReference Include="SunamoRandom" Version="24.1.7.1" />
-    <PackageReference Include="SunamoRegex" Version="24.1.5.1" />
+    <PackageReference Include="Diacritics" Version="3.3.27" />
+    <PackageReference Include="SunamoBts" Version="24.1.13.2" />
+    <PackageReference Include="SunamoChar" Version="24.1.10.1" />
+    <PackageReference Include="SunamoClipboard" Version="24.1.10.1" />
+    <PackageReference Include="SunamoCollections" Version="24.1.10.1" />
+    <PackageReference Include="SunamoCollectionsChangeContent" Version="24.1.14.1" />
+    <PackageReference Include="SunamoCollectionsGeneric" Version="24.1.10.1" />
+    <PackageReference Include="SunamoStringGetLines" Version="24.1.11.1" />
+    <PackageReference Include="SunamoStringJoin" Version="24.1.10.1" />
+    <PackageReference Include="SunamoStringReplace" Version="24.1.10.1" />
+    <PackageReference Include="SunamoStringSplit" Version="24.1.11.1" />
+    <PackageReference Include="SunamoStringSubstring" Version="24.1.10.1" />
+    <PackageReference Include="SunamoStringTrim" Version="24.1.10.1" />
+    <PackageReference Include="SunamoValues" Version="24.1.10.1" />
+    <PackageReference Include="SunamoData" Version="24.1.12.2" />
+    <PackageReference Include="SunamoDictionary" Version="24.1.12.1" />
+    <PackageReference Include="SunamoEnums" Version="24.1.10.1" />
+    <PackageReference Include="SunamoExceptions" Version="24.1.11.1" />
+    <PackageReference Include="SunamoFileIO" Version="24.1.12.3" />
+    <PackageReference Include="SunamoI18N" Version="24.1.10.1" />
+    <PackageReference Include="SunamoLogger" Version="24.1.10.1" />
+    <PackageReference Include="SunamoNumbers" Version="24.1.14.1" />
+    <PackageReference Include="SunamoPercentCalculator" Version="24.1.11.1" />
+    <PackageReference Include="SunamoRandom" Version="24.1.10.1" />
+    <PackageReference Include="SunamoRegex" Version="24.1.10.1" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
