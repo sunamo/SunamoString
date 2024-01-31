@@ -1,6 +1,6 @@
 namespace SunamoString;
 
-public partial class SH : SHData
+public partial class SH : SHSH
 {
     #region 
     /*
@@ -40,22 +40,7 @@ public partial class SH : SHData
 
 
 
-    public static string WhiteSpaceFromStart(string v)
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (var item in v)
-        {
-            if (char.IsWhiteSpace(item))
-            {
-                sb.Append(item);
-            }
-            else
-            {
-                break;
-            }
-        }
-        return sb.ToString();
-    }
+
     #endregion
 
     private static StringBuilder sb = new StringBuilder();
@@ -71,7 +56,7 @@ public partial class SH : SHData
 
     public static string RemoveLastWord(string t)
     {
-        return RemoveAfterLast(t.Trim(), " ");
+        return SHParts.RemoveAfterLast(t.Trim(), " ");
     }
 
 
@@ -79,7 +64,7 @@ public partial class SH : SHData
     public static string RemoveLinesWhichContains(string p, string c)
     {
         var l = SHGetLines.GetLines(p);
-        CA.RemoveWhichContains(l, c, false);
+        l = l.Where(d => !d.Contains(c)).ToList(); //CA.RemoveWhichContains(l, c, false);
         var result = SHJoin.JoinNL(l);
         return result;
     }
@@ -555,7 +540,7 @@ public partial class SH : SHData
     public static string MultiWhitespaceLineToSingle(List<string> lines)
     {
         var str = SHJoin.JoinNL(lines);
-        CA.DoubleOrMoreMultiLinesToSingle(ref str);
+        SunamoCollectionsShared.CASH.DoubleOrMoreMultiLinesToSingle(ref str);
         return str;
 
         //CA.Trim(lines);
@@ -754,9 +739,9 @@ public partial class SH : SHData
                 if (indexesAfter.Count == 1 || indexesBefore.Count == 1)
                 {
                     indexAfterFinal = indexesAfter[0] + after.Length;
-                    indexBeforeFinal = CA.FirstValueHigherThan(indexesBefore, indexAfterFinal) - 1;
+                    indexBeforeFinal = indexesBefore.FirstOrDefault(d => d > indexAfterFinal) - 1;
 
-                    if (indexBeforeFinal == 0)
+                    if (indexBeforeFinal == 0) ;
                     {
                         ThrowEx.Custom("There is no number higher than " + indexAfterFinal);
                     }
@@ -938,7 +923,7 @@ public partial class SH : SHData
         StringBuilder sb = new StringBuilder();
         foreach (var item in v)
         {
-            if (!AllCharsSE.specialChars.Contains(item) && !CA.IsEqualToAnyElement(item, over))
+            if (!AllCharsSE.specialChars.Contains(item) && !CAGSH.IsEqualToAnyElement(item, over))
             {
                 sb.Append(item);
             }
@@ -1070,14 +1055,7 @@ public partial class SH : SHData
         return v.ToString();
     }
 
-    public static string WrapWithIf(string value, string v, Func<string, string, bool> f)
-    {
-        if (f.Invoke(value, v))
-        {
-            return WrapWith(value, v);
-        }
-        return value;
-    }
+
 
 
 
@@ -1323,33 +1301,9 @@ bool
 
 
 
-    /// <summary>
-    /// Remove also A2
-    /// Don't trim
-    /// </summary>
-    /// <param name="t"></param>
-    /// <param name="ch"></param>
-    public static string RemoveAfterFirst(string t, string ch)
-    {
-        int dex = t.IndexOf(ch);
-        if (dex == -1 || dex == t.Length - 1)
-        {
-            return t;
-        }
 
-        string vr = t.Remove(dex);
-        return vr;
-    }
 
-    public static (bool, string) IsNegationTuple(string contains)
-    {
-        if (contains[0] == AllCharsSE.excl)
-        {
-            contains = contains.Substring(1);
-            return (true, contains);
-        }
-        return (false, contains);
-    }
+
 
     public static bool IsNegation(string contains)
     {
@@ -1360,124 +1314,11 @@ bool
         return false;
     }
 
-    /// <summary>
-    /// AnySpaces - split A2 by spaces and A1 must contains all parts
-    /// ExactlyName - ==
-    /// FixedSpace - simple contains
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="term"></param>
-    /// <param name="searchStrategy"></param>
-    /// <param name="caseSensitive"></param>
-    public static bool Contains(string input, string term, SearchStrategy searchStrategy, bool caseSensitive)
-    {
-        if (term != "")
-        {
-            if (searchStrategy == SearchStrategy.ExactlyName)
-            {
-                if (caseSensitive)
-                {
-                    return input == term;
-                }
-                else
-                {
-                    return input.ToLower() == term.ToLower();
-                }
-            }
-            else
-            {
-                if (searchStrategy == SearchStrategy.FixedSpace)
-                {
-                    if (caseSensitive)
-                    {
-                        return input.Contains(term);
-                    }
-                    else
-                    {
-                        return input.ToLower().Contains(term.ToLower());
-                    }
-                }
-                else
-                {
-                    if (caseSensitive)
-                    {
-                        var allWords = SHSplit.Split(term, AllStringsSE.space);
-                        return ContainsAll(input, allWords);
-                    }
-                    else
-                    {
-                        var allWords = SHSplit.Split(term, AllStringsSE.space);
-                        CA.ToLower(allWords);
-                        return ContainsAll(input.ToLower(), allWords);
-                    }
-                }
-            }
-        }
-        return false;
-    }
 
-    /// <summary>
-    /// Return whether A1 contains all from A2
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="allWords"></param>
-    public static bool ContainsAll(string input, IList<string> allWords, ContainsCompareMethod ccm = ContainsCompareMethod.WholeInput)
-    {
-        if (ccm == ContainsCompareMethod.SplitToWords)
-        {
-            foreach (var item in allWords)
-            {
-                if (!input.Contains(item))
-                {
-                    return false;
-                }
-            }
-        }
-        else if (ccm == ContainsCompareMethod.Negations)
-        {
-            foreach (var item in allWords)
-            {
-                var c = item.ToString();
-                if (!IsContained(input, ref c))
-                {
-                    return false;
-                }
-            }
-        }
-        else if (ccm == ContainsCompareMethod.WholeInput)
-        {
-            foreach (var item in allWords)
-            {
-                if (!input.Contains(item))
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
-    /// <summary>
-    /// Auto remove potentially first !
-    /// </summary>
-    /// <param name="item"></param>
-    /// <param name="contains"></param>
-    public static bool IsContained(string item, ref string contains)
-    {
-        var (negation, contains2) = IsNegationTuple(contains);
-        contains = contains2;
 
-        if (negation && item.Contains(contains))
-        {
-            return false;
-        }
-        else if (!negation && !item.Contains(contains))
-        {
-            return false;
-        }
 
-        return true;
-    }
+
 
     /// <summary>
     /// Version wo ref - dont auto remove first!
@@ -1520,56 +1361,15 @@ bool
 
 
 
-    public static string GetString(IList o, string p)
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (var item in o)
-        {
-            sb.Append(SH.ListToString(item, p) + p);
-        }
-        return sb.ToString();
-    }
-
-    public static char GetFirstChar(string arg)
-    {
-        return arg[0];
-    }
 
 
 
-    public static bool IsNumber(string str, params char[] nextAllowedChars)
-    {
-        foreach (var item in str)
-        {
-            if (!char.IsNumber(item))
-            {
-                if (!CA.ContainsElement(nextAllowedChars, item))
-                {
-                    return false;
-                }
-            }
-        }
 
-        return true;
-    }
 
-    public static string PrefixIfNotStartedWith(string item, string http, bool skipWhitespaces = false)
-    {
-        string whitespaces = string.Empty;
 
-        if (skipWhitespaces)
-        {
-            whitespaces = WhiteSpaceFromStart(item);
-            item = item.Substring(whitespaces.Length);
-        }
 
-        if (!item.StartsWith(http))
-        {
-            return whitespaces + http + item;
-        }
 
-        return whitespaces + item;
-    }
+
 
 
 
@@ -1618,41 +1418,9 @@ bool
         //return RemoveDiacritics(sDiakritik);
     }
 
-    /// <summary>
-    /// Remove with char
-    ///
-    /// nameSolution musí být první kvůli ChangeContent
-    /// </summary>
-    /// <param name="us"></param>
-    /// <param name="nameSolution"></param>
-    public static string RemoveAfterLast(string nameSolution, object delimiter)
-    {
-        int dex = nameSolution.LastIndexOf(delimiter.ToString());
-        if (dex != -1)
-        {
-            string s = SHSubstring.Substring(nameSolution, 0, dex, new SubstringArgs());
-            return s;
-        }
-        return nameSolution;
-    }
 
-    /// <summary>
-    /// Add postfix if text not ends with
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="postfix"></param>
-    /// <returns></returns>
-    public static string PostfixIfNotEmpty(string text, string postfix)
-    {
-        if (text.Length != 0)
-        {
-            if (!text.EndsWith(postfix))
-            {
-                return text + postfix;
-            }
-        }
-        return text;
-    }
+
+
 
 
     /// <summary>
@@ -1759,16 +1527,16 @@ bool
     /////
     ///// Try to use in minimum!! Better use Format3 which dont raise "Input string was in wrong format"
     /////
-    ///// Simply return from string.Format. SH.Format is more intelligent
+    ///// Simply return from string.Format. SHFormat.Format is more intelligent
     ///// If input has curly bracket but isnt in right format, return A1. Otherwise apply string.Format.
-    ///// SH.Format2 return string.Format always
+    ///// SHFormat.Format2 return string.Format always
     ///// Wont working if contains {0} and another non-format SHReplace.Replacement. For this case of use is there Format3
     ///// </summary>
     ///// <param name="template"></param>
     ///// <param name="args"></param>
     //public static string Format2(string status, params string[] args)
     //{
-    //    return se.SH.Format2(status, args);
+    //    return se.SHFormat.Format2(status, args);
     //}
 
 
@@ -1869,7 +1637,7 @@ bool
     ///// <param name="ch"></param>
     //public static string RemoveAfterFirst(string t, char ch)
     //{
-    //    return se.SH.RemoveAfterFirst(t, ch);
+    //    return se.SHParts.RemoveAfterFirst(t, ch);
     //}
 
 
@@ -1884,10 +1652,7 @@ bool
     #endregion
 
     #region MyRegion
-    public static string WrapWithBs(string commitMessage)
-    {
-        return SH.WrapWithChar(commitMessage, AllCharsSE.bs);
-    }
+
 
     /// <summary>
     /// keep joinAnotherWordsIfIsAlsoNumber = false
@@ -1984,10 +1749,7 @@ bool
     //    return t;
     //}
 
-    public static int OccurencesOfStringIn(string source, string p_2)
-    {
-        return source.Split(new string[] { p_2 }, StringSplitOptions.None).Length - 1;
-    }
+
 
 
 
@@ -2015,42 +1777,7 @@ bool
 
 
 
-    public static string ListToString(object value, string delimiter = null)
-    {
-        if (value == null)
-        {
-            return Consts.nulled;
-        }
 
-        string text;
-        Type valueType = value.GetType();
-
-        if (value is IList && valueType != Types.tString && valueType != Types.tStringBuilder &&
-            !(value is IList<char>))
-        {
-            if (delimiter == null)
-            {
-                delimiter = Environment.NewLine;
-            }
-
-            List<string> enumerable = CA.ToListStringIEnumerable2((IList)value);
-            // I dont know why is needed SHReplace.Replace delimiterS(,) for space
-            // This setting remove , before RoutedEventArgs etc.
-            //CA.SHReplace.Replace(enumerable, delimiterS, AllStringsSE.space);
-            text = string.Join(delimiter, enumerable);
-        }
-        else if (valueType == Types.tDateTime)
-        {
-            //DTHelperEn.ToString(
-            text = ((DateTime)value).ToLongTimeString();
-        }
-        else
-        {
-            text = value.ToString();
-        }
-
-        return text;
-    }
 
     #region MyRegion
 
@@ -2076,17 +1803,7 @@ bool
 
 
     //
-    /// <summary>
-    ///     Usage: Exc.TypeAndMethodName
-    ///     Remove with A2
-    /// </summary>
-    /// <param name="t"></param>
-    /// <param name="ch"></param>
-    public static string RemoveAfterFirst(string t, char ch)
-    {
-        int dex = t.IndexOf(ch);
-        return dex == -1 || dex == t.Length - 1 ? t : t.Substring(0, dex);
-    }
+
 
     /// <summary>
     ///     Usage: Exc.MethodOfOccuredFromStackTrace
@@ -2095,7 +1812,7 @@ bool
     /// <returns></returns>
     public static string FirstLine(string item)
     {
-        List<string> lines = GetLines(item);
+        List<string> lines = SHGetLines.GetLines(item);
         return lines.Count == 0 ? string.Empty : lines[0];
     }
 
@@ -2113,21 +1830,7 @@ bool
 
 
 
-    public static void FirstCharUpper(ref string nazevPP)
-    {
-        nazevPP = FirstCharUpper(nazevPP);
-    }
 
-    public static string FirstCharUpper(string nazevPP)
-    {
-        if (nazevPP.Length == 1)
-        {
-            return nazevPP.ToUpper();
-        }
-
-        string sb = nazevPP.Substring(1);
-        return nazevPP[0].ToString().ToUpper() + sb;
-    }
 
     /// <summary>
     ///     Usage: Exceptions.FileWasntFoundInDirectory
@@ -2261,7 +1964,7 @@ bool
 
     public static string GetWordOnIndex(string line, int v)
     {
-        var p = SHSplit.SplitList(line, SH.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true));
+        var p = SHSplit.SplitList(line, SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true));
 
         if (p.Count < v)
         {
@@ -2271,12 +1974,7 @@ bool
         return p[v];
     }
 
-    public static string RemoveAndInsertReplace(string s, int startIndex, string what, string to)
-    {
-        s = s.Remove(startIndex, what.Length);
-        s = s.Insert(startIndex, to);
-        return s;
-    }
+
 
 
 
@@ -2554,7 +2252,7 @@ bool
             }
         }
 
-        CA.RemoveStringsEmpty2(result);
+        SunamoCollectionsShared.CASH.RemoveStringsEmpty2(result);
 
         return result;
     }
@@ -2576,22 +2274,7 @@ bool
 
 
 
-    public static string RemoveAfterFirstFunc(string v, Func<char, bool> isSpecial, params char[] canBe)
-    {
-        v = v.Trim();
-        for (int i = 0; i < v.Length; i++)
-        {
-            if (isSpecial(v[i]))
-            {
-                if (canBe.Contains(v[i]))
-                {
-                    continue;
-                }
-                return v.Substring(0, i);
-            }
-        }
-        return v;
-    }
+
 
 
     /// <summary>
@@ -2689,8 +2372,8 @@ bool
         //Environment.NewLine
         v = v.Replace("\t", "\r");
         var l = SHGetLines.GetLines(v);
-        CA.Trim(l);
-        CA.RemoveStringsEmpty(l);
+        CASE.Trim(l);
+        l = l.Where(d => d.Trim() != string.Empty).ToList();
         return SHJoin.JoinNL(l);
     }
 
@@ -2723,6 +2406,8 @@ bool
         return ContainsBracket(t, ref left, ref right, mustBeLeftAndRight);
     }
 
+    protected static bool s_cs = false;
+
     static SH()
     {
         s_cs = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "cs";
@@ -2731,31 +2416,7 @@ bool
 
     }
 
-    public static List<int> TabOrSpaceNextTo(string input)
-    {
-        var tabs = SH.ReturnOccurencesOfString(input, AllStrings.tab);
 
-        // nevím k čemu to tu je ale když jsem měl řetězec b nopCommerce\tSimplCommerce\tSmartStoreNET\tgrandnode\tKartris tak mi to vrátilo navíc o 2 \t kde nikdy nebyly
-
-        //for (int i = 0; i < tabs.Count-1; i++)
-        //{
-        //    var dx = tabs[i] + 1;
-        //    if (input[i] == AllChars.space)
-        //    {
-        //        tabs.Add(dx);
-        //    }
-        //}
-
-        //for (int i = 1; i < tabs.Count; i++)
-        //{
-        //    var dx = tabs[i] - 1;
-        //    if (input[i] == AllChars.space)
-        //    {
-        //        tabs.Add(dx);
-        //    }
-        //}
-        return tabs;
-    }
 
 
 
@@ -2901,23 +2562,6 @@ bool
         return c;
     }
 
-    public static string AddBeforeUpperChars(string text, char add, bool preserveAcronyms)
-    {
-        if (string.IsNullOrWhiteSpace(text))
-            return string.Empty;
-        StringBuilder newText = new StringBuilder(text.Length * 2);
-        newText.Append(text[0]);
-        for (int i = 1; i < text.Length; i++)
-        {
-            if (char.IsUpper(text[i]))
-                if ((text[i - 1] != add && !char.IsUpper(text[i - 1])) ||
-                (preserveAcronyms && char.IsUpper(text[i - 1]) &&
-                i < text.Length - 1 && !char.IsUpper(text[i + 1])))
-                    newText.Append(add);
-            newText.Append(text[i]);
-        }
-        return newText.ToString();
-    }
 
 
 
@@ -2927,10 +2571,8 @@ bool
 
 
 
-    public static string WrapWithSpace(string originalLogin)
-    {
-        return SH.WrapWithChar(originalLogin, AllChars.space);
-    }
+
+
 
 
 
@@ -2942,227 +2584,9 @@ bool
         return parse.Invoke(v);
     }
 
-    public static string RemoveEndingPairCharsWhenDontHaveStarting(string vr, string cbl, string cbr)
-    {
-        List<int> removeOnIndexes = new List<int>();
-
-        var sb = new StringBuilder(vr);
-
-
-        var occL = SH.ReturnOccurencesOfString(vr, cbl);
-        var occR = SH.ReturnOccurencesOfString(vr, cbr);
-        List<int> onlyLeft = null;
-        List<int> onlyRight = null;
-
-
-        var l = GetPairsStartAndEnd(occL, occR, ref onlyLeft, ref onlyRight);
-
-        onlyLeft.AddRange(onlyRight);
-        onlyLeft.Sort();
-
-        for (int i = onlyLeft.Count - 1; i >= 0; i--)
-        {
-            sb.Remove(onlyLeft[i], 1);
-        }
-
-        //if (occL.Count == 0)
-        //{
-        //    result = vr.SHReplace.Replace(AllStrings.rcub, string.Empty);
-        //}
-        //else
-        //{
-        //
-
-        //    int left = -1;
-        //    int right = -1;
-
-        //    var onlyLeft = new List<int>();
-
-        //    var pairs = SH.GetPairsStartAndEnd(occL, occR, ref onlyLeft);
-
-        //    while (true)
-        //    {
-        //        if (occR.Count == 0)
-        //        {
-        //            break;
-        //        }
-
-        //        if (occL.Count == 0)
-        //        {
-        //            break;
-        //        }
-
-        //        left = occL.First();
-        //        right = occR.First();
-
-        //        if (right > left)
-        //        {
-        //            removeOnIndexes.Add(right);
-        //            occR.RemoveAt(0);
-        //        }
-        //        else
-        //        {
-        //            // right, remove from right
-        //            occR.RemoveAt(0);
-        //        }
-        //    }
-
-        //    StringBuilder sb = new StringBuilder(vr);
-
-        //    for (int i = removeOnIndexes.Count - 1; i >= 0; i--)
-        //    {
-        //        vr.Remove(removeOnIndexes[i], 1);
-        //    }
-
-        //    result = vr.ToLower();
-        //}
-
-        return sb.ToString();
-    }
-
-    public static List<Tuple<int, int>> GetPairsStartAndEnd(List<int> occL, List<int> occR, ref List<int> onlyLeft, ref List<int> onlyRight)
-    {
-        var l = new List<Tuple<int, int>>();
-
-        onlyLeft = occL.ToList();
-        onlyRight = occR.ToList();
-
-        for (int i = occR.Count - 1; i >= 0; i--)
-        {
-            int lastRight = occR[i];
-            if (occL.Count == 0)
-            {
-                break;
-            }
-            var lastLeft = occL.Last();
-
-            if (lastRight < lastLeft)
-            {
-                i++;
-                // Na konci přebývá lastLeft
-
-                // onlyLeft.Add(lastLeft);
-                // I will remove it on end
-                occL.RemoveAt(occL.Count - 1);
-            }
-            else
-            {
-                // když je lastLeft menší, znamená to že last right má svůj levý protějšek
-                l.Add(new Tuple<int, int>(lastLeft, lastRight));
-            }
-        }
-
-        occL = onlyLeft;
-
-        //foreach (var item in l)
-        //{
-        //    occL.Remove(item.Item1);
-        //}
-
-        // occL = onlyLeft o pár řádků výše
-        //onlyLeft.AddRange(occL);
-
-        //l.Reverse();
-
-        var addToAnotherCollection = new CollectionWithoutDuplicates<int>();
-        var l2 = new List<Tuple<int, int>>();
-
-        List<int> alreadyProcessedItem1 = new List<int>();
-        for (int i = l.Count - 1; i >= 0; i--)
-        {
-            if (alreadyProcessedItem1.Contains(l[i].Item1))
-            {
-                addToAnotherCollection.Add(l[i].Item1);
-                l2.Add(l[i]);
-                l.RemoveAt(i);
-                //continue;
-            }
-
-
-            alreadyProcessedItem1.Add(l[i].Item1);
-        }
-
-        //for (int i = l2.Count - 1; i >= 0; i--)
-        //{
-        //    if (l.Contains(l2[i]))
-        //    {
-        //        l2.RemoveAt(i);
-        //    }
-        //}
-
-        foreach (var item in addToAnotherCollection.c)
-        {
-            var count = alreadyProcessedItem1.Where(d => d == item).Count();
-            //!alreadyProcessedItem1.Contains(item)
-
-            if (count > 2)
-            {
-
-
-                var sele = l2.Where(d => d.Item1 == item).ToList();
-                //for (int i = sele.Count() - 1; i >= 1; i--)
-                //{
-                //    l2.Remove(sele[i]);
-                //}
-
-                var dx2 = occL.IndexOf(sele[0].Item1);
-                if (dx2 != -1)
-                {
-                    var dx3 = l.IndexOf(sele[0]);
-                    l.Add(new Tuple<int, int>(occL[dx2 - 1], sele[0].Item2));
-                }
-
-            }
-        }
-
-        //l.AddRange(l2);
-
-        occL.Sort();
 
 
 
-
-        var result = l; //l.OrderByDescending(d => d.Item1).ToList();
-                        //
-
-        List<int> alreadyProcessed = new List<int>();
-
-        int dx = -1;
-
-        for (int y = 0; y < result.Count; y++)
-        {
-            var item = result[y];
-            var i = item.Item1;
-
-            if (alreadyProcessed.Contains(i))
-            {
-                dx = occL.IndexOf(i);
-                if (dx != -1)
-                {
-                    i = occL[dx - 1];
-                    result[i] = new Tuple<int, int>(i, result[y - 1].Item2);
-                }
-            }
-
-            alreadyProcessed.Add(i);
-        }
-
-
-
-        onlyLeft = occL;
-        CAG.RemoveDuplicitiesList(onlyLeft);
-        CAG.RemoveDuplicitiesList(onlyRight);
-
-        foreach (var item in result)
-        {
-            onlyLeft.Remove(item.Item1);
-            onlyRight.Remove(item.Item2);
-        }
-
-        result.Reverse();
-
-        return result;
-    }
 
     public static string RepairQuotes(string c)
     {
@@ -3177,19 +2601,7 @@ bool
 
 
 
-    public static string MakeUpToXChars(int p, int p_2)
-    {
-        StringBuilder sb = new StringBuilder();
-        string d = p.ToString();
-        int doplnit = (p.ToString().Length - p_2) * -1;
-        for (int i = 0; i < doplnit; i++)
-        {
-            sb.Append(0);
-        }
-        sb.Append(d);
 
-        return sb.ToString();
-    }
 
     public static bool IsNumbered(string v)
     {
@@ -3373,7 +2785,7 @@ bool
         {
             foreach (var item in s)
             {
-                if (CA.ContainsElement<char>(SH.bracketsLeftList, item))
+                if (SH.bracketsLeftList.Contains(item))
                 {
                     containsBracket.Add(item);
                 }
@@ -3383,7 +2795,7 @@ bool
         {
             foreach (var item in s)
             {
-                if (CA.ContainsElement<char>(SH.bracketsRightList, item))
+                if (SH.bracketsRightList.Contains(item))
                 {
                     containsBracket.Add(item);
                 }
@@ -3402,29 +2814,7 @@ bool
 
 
 
-    public static string KeepAfterFirst(string searchQuery, string after, bool keepDeli = false)
-    {
-        var dx = searchQuery.IndexOf(after);
-        if (dx != -1)
-        {
-            searchQuery = SHTrim.TrimStart(searchQuery.Substring(dx), after);
-            if (keepDeli)
-            {
-                searchQuery = after + searchQuery;
-            }
-        }
-        return searchQuery;
-    }
 
-    public static string KeepAfterLast(string searchQuery, string after)
-    {
-        var dx = searchQuery.LastIndexOf(after);
-        if (dx != -1)
-        {
-            return SHTrim.TrimStart(searchQuery.Substring(dx), after);
-        }
-        return searchQuery;
-    }
 
 
 
@@ -3446,56 +2836,10 @@ bool
 
 
 
-    public static string NormalizeString(string s)
-    {
-        if (s.Contains(AllChars.nbsp))
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in s)
-            {
-                if (item == AllChars.nbsp)
-                {
-                    sb.Append(AllChars.space);
-                }
-                else
-                {
-                    sb.Append(item);
-                }
-            }
-            return sb.ToString();
-        }
-
-        return s;
-    }
 
 
-    /// <summary>
-    /// IndexesOfChars - char
-    /// ReturnOccurencesOfString - string
-    /// </summary>
-    /// <param name="vcem"></param>
-    /// <param name="co"></param>
-    /// <returns></returns>
-    public static List<int> ReturnOccurencesOfString(string vcem, string co)
-    {
-        vcem = NormalizeString(vcem);
-        List<int> Results = new List<int>();
-        for (int Index = 0; Index < (vcem.Length - co.Length) + 1; Index++)
-        {
-            var subs = vcem.Substring(Index, co.Length);
-            ////////DebugLogger.Instance.WriteLine(subs);
-            // non-breaking space. &nbsp; code 160
-            // 32 space
-            char ch = subs[0];
-            char ch2 = co[0];
-            if (subs == AllStrings.space)
-            {
-            }
-            if (subs == co)
-                Results.Add(Index);
-        }
-        return Results;
-    }
+
+
 
 
     private static bool IsInFirstXCharsTheseLetters(string p, int pl, params char[] letters)
@@ -3739,17 +3083,7 @@ bool
         return vr;
     }
 
-    public static bool StartingWith(string val, string start, bool caseSensitive)
-    {
-        if (caseSensitive)
-        {
-            return val.StartsWith(start);
-        }
-        else
-        {
-            return val.ToLower().StartsWith(start.ToLower());
-        }
-    }
+
 
     /// <summary>
     /// Really return list, for string join value
@@ -3804,28 +3138,6 @@ bool
 
 
 
-    /// <summary>
-    /// Musi mit sudy pocet prvku
-    /// Pokud sudý [0], [2], ... bude mít aspoň jeden nebílý znak, pak se přidá lichý [1], [3] i sudý ve dvojicích. jinak nic
-    /// </summary>
-    /// <param name="className"></param>
-    /// <param name="v1"></param>
-    /// <param name="methodName"></param>
-    /// <param name="v2"></param>
-    public static string ConcatIfBeforeHasValue(params string[] className)
-    {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < className.Length; i++)
-        {
-            string even = className[i];
-            if (!string.IsNullOrWhiteSpace(even))
-            {
-                //string odd =
-                result.Append(even + className[++i]);
-            }
-        }
-        return result.ToString();
-    }
 
 
 
@@ -3860,16 +3172,7 @@ bool
         return nazevTabulky;
     }
 
-    public static string WrapWithQm(string commitMessage)
-    {
-        return WrapWithQm(commitMessage, true);
-    }
 
-
-    public static string WrapWithQm(string commitMessage, bool alsoIfIsWhitespaceOrEmpty = true)
-    {
-        return SH.WrapWithChar(commitMessage, AllChars.qm, alsoIfIsWhitespaceOrEmpty);
-    }
 
     // takhle to bylo předtím ale teď to tu mám 2x se stejnými parametry
     //[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3878,18 +3181,6 @@ bool
     //    // TODO: Make with StringBuilder, because of SH.WordAfter and so
     //    return WrapWith(value, v.ToString(), _trimWrapping);
     //}
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string WrapWithChar(string value, char v, bool _trimWrapping = false, bool alsoIfIsWhitespaceOrEmpty = true)
-    {
-        if (string.IsNullOrWhiteSpace(value) && !alsoIfIsWhitespaceOrEmpty)
-        {
-            return string.Empty;
-        }
-
-        // TODO: Make with StringBuilder, because of SH.WordAfter and so
-        return WrapWith(_trimWrapping ? value.Trim() : value, v.ToString());
-    }
 
     /// <summary>
     /// Vše tu funguje výborně
@@ -3943,50 +3234,9 @@ bool
 
 
     #region GetPartsByLocation
-    /// <summary>
-    /// Into A1,2 never put null
-    /// </summary>
-    /// <param name="pred"></param>
-    /// <param name="za"></param>
-    /// <param name="text"></param>
-    /// <param name="pozice"></param>
-    public static void GetPartsByLocation(out string pred, out string za, string text, int pozice)
-    {
-        if (pozice == -1)
-        {
-            pred = text;
-            za = "";
-        }
-        else
-        {
-            pred = text.Substring(0, pozice);
-            if (text.Length > pozice + 1)
-            {
-                za = text.Substring(pozice + 1);
-            }
-            else
-            {
-                za = string.Empty;
-            }
-        }
-    }
 
-    public static (string, string) GetPartsByLocationNoOutInt(string text, int pozice)
-    {
-        string pred, za;
-        GetPartsByLocation(out pred, out za, text, pozice);
-        return (pred, za);
-    }
 
-    /// <param name="pred"></param>
-    /// <param name="za"></param>
-    /// <param name="text"></param>
-    /// <param name="or"></param>
-    public static void GetPartsByLocation(out string pred, out string za, string text, char or)
-    {
-        int dex = text.IndexOf(or);
-        SH.GetPartsByLocation(out pred, out za, text, dex);
-    }
+
     #endregion
 
     ///// <summary>
@@ -4003,10 +3253,7 @@ bool
 
 
 
-    public static string RemoveLastChar(string artist)
-    {
-        return artist.Substring(0, artist.Length - 1);
-    }
+
 
     /// <summary>
     /// Údajně detekuje i japonštinu a podpobné jazyky
@@ -4119,7 +3366,7 @@ bool
     /// <param name="end"></param>
     public static string RemoveBetweenAndEdgeChars(string s, string begin, string end)
     {
-        Regex regex = new Regex(SH.Format2("\\{0}.*?\\{1}", begin, end));
+        Regex regex = new Regex(SHFormat.Format2("\\{0}.*?\\{1}", begin, end));
         return regex.Replace(s, string.Empty);
     }
 
@@ -4561,6 +3808,8 @@ bool
         return FirstCharOfEveryWordUpper(v, AllChars.dash);
     }
 
+
+
     /// <summary>
     /// Return joined with space
     /// </summary>
@@ -4569,42 +3818,11 @@ bool
     private static string FirstCharOfEveryWordUpper(string v, char dash)
     {
         var p = SHSplit.SplitChar(v, dash);
-        p = CAChangeContent.ChangeContent0(null, p, SH.FirstCharUpper);
+        p = CAChangeContent.ChangeContent0(null, p, FirstCharUpper);
         return SHJoin.JoinSpace(p);
     }
 
-    /// <summary>
-    /// FixedSpace - Contains
-    /// AnySpaces - split input by spaces and A1 must contains all parts
-    /// ExactlyName - Is exactly the same
-    ///
-    ///
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="term"></param>
-    /// <param name="enoughIsContainsAttribute"></param>
-    /// <param name="caseSensitive"></param>
-    public static bool ContainsBoolBool(string input, string term, bool enoughIsContainsAttribute, bool caseSensitive)
-    {
-        return Contains(input, term, enoughIsContainsAttribute ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName, caseSensitive);
-    }
 
-
-
-    /// <summary>
-    /// AnySpaces - split A2 by spaces and A1 must contains all parts
-    /// ExactlyName - ==
-    /// FixedSpace - simple contains
-    ///
-    /// A1 = search for exact occur. otherwise split both to words
-    /// Control for string.Empty, because otherwise all results are true
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="what"></param>
-    public static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace)
-    {
-        return Contains(input, term, searchStrategy, true);
-    }
 
 
 
@@ -4659,7 +3877,7 @@ bool
 
         while (true)
         {
-            bool canBeAnyChar = CA.IsEmptyOrNull(actualFormatData.mustBe);
+            bool canBeAnyChar = SunamoCollectionsShared.CASH.IsEmptyOrNull(actualFormatData.mustBe);
             bool isRightChar = false;
 
             if (canBeAnyChar)
@@ -4674,7 +3892,7 @@ bool
                     return false;
                 }
 
-                isRightChar = CA.IsEqualToAnyElement<char>(r[actualChar], actualFormatData.mustBe);
+                isRightChar = CAGSH.IsEqualToAnyElement<char>(r[actualChar], actualFormatData.mustBe);
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -4690,7 +3908,7 @@ bool
                     return false;
                 }
 
-                isRightChar = CA.IsEqualToAnyElement<char>(r[actualChar], followingFormatData.mustBe);
+                isRightChar = CAGSH.IsEqualToAnyElement<char>(r[actualChar], followingFormatData.mustBe);
                 if (!isRightChar)
                 {
                     return false;
@@ -4706,13 +3924,13 @@ bool
                     processed++;
                     actualChar++;
 
-                    if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
+                    if (!CASH.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
                     {
                         return false;
                     }
 
                     actualFormatData = tfd[actualCharFormatData];
-                    if (CA.HasIndex(actualCharFormatData + 1, tfd))
+                    if (CASH.HasIndex(actualCharFormatData + 1, tfd))
                     {
                         followingFormatData = tfd[actualCharFormatData + 1];
                     }
@@ -4741,12 +3959,12 @@ bool
             if (remains == 0)
             {
                 ++actualCharFormatData;
-                if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
+                if (!CASH.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
                 {
                     return false;
                 }
                 actualFormatData = tfd[actualCharFormatData];
-                if (CA.HasIndex(actualCharFormatData + 1, tfd))
+                if (CASH.HasIndex(actualCharFormatData + 1, tfd))
                 {
                     followingFormatData = tfd[actualCharFormatData + 1];
                 }
@@ -4776,101 +3994,17 @@ bool
 
 
 
-    public static string FromSpace160To32(string text)
-    {
-        text = Regex.Replace(text, @"\p{Z}", AllStrings.space);
-        return text;
-    }
+
     #endregion
 
     #region MyRegion
-    /// <summary>
-    ///     Func<int, bool> / FromToList
-    /// </summary>
-    /// <param name="o"></param>
-    /// <param name="nt"></param>
-    /// <returns></returns>
-    public static bool NotAllowedInRanges(object o, int nt)
-    {
-        if (o is Func<int, bool>)
-        {
-            var t = (Func<int, bool>)o;
-            return t(nt);
-        }
 
-        if (o is FromToList)
-        {
-            var r = (FromToList)o;
-            return r.IsInRange(nt);
-        }
 
-        ThrowEx.NotImplementedCase("NotAllowedInRanges: " + o);
-        return false;
-    }
 
-    /// <summary>
-    ///     notAllowedInRanges can be Func
-    ///     <int, bool>
-    ///         (delegát který vrací zda daný index může být použít pro end) or FromToList
-    ///         Used in: Metaproject.PackageIndex.Functions.ParseCsprojFile
-    ///         Work like everybody excepts, from a {b} c return b
-    ///         A5 is type FromToList but into SE could be only absolutely minimal code base
-    /// </summary>
-    /// <param name="p"></param>
-    /// <param name="begin"></param>
-    /// <param name="end"></param>
-    public static string GetTextBetweenTwoChars(string p, char beginS, char endS,
-    bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
-    {
-        var begin = p.IndexOf(beginS);
-        var end = -1;
-        if (endLastIndexOf)
-        {
-            end = p.LastIndexOf(endS);
-        }
-        else
-        {
-            end = p.IndexOf(endS, begin + 1);
 
-            if (notAllowedInRanges != null)
-                while (end != NumConsts.mOne && NotAllowedInRanges(notAllowedInRanges, end))
-                    end = p.IndexOf(endS, end + 1);
-        }
 
-        if (begin == NumConsts.mOne || end == NumConsts.mOne)
-        {
-            if (throwExceptionIfNotContains)
-            {
-                ThrowEx.NotContains(p, beginS.ToString(), endS.ToString());
-            }
-            else
-            {
-                if (end == NumConsts.mOne) return null;
-            }
-        }
-        else
-        {
-            return GetTextBetweenTwoCharsInts(p, begin, end);
-        }
-
-        return p;
-    }
-
-    public static string GetTextBetweenTwoCharsInts(string p, int begin, int end)
-    {
-        if (end > begin)
-            // a(1) - 1,3
-            return p.Substring(begin + 1, end - begin - 1);
-        // originally
-        //return p.Substring(begin+1, end - begin - 1);
-        return p;
-    }
     #endregion
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string WrapWith(string value, string h, bool _trimWrapping = false)
-    {
-        return h + (_trimWrapping ? SHTrim.Trim(value, h) : value) + h;
-    }
+
 
 }
