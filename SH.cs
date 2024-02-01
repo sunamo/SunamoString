@@ -1,4 +1,13 @@
+
 namespace SunamoString;
+using Diacritics.Extensions;
+using SunamoData.Data;
+using SunamoDictionary;
+using SunamoEnums.Enums;
+using SunamoString._sunamo;
+using SunamoStringParts;
+using SunamoStringShared;
+
 
 public partial class SH : SHSH
 {
@@ -65,7 +74,7 @@ public partial class SH : SHSH
     {
         var l = SHGetLines.GetLines(p);
         l = l.Where(d => !d.Contains(c)).ToList(); //CA.RemoveWhichContains(l, c, false);
-        var result = SHJoin.JoinNL(l);
+        var result = string.Join(Environment.NewLine, l);
         return result;
     }
 
@@ -223,7 +232,7 @@ public partial class SH : SHSH
 
         foreach (var item in list)
         {
-            if (s.Contains(item))
+            if (s.ToString().Contains(item))
             {
                 result.Add(i);
             }
@@ -235,7 +244,7 @@ public partial class SH : SHSH
 
     public static int FindClosingBracketIndexChar(StringBuilder text, bool removeBetween, string openedBracket = "{")
     {
-        int index = text.IndexOf(openedBracket);
+        int index = text.ToString().IndexOf(openedBracket);
         return FindClosingBracketIndex(text, removeBetween, text[index]);
     }
 
@@ -379,14 +388,14 @@ public partial class SH : SHSH
         return sb.ToString();
     }
 
-    public static bool IsCharOn(string item, int v, UnicodeChars number)
-    {
-        if (item.Length > v)
-        {
-            return CharHelper.IsUnicodeChar(number, item[v]);
-        }
-        return false;
-    }
+    //public static bool IsCharOn(string item, int v, UnicodeChars number)
+    //{
+    //    if (item.Length > v)
+    //    {
+    //        return CharHelper.IsUnicodeChar(number, item[v]);
+    //    }
+    //    return false;
+    //}
 
     /// <summary>
     /// A2 is use to calculate length of center
@@ -539,12 +548,12 @@ public partial class SH : SHSH
 
     public static string MultiWhitespaceLineToSingle(List<string> lines)
     {
-        var str = SHJoin.JoinNL(lines);
-        SunamoCollectionsShared.CASH.DoubleOrMoreMultiLinesToSingle(ref str);
+        var str = string.Join(Environment.NewLine, lines);
+        //SunamoCollectionsShared.CASH.DoubleOrMoreMultiLinesToSingle(ref str);
         return str;
 
         //CA.Trim(lines);
-        //var str = SHJoin.JoinNL(lines);
+        //var str = string.Join(Environment.NewLine, lines);
         //var nl3 = string.Join(Times(3, Environment.NewLine);
         //var nl2 = string.Join(Times(2, Environment.NewLine);
         //while (str.Contains(nl3))
@@ -556,7 +565,7 @@ public partial class SH : SHSH
         //return Regex.SHReplace.Replace(str, @"(\r\n)+", "\r\n\r\n", RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
         // Ódstranuje nám to
         //return Regex.SHReplace.Replace(str, @"(\r\n){2,}", Environment.NewLine);
-        //ThrowEx.Custom("NOT WORKING, IN FIRST DEBUG WITH UNIT TESTS AND THEN USE");
+        //throw new Exception("NOT WORKING, IN FIRST DEBUG WITH UNIT TESTS AND THEN USE");
         //List<int> toRemove = new List<int>();
         //List<bool> isWhitespace = new List<bool>(l.Count);
         ////l.Add(false)
@@ -743,7 +752,7 @@ public partial class SH : SHSH
 
                     if (indexBeforeFinal == 0) ;
                     {
-                        ThrowEx.Custom("There is no number higher than " + indexAfterFinal);
+                        throw new Exception("There is no number higher than " + indexAfterFinal);
                     }
                 }
                 else
@@ -815,7 +824,7 @@ public partial class SH : SHSH
     }
 
 
-
+    public static string xMismatchCountInInputArraysOfSHAllHaveRightFormat = "MismatchCountInInputArraysOfSHAllHaveRightFormat";
 
     /// <summary>
     /// Pokud je A1 true, bere se z A2,3 menší počet prvků
@@ -830,7 +839,7 @@ public partial class SH : SHSH
         {
             if (typeDynamics.Count != tfd.Count)
             {
-                ThrowEx.Custom(sess.i18n(XlfKeys.MismatchCountInInputArraysOfSHAllHaveRightFormat));
+                throw new Exception(xMismatchCountInInputArraysOfSHAllHaveRightFormat);
             }
         }
         int lowerCount = Math.Min(typeDynamics.Count, tfd.Count);
@@ -923,7 +932,7 @@ public partial class SH : SHSH
         StringBuilder sb = new StringBuilder();
         foreach (var item in v)
         {
-            if (!AllCharsSE.specialChars.Contains(item) && !CAGSH.IsEqualToAnyElement(item, over))
+            if (!AllCharsSE.specialChars.Contains(item) && !over.Any(d => d == item))// CAGSH.IsEqualToAnyElement(item, over))
             {
                 sb.Append(item);
             }
@@ -1010,7 +1019,7 @@ public partial class SH : SHSH
         {
             lines.Add(string.Empty);
         }
-        return SHJoin.JoinNL(lines);
+        return string.Join(Environment.NewLine, lines);
     }
     public static string ToCase(string v, bool? velkym)
     {
@@ -1235,30 +1244,30 @@ public partial class SH : SHSH
         return i;
     }
 
-    public static
-#if ASYNC
-    async Task<bool>
-#else
-bool
-#endif
-    ContainsInShared(string item, string mustContains, string v)
-    {
-        var cs = AllExtensions.cs;
-        item = item.Replace(cs, v + cs);
-        if (File.Exists(item))
-        {
-            var c =
-#if ASYNC
-            await
-#endif
-            TF.ReadAllText(item);
-            if (c.Contains(mustContains))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    //    public static
+    //#if ASYNC
+    //    async Task<bool>
+    //#else
+    //    bool
+    //#endif
+    //    ContainsInShared(string item, string mustContains, string v)
+    //    {
+    //        var cs = AllExtensions.cs;
+    //        item = item.Replace(cs, v + cs);
+    //        if (File.Exists(item))
+    //        {
+    //            var c =
+    //#if ASYNC
+    //            await
+    //#endif
+    //            File.ReadAllTextAsync(item);
+    //            if (c.Contains(mustContains))
+    //            {
+    //                return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
 
     ///// <summary>
     ///// Trim all A2 from beginning A1
@@ -1278,7 +1287,7 @@ bool
         {
             if (throwExcWhenInvalidIndex)
             {
-                ThrowEx.Custom("Chybn\u00FD parametr ");
+                throw new Exception("Chybn\u00FD parametr ");
             }
             else
             {
@@ -1318,7 +1327,16 @@ bool
 
 
 
+    public static (bool, string) IsNegationTuple(string contains)
+    {
+        if (contains[0] == '!')
+        {
+            contains = contains.Substring(1);
+            return (true, contains);
+        }
 
+        return (false, contains);
+    }
 
     /// <summary>
     /// Version wo ref - dont auto remove first!
@@ -1529,14 +1547,14 @@ bool
     /////
     ///// Simply return from string.Format. SHFormat.Format is more intelligent
     ///// If input has curly bracket but isnt in right format, return A1. Otherwise apply string.Format.
-    ///// SHFormat.Format2 return string.Format always
+    ///// string.Format return string.Format always
     ///// Wont working if contains {0} and another non-format SHReplace.Replacement. For this case of use is there Format3
     ///// </summary>
     ///// <param name="template"></param>
     ///// <param name="args"></param>
     //public static string Format2(string status, params string[] args)
     //{
-    //    return se.SHFormat.Format2(status, args);
+    //    return se.string.Format(status, args);
     //}
 
 
@@ -1603,7 +1621,7 @@ bool
 
     //public static string JoinNL(IList parts, bool removeLastNl = false)
     //{
-    //    return se.SHJoin.JoinNL(parts, removeLastNl);
+    //    return se.string.Join(Environment.NewLine, parts, removeLastNl);
     //}
 
     ///// <summary>
@@ -1663,49 +1681,51 @@ bool
     /// <returns></returns>
     public static int FirstWordWhichIsNumber(string nameTrim, int probablyIndex, bool joinAnotherWordsIfIsAlsoNumber = false)
     {
-        var p = SHSplit.Split(nameTrim, AllStrings.space);
-        if (p.Count > probablyIndex)
-        {
-            if (BTS.IsInt(p[probablyIndex]))
-            {
-                if (joinAnotherWordsIfIsAlsoNumber)
-                {
-                    string s = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(p, probablyIndex + 1);
-                    return int.Parse(s);
-                }
+        throw new NotImplementedException();
+        //var p = SHSplit.Split(nameTrim, AllStrings.space);
+        //if (p.Count > probablyIndex)
+        //{
+        //    if (BTS.IsInt(p[probablyIndex]))
+        //    {
+        //        if (joinAnotherWordsIfIsAlsoNumber)
+        //        {
+        //            string s = BTS.lastInt + SunamoNumbers.NH.JoinAnotherTokensIfIsNumber(p, probablyIndex + 1);
+        //            return int.Parse(s);
+        //        }
 
-                return BTS.lastInt;
-            }
-            else
-            {
-                return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
-            }
-        }
-        else
-        {
-            return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
-        }
-        return int.MinValue;
+        //        return BTS.lastInt;
+        //    }
+        //    else
+        //    {
+        //        return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
+        //    }
+        //}
+        //else
+        //{
+        //    return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
+        //}
+        //return int.MinValue;
     }
 
     public static int FirstWordWhichIsNumberAllIndexes(List<string> p, bool joinAnotherWordsIfIsAlsoNumber = true)
     {
-        int i = 0;
-        foreach (var item in p)
-        {
-            if (BTS.IsInt(item))
-            {
-                i++;
-                if (joinAnotherWordsIfIsAlsoNumber)
-                {
-                    string s = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(p, i);
-                    return int.Parse(s);
-                }
+        throw new NotImplementedException();
+        //int i = 0;
+        //foreach (var item in p)
+        //{
+        //    if (BTS.IsInt(item))
+        //    {
+        //        i++;
+        //        if (joinAnotherWordsIfIsAlsoNumber)
+        //        {
+        //            string s = BTS.lastInt + SunamoNumbers.NH.JoinAnotherTokensIfIsNumber(p, i);
+        //            return int.Parse(s);
+        //        }
 
-                return BTS.lastInt;
-            }
-        }
-        return int.MinValue;
+        //        return BTS.lastInt;
+        //    }
+        //}
+        //return int.MinValue;
     }
 
     public static bool CompareStringIgnoreWhitespaces2(string s1, string s2)
@@ -1789,7 +1809,7 @@ bool
     //public static string JoinIList<T>(object delimiter, IList<T> parts)
     //{
     //    // TODO: Delete after all app working
-    //    return JoinString(delimiter, CA.ToListString2(parts));
+    //    return JoinString(delimiter, new List<string>2(parts));
     //} //
 
     #endregion
@@ -1964,11 +1984,11 @@ bool
 
     public static string GetWordOnIndex(string line, int v)
     {
-        var p = SHSplit.SplitList(line, SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true));
+        var p = SHSplit.Split(line, SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true).ToArray());
 
         if (p.Count < v)
         {
-            ThrowEx.Custom("\"" + line + "\"" + " don't have " + v + " words");
+            throw new Exception("\"" + line + "\"" + " don't have " + v + " words");
         }
 
         return p[v];
@@ -2252,7 +2272,7 @@ bool
             }
         }
 
-        SunamoCollectionsShared.CASH.RemoveStringsEmpty2(result);
+        //SunamoCollectionsShared.CASH.RemoveStringsEmpty2(result);
 
         return result;
     }
@@ -2374,7 +2394,7 @@ bool
         var l = SHGetLines.GetLines(v);
         CASE.Trim(l);
         l = l.Where(d => d.Trim() != string.Empty).ToList();
-        return SHJoin.JoinNL(l);
+        return string.Join(Environment.NewLine, l);
     }
 
     public static bool IsAllLower(string ext)
@@ -2422,7 +2442,7 @@ bool
 
     public static List<int> IndexesOfChars(string input, char ch)
     {
-        return IndexesOfCharsList(input, CAG.ToList<char>(ch));
+        return IndexesOfCharsList(input, new List<char>(ch));
     }
 
     /// <summary>
@@ -2523,8 +2543,8 @@ bool
 
     public static string RemoveUselessWhitespaces(string innerText)
     {
-        var p = SHSplit.SplitByWhiteSpaces(innerText, true);
-        return SHJoin.JoinSpace(p);
+        var p = SHSplit.SplitChar(innerText);
+        return string.Join(AllStrings.space, p);
     }
 
     /// <summary>
@@ -2538,7 +2558,7 @@ bool
     public static string ShortToLengthByParagraph(string c, int maxLength)
     {
         //var delimiter = SH.PadRight(string.Empty, Environment.NewLine, 2);
-        var p = SHSplit.SplitByWhiteSpaces(c);
+        var p = SHSplit.SplitChar(c, AllChars.whiteSpacesChars.ToArray());
 
 
         while (c.Length + p.Count > maxLength)
@@ -2550,7 +2570,9 @@ bool
             }
             else
             {
-                c = SHSubstring.SubstringIfAvailable(c, maxLength); break;
+                //c = SHSubstring.SubstringIfAvailable(c, maxLength); 
+                c = c.Substring(0, maxLength);
+                break;
             }
         }
 
@@ -3093,7 +3115,8 @@ bool
     public static List<string> RemoveDuplicates(string input, string delimiter)
     {
         var split = SHSplit.Split(input, delimiter);
-        return CAG.RemoveDuplicitiesList(new List<string>(split));
+        return split.Distinct().ToList();
+        //return CAG.RemoveDuplicitiesList(new List<string>(split));
     }
 
     /// <summary>
@@ -3315,7 +3338,8 @@ bool
     public static List<string> RemoveDuplicatesNone(string p1, string delimiter)
     {
         var split = SHSplit.SplitNone(p1, delimiter);
-        return CAG.RemoveDuplicitiesList<string>(split);
+        split = split.Distinct().ToList();
+        return split;
     }
 
 
@@ -3354,7 +3378,7 @@ bool
                 title = title.Substring(0, dex + 1);
             }
         }
-        title = SHReplace.ReplaceAll(title, "", AllStrings.doubleSpace).Trim();
+        title = title.Replace(AllStrings.doubleSpace, string.Empty).Trim(); //SHReplace.ReplaceAll(title, "", AllStrings.doubleSpace).Trim();
         return title;
     }
 
@@ -3366,7 +3390,7 @@ bool
     /// <param name="end"></param>
     public static string RemoveBetweenAndEdgeChars(string s, string begin, string end)
     {
-        Regex regex = new Regex(SHFormat.Format2("\\{0}.*?\\{1}", begin, end));
+        Regex regex = new Regex(string.Format("\\{0}.*?\\{1}", begin, end));
         return regex.Replace(s, string.Empty);
     }
 
@@ -3818,8 +3842,12 @@ bool
     private static string FirstCharOfEveryWordUpper(string v, char dash)
     {
         var p = SHSplit.SplitChar(v, dash);
-        p = CAChangeContent.ChangeContent0(null, p, FirstCharUpper);
-        return SHJoin.JoinSpace(p);
+        for (int i = 0; i < p.Count; i++)
+        {
+            p[i] = SH.FirstCharUpper(p[i]);
+        }
+        //p = CAChangeContent.ChangeContent0(null, p, FirstCharUpper);
+        return string.Join(AllStrings.space, p);
     }
 
 
@@ -3877,7 +3905,7 @@ bool
 
         while (true)
         {
-            bool canBeAnyChar = SunamoCollectionsShared.CASH.IsEmptyOrNull(actualFormatData.mustBe);
+            bool canBeAnyChar = actualFormatData.mustBe == null || actualFormatData.mustBe.Length == 0; //SunamoCollectionsShared.CASH.IsEmptyOrNull();
             bool isRightChar = false;
 
             if (canBeAnyChar)
@@ -3892,7 +3920,7 @@ bool
                     return false;
                 }
 
-                isRightChar = CAGSH.IsEqualToAnyElement<char>(r[actualChar], actualFormatData.mustBe);
+                isRightChar = actualFormatData.mustBe.Any(d => d == r[actualChar]); //CAGSH.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -3908,7 +3936,7 @@ bool
                     return false;
                 }
 
-                isRightChar = CAGSH.IsEqualToAnyElement<char>(r[actualChar], followingFormatData.mustBe);
+                isRightChar = followingFormatData.mustBe.Any(d => d == r[actualChar]);  //CAGSH.IsEqualToAnyElement<char>(, );
                 if (!isRightChar)
                 {
                     return false;

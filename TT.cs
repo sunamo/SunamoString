@@ -1,4 +1,7 @@
+
 namespace SunamoString;
+using SunamoData.Data;
+
 
 /// <summary>
 /// Text Templates

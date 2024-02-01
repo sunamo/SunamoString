@@ -3,24 +3,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>24.1.24.1</Version>
+    <Version>24.2.1.2</Version>
     <Description>A large number of methods for string operations</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoCollectionsGenericShared" Version="24.1.24.1" />
-    <PackageReference Include="SunamoCollectionsShared" Version="24.1.23.2" />
-    <PackageReference Include="SunamoFileExtensions" Version="24.1.14.1" />
-    <PackageReference Include="SunamoPercentCalculator" Version="24.1.14.1" />
-    <PackageReference Include="SunamoStringData" Version="24.1.23.1" />
-    <PackageReference Include="SunamoStringFormat" Version="24.1.23.1" />
-    <PackageReference Include="SunamoStringGetLines" Version="24.1.14.1" />
-    <PackageReference Include="SunamoStringJoin" Version="24.1.14.1" />
-    <PackageReference Include="SunamoStringParts" Version="24.1.23.6" />
-    <PackageReference Include="SunamoStringShared" Version="24.1.23.9" />
-    <PackageReference Include="SunamoStringTrim" Version="24.1.23.1" />
-    <PackageReference Include="SunamoDictionary" Version="24.1.24.1" />
-    <PackageReference Include="SunamoNumbers" Version="24.1.14.2" />
-    <PackageReference Include="SunamoRandom" Version="24.1.14.1" />
+    <PackageReference Include="Diacritics" Version="3.3.27" />
+    <PackageReference Include="SunamoData" Version="24.2.1.1" />
+    <PackageReference Include="SunamoDictionary" Version="24.2.1.2" />
+    <PackageReference Include="SunamoPercentCalculator" Version="24.2.1.1" />
+    <PackageReference Include="SunamoStringData" Version="24.2.1.1" />
+    <PackageReference Include="SunamoStringGetLines" Version="24.2.1.1" />
+    <PackageReference Include="SunamoStringShared" Version="24.2.1.1" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>

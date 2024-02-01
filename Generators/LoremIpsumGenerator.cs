@@ -54,9 +54,10 @@ public static class LoremIpsumGenerator
         StringBuilder sb = new StringBuilder();
         int delkaTecky = 1;
         int delkaMezery = 1;
+        Random rnd = new Random();
         while (true)
         {
-            string word = RandomHelper.RandomElementOfCollection(s_words);
+            string word = s_words[rnd.Next(s_words.Count)];
             if (sb.Length + delkaMezery + word.Length + delkaTecky >= maxChars)
             {
                 sb.Append(AllStringsSE.dot);

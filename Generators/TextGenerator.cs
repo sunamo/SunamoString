@@ -1,4 +1,8 @@
+
 namespace SunamoString.Generators;
+using SunamoPercentCalculator;
+using SunamoTextOutputGenerator;
+
 
 
 /// <summary>

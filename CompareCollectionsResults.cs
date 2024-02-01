@@ -1,4 +1,8 @@
+
 namespace SunamoString;
+using SunamoData.Data;
+using SunamoTextOutputGenerator;
+
 
 
 public class CompareCollectionsResults : List<CompareCollectionsResult<string>>
@@ -14,14 +18,14 @@ public class CompareCollectionsResults : List<CompareCollectionsResult<string>>
         {
             TextOutputGenerator textOutputGenerator = new TextOutputGenerator();
 
-            textOutputGenerator.Header(sess.i18n(XlfKeys.Managed) + ":");
+            textOutputGenerator.Header("Managed:");
 
             foreach (var item in result.OnlyInFirst)
             {
                 textOutputGenerator.sb.AppendLine(item.ToString());
             }
 
-            textOutputGenerator.Header(sess.i18n(XlfKeys.Restored) + ":");
+            textOutputGenerator.Header("Restored:");
 
             foreach (var item in result.OnlyInSecond)
             {
@@ -30,7 +34,7 @@ public class CompareCollectionsResults : List<CompareCollectionsResult<string>>
 
             if (result.Both != null)
             {
-                textOutputGenerator.Header(sess.i18n(XlfKeys.Founded) + ":");
+                textOutputGenerator.Header("Founded:");
 
                 foreach (var item in result.Both)
                 {

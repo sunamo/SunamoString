@@ -15,7 +15,7 @@ public class BalancedBrackets
         {
             if (top == 99)
             {
-                ThisApp.Info("Stack full");
+                //ThisApp.Info("Stack full");
             }
             else
             {
@@ -27,7 +27,7 @@ public class BalancedBrackets
         {
             if (top == -1)
             {
-                ThisApp.Error("Underflow error");
+                //ThisApp.Error("Underflow error");
                 return '�';
             }
             else
