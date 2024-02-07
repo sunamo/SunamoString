@@ -12,8 +12,6 @@ global using SunamoValues.Values;
 global using SunamoExceptions;
 global using System.Data;
 global using System.Text.RegularExpressions;
-global using SunamoStringGetLines;
 global using SunamoValues.Constants;
-global using System.Collections.Immutable;
 global using SunamoStringData;
 global using SunamoString.Enums;
