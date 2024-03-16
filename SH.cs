@@ -2213,6 +2213,44 @@ public partial class SH : SHSH
     {
         return GetTextBetweenTwoChars(p, after, before, throwExceptionIfNotContains, notAllowedInRanges, endLastIndexOf);
     }
+
+    public static string GetTextBetweenTwoChars(string p, char beginS, char endS, bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
+    {
+        int num = p.IndexOf(beginS);
+        int num2 = -1;
+        if (endLastIndexOf)
+        {
+            num2 = p.LastIndexOf(endS);
+        }
+        else
+        {
+            num2 = p.IndexOf(endS, num + 1);
+            if (notAllowedInRanges != null)
+            {
+                while (num2 != -1 && NotAllowedInRanges(notAllowedInRanges, num2))
+                {
+                    num2 = p.IndexOf(endS, num2 + 1);
+                }
+            }
+        }
+
+        if (num == -1 || num2 == -1)
+        {
+            if (throwExceptionIfNotContains)
+            {
+                ThrowEx.NotContains(p, beginS.ToString(), endS.ToString());
+            }
+            else if (num2 == -1)
+            {
+                return null;
+            }
+
+            return p;
+        }
+
+        return GetTextBetweenTwoCharsInts(p, num, num2);
+    }
+
     #endregion
 
     public static List<string> ValuesBetweenQuotes(string str, bool insertAgainToQm, bool apos = false)
