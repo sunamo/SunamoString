@@ -34,7 +34,6 @@ public partial class SH : SHSH
             bracketsRight.Add(Brackets.Normal, ')');
 
             bracketsRightList = bracketsRight.Values.ToList();
-
         }
     }
     #endregion
@@ -66,7 +65,13 @@ public partial class SH : SHSH
         return SHParts.RemoveAfterLast(t.Trim(), " ");
     }
 
-
+    public static List<int> GetIndexesOfLinesStartingWith(List<string> list, Func<string, bool> predicate)
+    {
+        List<int> allIndices = list.Select((s, i) => new { Str = s, Index = i })
+    .Where(x => predicate(x.Str))
+    .Select(x => x.Index).ToList();
+        return allIndices;
+    }
 
     public static string RemoveLinesWhichContains(string p, string c)
     {
@@ -87,7 +92,7 @@ public partial class SH : SHSH
 
         if (!input.Contains(s))
         {
-            return input + AllStringsSE.space + s;
+            return input + AllStrings.space + s;
         }
         return input;
     }
@@ -97,7 +102,7 @@ public partial class SH : SHSH
         var p = SHSplit.Split(co, v);
         if (p.Count == 2)
         {
-            return p[1] + AllStringsSE.comma + p[0];
+            return p[1] + AllStrings.comma + p[0];
         }
         return null;
     }
@@ -341,7 +346,7 @@ public partial class SH : SHSH
         StringBuilder sb = new StringBuilder();
         foreach (string item in r)
         {
-            sb.Append(item + AllStringsSE.space);
+            sb.Append(item + AllStrings.space);
         }
         return sb.ToString();
     }
@@ -411,13 +416,13 @@ public partial class SH : SHSH
         if (HasIndex(b, text, false))
         {
             sb.Append(text.Substring(b, before));
-            sb.Append(AllStringsSE.space);
+            sb.Append(AllStrings.space);
         }
         sb.Append(centerString);
         if (HasIndex(a, text, false))
         {
             sb.Append(text.Substring(a, after));
-            sb.Append(AllStringsSE.space);
+            sb.Append(AllStrings.space);
         }
         return sb.ToString();
     }
@@ -464,7 +469,7 @@ public partial class SH : SHSH
 Å™,ř
 Ã,í
 Ä,č
-", AllStringsSE.comma);
+", AllStrings.comma);
             return true;
         }
     }
@@ -476,7 +481,7 @@ public partial class SH : SHSH
         CASE.Trim(input);
         for (int i = 0; i < input.Count; i++)
         {
-            input[i] = input[i].Insert(1, AllStringsSE.space);
+            input[i] = input[i].Insert(1, AllStrings.space);
         }
         input.Sort();
         return input;
@@ -511,9 +516,9 @@ public partial class SH : SHSH
             dxsColons = SH.ReturnOccurencesOfString(text, colon);
             for (int i = dxsColons.Count - 1; i >= 0; i--)
             {
-                sb.Insert(dxsColons[i] + 1, AllStringsSE.space);
+                sb.Insert(dxsColons[i] + 1, AllStrings.space);
             }
-            dxsColons = SH.ReturnOccurencesOfString(sb.ToString(), colon + AllStringsSE.doubleSpace);
+            dxsColons = SH.ReturnOccurencesOfString(sb.ToString(), colon + AllStrings.doubleSpace);
             for (int i = dxsColons.Count - 1; i >= 0; i--)
             {
                 sb.Remove(dxsColons[i] + 1, 1);
@@ -524,9 +529,9 @@ public partial class SH : SHSH
             dxsColons = SH.ReturnOccurencesOfString(text, colon);
             for (int i = dxsColons.Count - 1; i >= 0; i--)
             {
-                sb.Insert(dxsColons[i], AllStringsSE.space);
+                sb.Insert(dxsColons[i], AllStrings.space);
             }
-            dxsColons = SH.ReturnOccurencesOfString(sb.ToString(), AllStringsSE.doubleSpace + colon);
+            dxsColons = SH.ReturnOccurencesOfString(sb.ToString(), AllStrings.doubleSpace + colon);
             for (int i = dxsColons.Count - 1; i >= 0; i--)
             {
                 sb.Remove(dxsColons[i], 1);
@@ -911,10 +916,10 @@ public partial class SH : SHSH
 
     public static string RemoveBracketsWithTextCaseInsensitive(string vr, string zaCo, params string[] co)
     {
-        vr = SHReplace.ReplaceAll(vr, AllStringsSE.lb, "( ");
-        vr = SHReplace.ReplaceAll(vr, AllStringsSE.rsqb, " ]");
-        vr = SHReplace.ReplaceAll(vr, AllStringsSE.rb, " )");
-        vr = SHReplace.ReplaceAll(vr, AllStringsSE.lsqb, "[ ");
+        vr = SHReplace.ReplaceAll(vr, AllStrings.lb, "( ");
+        vr = SHReplace.ReplaceAll(vr, AllStrings.rsqb, " ]");
+        vr = SHReplace.ReplaceAll(vr, AllStrings.rb, " )");
+        vr = SHReplace.ReplaceAll(vr, AllStrings.lsqb, "[ ");
         for (int i = 0; i < co.Length; i++)
         {
             vr = Regex.Replace(vr, co[i], zaCo, RegexOptions.IgnoreCase);
@@ -942,18 +947,18 @@ public partial class SH : SHSH
         while (true)
         {
             bool neco = false;
-            if (vr.StartsWith(AllStringsSE.lb))
+            if (vr.StartsWith(AllStrings.lb))
             {
-                int ss = vr.IndexOf(AllStringsSE.rb);
+                int ss = vr.IndexOf(AllStrings.rb);
                 if (ss != -1 && ss != vr.Length - 1)
                 {
                     neco = true;
                     vr = vr.Substring(ss + 1);
                 }
             }
-            else if (vr.StartsWith(AllStringsSE.lsqb))
+            else if (vr.StartsWith(AllStrings.lsqb))
             {
-                int ss = vr.IndexOf(AllStringsSE.rsqb);
+                int ss = vr.IndexOf(AllStrings.rsqb);
                 if (ss != -1 && ss != vr.Length - 1)
                 {
                     neco = true;
@@ -2055,7 +2060,7 @@ public partial class SH : SHSH
     //            // this was original implementation but dont know why isnt used string.format
     //            for (int i = 0; i < args.Length; i++)
     //            {
-    //                template = SHReplace.ReplaceAll2(template, args[i].ToString(), AllStringsSE.lcub + i + AllStringsSE.rcub);
+    //                template = SHReplace.ReplaceAll2(template, args[i].ToString(), AllStrings.lcub + i + AllStrings.rcub);
     //            }
     //            return template;
     //        }
@@ -2130,7 +2135,7 @@ public partial class SH : SHSH
     //        #region
     //        public static string JoinComma(params string[] args)
     //        {
-    //            return Join(AllStringsSE.comma, (IList)args);
+    //            return Join(AllStrings.comma, (IList)args);
     //        }
     //
     //        public static void FirstCharUpper(ref string nazevPP)

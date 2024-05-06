@@ -60,10 +60,10 @@ public static class LoremIpsumGenerator
             string word = s_words[rnd.Next(s_words.Count)];
             if (sb.Length + delkaMezery + word.Length + delkaTecky >= maxChars)
             {
-                sb.Append(AllStringsSE.dot);
+                sb.Append(AllStrings.dot);
                 break;
             }
-            sb.Append(AllStringsSE.space + word);
+            sb.Append(AllStrings.space + word);
         }
         return sb.ToString();
     }
