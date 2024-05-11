@@ -1,4 +1,4 @@
-namespace SunamoString._sunamo;
+namespace SunamoString;
 
 internal class SHSplit
 {

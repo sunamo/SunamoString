@@ -1,4 +1,4 @@
-namespace SunamoString.Enums;
+namespace SunamoString;
 
 public enum Brackets
 {

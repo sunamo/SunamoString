@@ -1,4 +1,4 @@
-﻿namespace SunamoString._sunamo;
+namespace SunamoString;
 internal class SHParts
 {
     internal static string RemoveAfterLast(string nameSolution, object delimiter)

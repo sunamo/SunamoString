@@ -1,4 +1,4 @@
-﻿namespace SunamoString._sunamo;
+namespace SunamoString;
 internal class SH
 {
     internal static List<string> GetLines(string v)
