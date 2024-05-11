@@ -111,7 +111,7 @@ public partial class SH : SHSH
 
     public static string InsertBeforeEndingBracket(string postfixSpaceCommaNewline, string v)
     {
-        var dx = postfixSpaceCommaNewline.LastIndexOf(AllCharsSE.rb);
+        var dx = postfixSpaceCommaNewline.LastIndexOf(AllChars.rb);
         if (dx != -1)
         {
             return postfixSpaceCommaNewline.Insert(dx, v);
@@ -299,7 +299,7 @@ public partial class SH : SHSH
         start++;
         for (; start < end; start++)
         {
-            text[start] = AllCharsSE.space;
+            text[start] = AllChars.space;
         }
     }
 
@@ -330,10 +330,10 @@ public partial class SH : SHSH
 
     public static string ConvertWhitespaceToVisible(string t)
     {
-        t = t.Replace(AllCharsSE.tab, UnicodeWhiteToVisible.tab);
-        t = t.Replace(AllCharsSE.nl, UnicodeWhiteToVisible.newLine);
-        t = t.Replace(AllCharsSE.cr, UnicodeWhiteToVisible.carriageReturn);
-        t = t.Replace(AllCharsSE.space, UnicodeWhiteToVisible.space);
+        t = t.Replace(AllChars.tab, UnicodeWhiteToVisible.tab);
+        t = t.Replace(AllChars.nl, UnicodeWhiteToVisible.newLine);
+        t = t.Replace(AllChars.cr, UnicodeWhiteToVisible.carriageReturn);
+        t = t.Replace(AllChars.space, UnicodeWhiteToVisible.space);
         return t;
 
     }
@@ -431,7 +431,7 @@ public partial class SH : SHSH
 
     public static bool ContainsNewLine(string between)
     {
-        return between.Contains(AllCharsSE.nl) || between.Contains(AllCharsSE.cr);
+        return between.Contains(AllChars.nl) || between.Contains(AllChars.cr);
     }
     public static bool ChangeEncodingProcessWrongCharacters(ref string c)
     {
@@ -490,7 +490,7 @@ public partial class SH : SHSH
     public static string GetLastWord(string p, bool returnEmptyWhenDontHaveLenght = true)
     {
         p = p.Trim();
-        int dex = p.LastIndexOf(AllCharsSE.space);
+        int dex = p.LastIndexOf(AllChars.space);
         if (dex != -1)
         {
             return p.Substring(dex).Trim();
@@ -654,9 +654,9 @@ public partial class SH : SHSH
     }
     public static string WordAfter(string input, string word)
     {
-        input = SH.WrapWithChar(input, AllCharsSE.space);
+        input = SH.WrapWithChar(input, AllChars.space);
         int dex = input.IndexOf(word);
-        int dex2 = input.IndexOf(AllCharsSE.space, dex + 1);
+        int dex2 = input.IndexOf(AllChars.space, dex + 1);
         StringBuilder sb = new StringBuilder();
         if (dex2 != -1)
         {
@@ -664,7 +664,7 @@ public partial class SH : SHSH
             for (int i = dex2; i < input.Length; i++)
             {
                 char ch = input[i];
-                if (ch != AllCharsSE.space)
+                if (ch != AllChars.space)
                 {
                     sb.Append(ch);
                 }
@@ -893,7 +893,7 @@ public partial class SH : SHSH
     {
         title = remix = null;
         p = p.Trim();
-        if (p[p.Length - 1] != AllCharsSE.lsqb)
+        if (p[p.Length - 1] != AllChars.lsqb)
         {
             return false;
         }
@@ -901,7 +901,7 @@ public partial class SH : SHSH
         {
             p = p.Substring(0, p.Length - 1);
         }
-        int firstHranata = p.LastIndexOf(AllCharsSE.rsqb);
+        int firstHranata = p.LastIndexOf(AllChars.rsqb);
         if (firstHranata == -1)
         {
             return false;
@@ -935,7 +935,7 @@ public partial class SH : SHSH
         StringBuilder sb = new StringBuilder();
         foreach (var item in v)
         {
-            if (!AllCharsSE.specialChars.Contains(item) && !over.Any(d => d == item))// CAGSH.IsEqualToAnyElement(item, over))
+            if (!AllChars.specialChars.Contains(item) && !over.Any(d => d == item))// CAGSH.IsEqualToAnyElement(item, over))
             {
                 sb.Append(item);
             }
@@ -1091,7 +1091,7 @@ public partial class SH : SHSH
     public static string GetWithoutLastWord(string p)
     {
         p = p.Trim();
-        int dex = p.LastIndexOf(AllCharsSE.space);
+        int dex = p.LastIndexOf(AllChars.space);
         if (dex != -1)
         {
             return p.Substring(0, dex);
@@ -1194,7 +1194,7 @@ public partial class SH : SHSH
     {
         item2 = item2.Trim();
         //return item2.Substring(
-        int dex = item2.IndexOf(AllCharsSE.space);
+        int dex = item2.IndexOf(AllChars.space);
         if (dex != -1)
         {
             return item2.Substring(dex + 1);
@@ -1319,7 +1319,7 @@ public partial class SH : SHSH
 
     public static bool IsNegation(string contains)
     {
-        if (contains[0] == AllCharsSE.excl)
+        if (contains[0] == AllChars.excl)
         {
             return true;
         }
@@ -1452,7 +1452,7 @@ public partial class SH : SHSH
     public static string GetFirstWord(string p, bool returnEmptyWhenDontHaveLenght = true)
     {
         p = p.Trim();
-        int dex = p.IndexOf(AllCharsSE.space);
+        int dex = p.IndexOf(AllChars.space);
         if (dex != -1)
         {
             return p.Substring(0, dex);
@@ -2067,7 +2067,7 @@ public partial class SH : SHSH
     //
     //            public static string WrapWithQm(string commitMessage)
     //        {
-    //            return SH.WrapWith(commitMessage, AllCharsSE.qm);
+    //            return SH.WrapWith(commitMessage, AllChars.qm);
     //        }
     //
     //        [MethodImpl(MethodImplOptions.AggressiveInlining)]

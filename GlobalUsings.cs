@@ -15,3 +15,7 @@ global using System.Text.RegularExpressions;
 global using SunamoValues.Constants;
 global using SunamoStringData;
 global using SunamoString.Enums;
+global using System.Collections.Generic;
+global using System.Collections;
+global using System.IO;
+

@@ -10,6 +10,24 @@
     <PackageReference Include="Diacritics" Version="3.3.27" />
     <PackageReference Include="SunamoStringData" Version="24.2.6.2" />
     <PackageReference Include="SunamoStringShared" Version="24.2.6.2" />
+    <Compile Include="..\SunamoValues\Consts.cs" Link="_linked\SunamoValues\Consts.cs" />
+    <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
+    <Compile Include="..\SunamoEnums\Enums\StatisticLetterCharsStrategy.cs" Link="_linked\SunamoEnums\Enums\StatisticLetterCharsStrategy.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\ThrowEx.cs" Link="_linked\SunamoExceptions\OnlyInSE\ThrowEx.cs" />
+    <Compile Include="..\SunamoValues\Constants\UnicodeWhiteToVisible.cs" Link="_linked\SunamoValues\Constants\UnicodeWhiteToVisible.cs" />
+    <Compile Include="..\SunamoData\Data\TextFormatData.cs" Link="_linked\SunamoData\Data\TextFormatData.cs" />
+    <Compile Include="..\SunamoData\Data\CharFormatData.cs" Link="_linked\SunamoData\Data\CharFormatData.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Exc.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exc.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Exceptions.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exceptions.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Types.cs" Link="_linked\SunamoExceptions\OnlyInSE\Types.cs" />
+    <Compile Include="..\SunamoValues\Constants\NumConsts.cs" Link="_linked\SunamoValues\Constants\NumConsts.cs" />
+    <Compile Include="..\SunamoData\Data\FromToList.cs" Link="_linked\SunamoData\Data\FromToList.cs" />
+    <Compile Include="..\SunamoValues\Values\AllLists.cs" Link="_linked\SunamoValues\Values\AllLists.cs" />
+    <Compile Include="..\SunamoValues\AllChars.cs" Link="_linked\SunamoValues\AllChars.cs" />
+    <Compile Include="..\SunamoValues\Values\SunamoNotTranslateAble.cs" Link="_linked\SunamoValues\Values\SunamoNotTranslateAble.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\TranslateAble.cs" Link="_linked\SunamoExceptions\OnlyInSE\TranslateAble.cs" />
+    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" />
+    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoString</DefineConstants>
