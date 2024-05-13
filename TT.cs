@@ -1,6 +1,6 @@
 
 namespace SunamoString;
-using SunamoData.Data;
+
 
 
 /// <summary>
