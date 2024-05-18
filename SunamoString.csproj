@@ -8,8 +8,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Diacritics" Version="3.3.27" />
-    <PackageReference Include="SunamoStringData" Version="24.2.6.2" />
-    <PackageReference Include="SunamoStringShared" Version="24.2.6.2" />
     <Compile Include="..\SunamoValues\Consts.cs" Link="_linked\SunamoValues\Consts.cs" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
     <Compile Include="..\SunamoEnums\Enums\StatisticLetterCharsStrategy.cs" Link="_linked\SunamoEnums\Enums\StatisticLetterCharsStrategy.cs" />
