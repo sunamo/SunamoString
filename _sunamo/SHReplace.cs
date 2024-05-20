@@ -2,7 +2,7 @@ namespace SunamoString;
 
 
 
-//namespace SunamoString._sunamo;
+//namespace SunamoString;
 internal class SHReplace
 {
     //internal static Func<string, string, string, string> ReplaceAll;

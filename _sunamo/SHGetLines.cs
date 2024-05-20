@@ -1,8 +1,8 @@
 namespace SunamoString;
 internal class SHGetLines
 {
-    internal static List<string> GetLines(string s)
+    internal static List<string> GetLines(string v)
     {
-        return sv.Split(new string[] { v.Contains("\r\n") ? "\r\n" : "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        return v.Split(new string[] { v.Contains("\r\n") ? "\r\n" : "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 }

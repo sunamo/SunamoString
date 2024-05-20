@@ -17,6 +17,31 @@
     <Compile Include="..\SunamoValues\AllChars.cs" Link="_linked\SunamoValues\AllChars.cs" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
     <Compile Include="..\SunamoValues\Consts.cs" Link="_linked\SunamoValues\Consts.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\ThrowEx.cs" Link="_linked\SunamoExceptions\OnlyInSE\ThrowEx.cs" />
+    <Compile Include="..\SunamoData\Data\ABC.cs" Link="_linked\SunamoData\Data\ABC.cs" />
+    <Compile Include="..\SunamoStringShared\SHSH.cs" Link="_linked\SunamoStringShared\SHSH.cs" />
+    <Compile Include="..\SunamoEnums\Enums\StatisticLetterCharsStrategy.cs" Link="_linked\SunamoEnums\Enums\StatisticLetterCharsStrategy.cs" />
+    <Compile Include="..\SunamoData\Data\SquareMap.cs" Link="_linked\SunamoData\Data\SquareMap.cs" />
+    <Compile Include="..\SunamoData\Data\SquareMapLines.cs" Link="_linked\SunamoData\Data\SquareMapLines.cs" />
+    <Compile Include="..\SunamoValues\Constants\UnicodeWhiteToVisible.cs" Link="_linked\SunamoValues\Constants\UnicodeWhiteToVisible.cs" />
+    <Compile Include="..\SunamoExceptions\InSunamoIsDerivedFrom\CASE.cs" Link="_linked\SunamoExceptions\InSunamoIsDerivedFrom\CASE.cs" />
+    <Compile Include="..\SunamoData\Data\TextFormatData.cs" Link="_linked\SunamoData\Data\TextFormatData.cs" />
+    <Compile Include="..\SunamoData\Data\CharFormatData.cs" Link="_linked\SunamoData\Data\CharFormatData.cs" />
+    <Compile Include="..\SunamoStringData\SHData.cs" Link="_linked\SunamoStringData\SHData.cs" />
+    <Compile Include="..\SunamoParsing\Parse.cs" Link="_linked\SunamoParsing\Parse.cs" />
+    <Compile Include="..\SunamoValues\Values\AllLists.cs" Link="_linked\SunamoValues\Values\AllLists.cs" />
+    <Compile Include="..\SunamoParsing\TryParse.cs" Link="_linked\SunamoParsing\TryParse.cs" />
+    <Compile Include="..\SunamoValues\Values\SunamoNotTranslateAble.cs" Link="_linked\SunamoValues\Values\SunamoNotTranslateAble.cs" />
+    <Compile Include="..\SunamoData\Data\FromToWord.cs" Link="_linked\SunamoData\Data\FromToWord.cs" />
+    <Compile Include="..\SunamoData\Data\FromTo.cs" Link="_linked\SunamoData\Data\FromTo.cs" />
+    <Compile Include="..\SunamoData\Data\FromToTSH.cs" Link="_linked\SunamoData\Data\FromToTSH.cs" />
+    <Compile Include="..\SunamoEnums\Enums\SearchStrategy.cs" Link="_linked\SunamoEnums\Enums\SearchStrategy.cs" />
+    <Compile Include="..\SunamoEnums\Enums\ContainsCompareMethod.cs" Link="_linked\SunamoEnums\Enums\ContainsCompareMethod.cs" />
+    <Compile Include="..\SunamoValues\Constants\NumConsts.cs" Link="_linked\SunamoValues\Constants\NumConsts.cs" />
+    <Compile Include="..\SunamoExceptions\SHSE.cs" Link="_linked\SunamoExceptions\SHSE.cs" />
+    <Compile Include="..\SunamoData\Data\AB.cs" Link="_linked\SunamoData\Data\AB.cs" />
+    <Compile Include="..\SunamoEnums\Enums\FromToUse.cs" Link="_linked\SunamoEnums\Enums\FromToUse.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Types.cs" Link="_linked\SunamoExceptions\OnlyInSE\Types.cs" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoString</DefineConstants>

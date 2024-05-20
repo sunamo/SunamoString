@@ -1,12 +1,11 @@
-
-namespace SunamoString;
+namespace
+#if SunamoWikipedia
+SunamoWikipedia
+#else
+SunamoString
+#endif
+;
 using Diacritics.Extensions;
-
-
-
-
-
-
 public partial class SH : SHSH
 {
     #region 
@@ -17,7 +16,6 @@ public partial class SH : SHSH
      */
     protected static Dictionary<Brackets, char> bracketsLeft = null;
     protected static Dictionary<Brackets, char> bracketsRight = null;
-
     protected static void Init()
     {
         if (bracketsLeft == null)
@@ -27,30 +25,19 @@ public partial class SH : SHSH
             bracketsLeft.Add(Brackets.Square, '[');
             bracketsLeft.Add(Brackets.Normal, '(');
             bracketsLeftList = bracketsLeft.Values.ToList();
-
             bracketsRight = new Dictionary<Brackets, char>();
             bracketsRight.Add(Brackets.Curly, '}');
             bracketsRight.Add(Brackets.Square, ']');
             bracketsRight.Add(Brackets.Normal, ')');
-
             bracketsRightList = bracketsRight.Values.ToList();
         }
     }
     #endregion
     protected static List<char> bracketsLeftList = null;
     protected static List<char> bracketsRightList = null;
-
     #region TrimStartingAndTrailingChars
-
-
-
-
-
-
     #endregion
-
     private static StringBuilder sb = new StringBuilder();
-
     public static string DetectNewline(string s)
     {
         if (s.Contains(Consts.rn))
@@ -59,12 +46,10 @@ public partial class SH : SHSH
         }
         return "\n";
     }
-
     public static string RemoveLastWord(string t)
     {
         return SHParts.RemoveAfterLast(t.Trim(), " ");
     }
-
     public static List<int> GetIndexesOfLinesStartingWith(List<string> list, Func<string, bool> predicate)
     {
         List<int> allIndices = list.Select((s, i) => new { Str = s, Index = i })
@@ -72,7 +57,6 @@ public partial class SH : SHSH
     .Select(x => x.Index).ToList();
         return allIndices;
     }
-
     public static string RemoveLinesWhichContains(string p, string c)
     {
         var l = SHGetLines.GetLines(p);
@@ -80,8 +64,6 @@ public partial class SH : SHSH
         var result = string.Join(Environment.NewLine, l);
         return result;
     }
-
-
     public static string AddIfNotContains(string input, string s, string sLower = null)
     {
         if (sLower != null)
@@ -89,14 +71,12 @@ public partial class SH : SHSH
             s = sLower;
             input = input.ToLower();
         }
-
         if (!input.Contains(s))
         {
             return input + AllStrings.space + s;
         }
         return input;
     }
-
     public static string SwitchSwap(string co, string v)
     {
         var p = SHSplit.Split(co, v);
@@ -106,9 +86,6 @@ public partial class SH : SHSH
         }
         return null;
     }
-
-
-
     public static string InsertBeforeEndingBracket(string postfixSpaceCommaNewline, string v)
     {
         var dx = postfixSpaceCommaNewline.LastIndexOf(AllChars.rb);
@@ -118,20 +95,13 @@ public partial class SH : SHSH
         }
         return postfixSpaceCommaNewline;
     }
-
-
-
-
-
     public static Dictionary<char, int> StatisticLetterChars(string between, StatisticLetterCharsStrategy s, params char[] charsToStrategy)
     {
         List<char> ignoreCompletely = null;
-
         if (s == StatisticLetterCharsStrategy.IgnoreCompletely)
         {
             ignoreCompletely = new List<char>(charsToStrategy);
         }
-
         Dictionary<char, int> list = new Dictionary<char, int>();
         if (s == StatisticLetterCharsStrategy.AddAsFirst)
         {
@@ -140,7 +110,6 @@ public partial class SH : SHSH
                 list.Add(item, 0);
             }
         }
-
         foreach (var item in between)
         {
             if (s == StatisticLetterCharsStrategy.IgnoreCompletely)
@@ -152,15 +121,12 @@ public partial class SH : SHSH
             }
             DictionaryHelper.AddOrPlus(list, item, 1);
         }
-
         return list;
     }
-
     public static List<char> AllBrackets(string c)
     {
         List<char> ch = new List<char>();
         bool end = false;
-
         for (int i = 0; i < c.Length; i++)
         {
             var s = SH.GetBracketFromBegin(c[i], ref end, false);
@@ -169,20 +135,15 @@ public partial class SH : SHSH
                 ch.Add(c[i]);
             }
         }
-
         return ch;
     }
-
     public static Tuple<SquareMap, SquareMapLines> IndexesOfBrackets(string c)
     {
         SquareMap m = new SquareMap();
         SquareMapLines me = new SquareMapLines(m);
-
         bool end = false;
-
         int line = 0;
         bool r = false;
-
         for (int i = 0; i < c.Length; i++)
         {
             var ch = c[i];
@@ -205,34 +166,25 @@ public partial class SH : SHSH
                 r = true;
                 continue;
             }
-
             var s = SH.GetBracketFromBegin(ch, ref end, false);
-
-
             if (s != Brackets.None)
             {
                 m.Add(s, end, i);
                 me.Add(s, end, i, line);
             }
         }
-
         return new Tuple<SquareMap, SquareMapLines>(m, me);
     }
-
     public static string ReplaceBrackets(string item, Brackets from, Brackets to)
     {
         item = item.Replace(bracketsLeft[from], bracketsLeft[to]);
         item = item.Replace(bracketsRight[from], bracketsRight[to]);
-
         return item;
     }
-
     public static List<int> ContainsAnyFromElement(StringBuilder s, IList<string> list)
     {
         List<int> result = new List<int>();
-
         int i = 0;
-
         foreach (var item in list)
         {
             if (s.ToString().Contains(item))
@@ -241,28 +193,21 @@ public partial class SH : SHSH
             }
             i++;
         }
-
         return result;
     }
-
     public static int FindClosingBracketIndexChar(StringBuilder text, bool removeBetween, string openedBracket = "{")
     {
         int index = text.ToString().IndexOf(openedBracket);
         return FindClosingBracketIndex(text, removeBetween, text[index]);
     }
-
     public static int FindClosingBracketIndex(StringBuilder text, bool removeBetween, int dxOfStart)
     {
         char openedBracket = text[dxOfStart];
-
         char closedBracket = SH.ClosingBracketFor(openedBracket);
         int start = dxOfStart;
-
         int bracketCount = 1;
         //var textArray = text.ToString().ToCharArray();
-
         char ai = 'a';
-
         for (int i = dxOfStart + 1; i < text.Length; i++)
         {
             ai = text[i];
@@ -274,45 +219,35 @@ public partial class SH : SHSH
             {
                 bracketCount--;
             }
-
             if (bracketCount == 0)
             {
                 dxOfStart = i;
                 break;
             }
         }
-
         if (removeBetween)
         {
             RemoveBetweenIndexes(text, start, dxOfStart);
         }
-
         return dxOfStart;
     }
-
     private static void RemoveBetweenIndexes(StringBuilder text, int start, int end)
     {
         ThrowEx.StartIsHigherThanEnd(start, end);
-
-
-
         start++;
         for (; start < end; start++)
         {
             text[start] = AllChars.space;
         }
     }
-
     public static bool CheckWhetherNoBrackedIsBeforeOther2(string braces)
     {
         return BalancedBrackets.areBracketsBalanced(AllBrackets(braces));
     }
-
     public static bool CheckWhetherNoBrackedIsBeforeOther1(string braces)
     {
         const string openBraces = "([{";
         const string closeBraces = ")]}";
-
         Stack<char> stack = new Stack<char>();
         foreach (char c in braces)
         {
@@ -327,7 +262,6 @@ public partial class SH : SHSH
         }
         return stack.Count == 0;
     }
-
     public static string ConvertWhitespaceToVisible(string t)
     {
         t = t.Replace(AllChars.tab, UnicodeWhiteToVisible.tab);
@@ -335,12 +269,7 @@ public partial class SH : SHSH
         t = t.Replace(AllChars.cr, UnicodeWhiteToVisible.carriageReturn);
         t = t.Replace(AllChars.space, UnicodeWhiteToVisible.space);
         return t;
-
     }
-
-
-
-
     public static string ConcatSpace(IList r)
     {
         StringBuilder sb = new StringBuilder();
@@ -361,19 +290,10 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
-
     public static bool IsSingleLine(string sbNullS)
     {
         return !sbNullS.Trim().Contains(Environment.NewLine);
     }
-
-
-
     public static string GetWhitespaceFromBeginning(StringBuilder sb, string line)
     {
         sb.Clear();
@@ -390,7 +310,6 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
     //public static bool IsCharOn(string item, int v, UnicodeChars number)
     //{
     //    if (item.Length > v)
@@ -399,7 +318,6 @@ public partial class SH : SHSH
     //    }
     //    return false;
     //}
-
     /// <summary>
     /// A2 is use to calculate length of center
     /// </summary>
@@ -426,9 +344,6 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
-
-
     public static bool ContainsNewLine(string between)
     {
         return between.Contains(AllChars.nl) || between.Contains(AllChars.cr);
@@ -473,9 +388,6 @@ public partial class SH : SHSH
             return true;
         }
     }
-
-
-
     public static List<string> AddSpaceAfterFirstLetterForEveryAndSort(List<string> input)
     {
         CASE.Trim(input);
@@ -486,7 +398,6 @@ public partial class SH : SHSH
         input.Sort();
         return input;
     }
-
     public static string GetLastWord(string p, bool returnEmptyWhenDontHaveLenght = true)
     {
         p = p.Trim();
@@ -501,11 +412,9 @@ public partial class SH : SHSH
             {
                 return string.Empty;
             }
-
         }
         return p;
     }
-
     public static string AddSpaceAndDontDuplicate(bool after, string text, string colon)
     {
         List<int> dxsColons = null;
@@ -548,13 +457,11 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
     public static string MultiWhitespaceLineToSingle(List<string> lines)
     {
         var str = string.Join(Environment.NewLine, lines);
         //SunamoCollectionsShared.CASH.DoubleOrMoreMultiLinesToSingle(ref str);
         return str;
-
         //CA.Trim(lines);
         //var str = string.Join(Environment.NewLine, lines);
         //var nl3 = string.Join(Times(3, Environment.NewLine);
@@ -622,7 +529,6 @@ public partial class SH : SHSH
     {
         return ContainsLine2(item, checkInCaseOnlyOneString, contains);
     }
-
     /// <summary>
     /// Whether A1 contains any from a3. a2 only logical chcek
     /// </summary>
@@ -715,23 +621,17 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
     public static List<string> GetTextsBetween(string p, string after, string before, bool cannotBeLetterBeforeFounded = false)
     {
         var firstCharBeforeIsLetter = false;
         return GetTextsBetween(p, after, before, cannotBeLetterBeforeFounded, out cannotBeLetterBeforeFounded);
     }
-
     public static List<string> GetTextsBetween(string p, string after, string before, bool cannotBeLetterBeforeFounded, out bool firstCharBeforeIsLetter)
     {
         firstCharBeforeIsLetter = false;
-
 #if DEBUG
         if (p.Contains("headerName: t(\"Name\"),"))
         {
-
         }
 #endif
         List<string> vr = new List<string>();
@@ -745,14 +645,12 @@ public partial class SH : SHSH
             int indexAfter = indexesAfter[indexAfterToAccessCollection];
             int indexBefore = indexesBefore[indexBeforeToAccessCollection];
             int indexAfterFinal, indexBeforeFinal;
-
             if (indexAfter > indexBefore)
             {
                 if (indexesAfter.Count == 1 || indexesBefore.Count == 1)
                 {
                     indexAfterFinal = indexesAfter[0] + after.Length;
                     indexBeforeFinal = indexesBefore.FirstOrDefault(d => d > indexAfterFinal) - 1;
-
                     if (indexBeforeFinal == 0) ;
                     {
                         throw new Exception("There is no number higher than " + indexAfterFinal);
@@ -772,16 +670,12 @@ public partial class SH : SHSH
             }
             // When I return between ( ), there must be +1
             var substringed = p.Substring(indexAfterFinal, indexBeforeFinal - indexAfterFinal + 1).Trim();
-
 #if DEBUG
             if (p.Contains(".matches(new RegExp(endsWit"))
             {
-
             }
 #endif
-
             // t("Url must end with .json"
-
             if (cannotBeLetterBeforeFounded)
             {
                 if (indexAfterFinal != 0)
@@ -806,12 +700,9 @@ public partial class SH : SHSH
             {
                 vr.Add(substringed);
             }
-
-
         }
         return vr;
     }
-
     public static string RemoveLastLetters(string v1, int v2)
     {
         if (v1.Length > v2)
@@ -825,10 +716,7 @@ public partial class SH : SHSH
         ThrowEx.NotImplementedMethod();
         return false;
     }
-
-
     public static string xMismatchCountInInputArraysOfSHAllHaveRightFormat = "MismatchCountInInputArraysOfSHAllHaveRightFormat";
-
     /// <summary>
     /// Pokud je A1 true, bere se z A2,3 menší počet prvků
     /// Simply call HasTextRightFormat for every in A2
@@ -855,7 +743,6 @@ public partial class SH : SHSH
         }
         return true;
     }
-
     public static bool HasCharRightFormat(char ch, CharFormatData cfd)
     {
         if (cfd.upper.HasValue)
@@ -888,7 +775,6 @@ public partial class SH : SHSH
         }
         return true;
     }
-
     public static bool GetTextInLastSquareBracketsAndOther(string p, out string title, out string remix)
     {
         title = remix = null;
@@ -912,8 +798,6 @@ public partial class SH : SHSH
         }
         return true;
     }
-
-
     public static string RemoveBracketsWithTextCaseInsensitive(string vr, string zaCo, params string[] co)
     {
         vr = SHReplace.ReplaceAll(vr, AllStrings.lb, "( ");
@@ -994,7 +878,6 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
     /// <summary>
     /// If A1 contains A2, return A2 and all following. Otherwise A1
     /// </summary>
@@ -1014,7 +897,6 @@ public partial class SH : SHSH
         }
         return input;
     }
-
     public static string AddEmptyLines(string content, int addRowsDuringScrolling)
     {
         var lines = SHGetLines.GetLines(content);
@@ -1050,9 +932,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
     /// <summary>
     /// Výchozí byla metoda NullToStringOrEmpty
     /// OrNull pro odliseni od metody NullToStringOrEmpty
@@ -1066,13 +945,6 @@ public partial class SH : SHSH
         }
         return v.ToString();
     }
-
-
-
-
-
-
-
     public static bool LastCharEquals(string input, char delimiter)
     {
         if (!string.IsNullOrEmpty(input))
@@ -1086,8 +958,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
     public static string GetWithoutLastWord(string p)
     {
         p = p.Trim();
@@ -1098,10 +968,6 @@ public partial class SH : SHSH
         }
         return p;
     }
-
-
-
-
     public static string DeleteCharsOutOfAscii(string s)
     {
         StringBuilder sb = new StringBuilder();
@@ -1143,11 +1009,6 @@ public partial class SH : SHSH
         return string.Join("_", result.Split(new char[] { '_' }
         , StringSplitOptions.RemoveEmptyEntries)); // remove duplicate underscores
     }
-
-
-
-
-
     public static string StripFunctationsAndSymbols(string p)
     {
         StringBuilder sb = new StringBuilder();
@@ -1160,15 +1021,6 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Vrátí mi v každém prvku index na které se nachází první znak a index na kterém se nachází poslední
     /// </summary>
@@ -1212,7 +1064,6 @@ public partial class SH : SHSH
         }
         return -1;
     }
-
     /// <summary>
     /// Return A1 if wont find A2
     /// </summary>
@@ -1227,13 +1078,8 @@ public partial class SH : SHSH
         }
         return input;
     }
-
-
     #region MyRegion
     private static Type type = typeof(SH);
-
-
-
     public static int CountOf(string pi, char v)
     {
         int i = 0;
@@ -1246,7 +1092,6 @@ public partial class SH : SHSH
         }
         return i;
     }
-
     //    public static
     //#if ASYNC
     //    async Task<bool>
@@ -1271,7 +1116,6 @@ public partial class SH : SHSH
     //        }
     //        return false;
     //    }
-
     ///// <summary>
     ///// Trim all A2 from beginning A1
     ///// </summary>
@@ -1281,9 +1125,6 @@ public partial class SH : SHSH
     //{
     //    return se.SHTrim.TrimStart(v, s);
     //}
-
-
-
     public static bool HasIndex(int p, string nahledy, bool throwExcWhenInvalidIndex = true)
     {
         if (p < 0)
@@ -1303,20 +1144,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static bool IsNegation(string contains)
     {
         if (contains[0] == AllChars.excl)
@@ -1325,11 +1152,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
     public static (bool, string) IsNegationTuple(string contains)
     {
         if (contains[0] == '!')
@@ -1337,10 +1159,8 @@ public partial class SH : SHSH
             contains = contains.Substring(1);
             return (true, contains);
         }
-
         return (false, contains);
     }
-
     /// <summary>
     /// Version wo ref - dont auto remove first!
     /// </summary>
@@ -1351,7 +1171,6 @@ public partial class SH : SHSH
     {
         var (negation, contains2) = IsNegationTuple(contains);
         contains = contains2;
-
         if (negation && item.Contains(contains))
         {
             return false;
@@ -1360,10 +1179,8 @@ public partial class SH : SHSH
         {
             return false;
         }
-
         return true;
     }
-
     public static bool EqualsOneOfThis(string p1, params string[] p2)
     {
         foreach (string item in p2)
@@ -1375,27 +1192,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ///// <summary>
     ///// Trim all A2 from end A1
     ///// Originally named TrimWithEnd
@@ -1407,11 +1203,6 @@ public partial class SH : SHSH
     //{
     //    return se.SHTrim.TrimEnd(name, ext);
     //}
-
-
-
-
-
     /// <summary>
     /// Another method is RemoveDiacritics
     /// G text bez dia A1.
@@ -1425,25 +1216,15 @@ public partial class SH : SHSH
         //{
         //    System.Text.EncodingProvider provider = System.Text.CodePagesEncodingProvider.Instance;
         //    Encoding.RegisterProvider(provider);
-
         //    initDiactitic = true;
         //}
-
         //originally was "ISO-8859-8" but not working in .net standard. 1252 is eqvivalent
         //return Encoding.UTF8.GetString(Encoding.GetEncoding("ISO-8859-8").GetBytes(sDiakritik));
-
         // FormC - followed by SHReplace.Replacement of sequences
         // As default using FormC
         //return sDiakritik.Normalize(NormalizationForm.FormC);
-
         //return RemoveDiacritics(sDiakritik);
     }
-
-
-
-
-
-
     /// <summary>
     /// Vrátí prázdný řetězec pokud nebude nalezena mezera a A1
     ///
@@ -1457,35 +1238,20 @@ public partial class SH : SHSH
         {
             return p.Substring(0, dex);
         }
-
         if (returnEmptyWhenDontHaveLenght)
         {
             return string.Empty;
         }
         return p;
     }
-
-
-
-
-
-
-
     //public static List<string> SplitChar(string parametry, params char[] deli)
     //{
     //    return se.SHSplit.SplitChar(parametry, deli);
     //}
-
     //public static List<string> Split(string parametry, params string[] deli)
     //{
     //    return se.SHSplit.Split(parametry, deli);
     //}
-
-
-
-
-
-
     /// <summary>
     /// Will be delete after final refactoring
     /// Automaticky ořeže poslední znad A1
@@ -1502,12 +1268,6 @@ public partial class SH : SHSH
     //    // TODO: Delete after all app working, has flipped A1 and A2
     //    return Join(delimiter, parts);
     //}
-
-
-
-
-
-
     ///// <summary>
     ///// If null, return Consts.nulled
     ///// </summary>
@@ -1517,7 +1277,6 @@ public partial class SH : SHSH
     //{
     //    return se.SH.NullToStringOrDefault(n);
     //}
-
     ///// <summary>
     ///// If null, return Consts.nulled
     ///// </summary>
@@ -1528,18 +1287,6 @@ public partial class SH : SHSH
     //{
     //    return se.SH.NullToStringOrDefault(n, v);
     //}
-
-
-
-
-
-
-
-
-
-
-
-
     ///// <summary>
     ///// Format - use string.Format with error checking, as only one can be use wich { } [ ] chars in text
     ///// Format2 - use string.Format with error checking
@@ -1559,35 +1306,16 @@ public partial class SH : SHSH
     //{
     //    return se.string.Format(status, args);
     //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     #endregion
-
     #region For easy copy
-
-
     public static bool ContainsAnyBool(string item, bool checkInCaseOnlyOneString, IList<string> contains)
     {
         return ContainsAny(item, checkInCaseOnlyOneString, contains).Count > 0;
     }
-
     //public static List<string> ContainsAny(string item, bool checkInCaseOnlyOneString, IList<string> contains)
     //{
     //    return se.SH.ContainsAny(item, checkInCaseOnlyOneString, contains);
     //}
-
     ///// <summary>
     ///// Return which a3 is contained in A1. if a2 and A3 contains only 1 element, check for contains these first element
     ///// If A3 contains more than 1 element, A2 is not used
@@ -1602,14 +1330,7 @@ public partial class SH : SHSH
     //{
     //    return se.SH.ContainsAny<T>(checkInCaseOnlyOneString, item, contains);
     //}
-
-
-
-
-
-
     #endregion
-
     #region For easy copy from SHShared64.cs
     ///// <summary>
     ///// Will be delete after final refactoring
@@ -1621,12 +1342,10 @@ public partial class SH : SHSH
     //{
     //    return se.SHJoin.JoinString(delimiter, parts);
     //}
-
     //public static string JoinNL(IList parts, bool removeLastNl = false)
     //{
     //    return se.string.Join(Environment.NewLine, parts, removeLastNl);
     //}
-
     ///// <summary>
     ///// Automaticky ořeže poslední znad A1
     ///// Pokud máš inty v A2, použij metodu JoinMakeUpTo2NumbersToZero
@@ -1637,7 +1356,6 @@ public partial class SH : SHSH
     //{
     //    return se.string.Join(delimiter, parts);
     //}
-
     ///// <summary>
     ///// Start at 0
     ///// </summary>
@@ -1648,9 +1366,6 @@ public partial class SH : SHSH
     //{
     //    return se.SHSubstring.SubstringIfAvailable(input, lenght);
     //}
-
-
-
     ///// <summary>
     ///// Remove with A2
     ///// </summary>
@@ -1660,21 +1375,12 @@ public partial class SH : SHSH
     //{
     //    return se.SHParts.RemoveAfterFirst(t, ch);
     //}
-
-
     //public static string FirstLine(string item)
     //{
     //    return se.SH.FirstLine(item);
     //}
-
-
-
-
     #endregion
-
     #region MyRegion
-
-
     /// <summary>
     /// keep joinAnotherWordsIfIsAlsoNumber = false
     /// </summary>
@@ -1695,7 +1401,6 @@ public partial class SH : SHSH
         //            string s = BTS.lastInt + SunamoNumbers.NH.JoinAnotherTokensIfIsNumber(p, probablyIndex + 1);
         //            return int.Parse(s);
         //        }
-
         //        return BTS.lastInt;
         //    }
         //    else
@@ -1709,7 +1414,6 @@ public partial class SH : SHSH
         //}
         //return int.MinValue;
     }
-
     public static int FirstWordWhichIsNumberAllIndexes(List<string> p, bool joinAnotherWordsIfIsAlsoNumber = true)
     {
         throw new NotImplementedException();
@@ -1724,68 +1428,50 @@ public partial class SH : SHSH
         //            string s = BTS.lastInt + SunamoNumbers.NH.JoinAnotherTokensIfIsNumber(p, i);
         //            return int.Parse(s);
         //        }
-
         //        return BTS.lastInt;
         //    }
         //}
         //return int.MinValue;
     }
-
     public static bool CompareStringIgnoreWhitespaces2(string s1, string s2)
     {
         return String.Compare(s1, s2, CultureInfo.CurrentCulture, CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
     }
-
     public static bool CompareStringIgnoreWhitespaces(string s1, string s2)
     {
         string normalized1 = Regex.Replace(s1, @"\s", "");
         string normalized2 = Regex.Replace(s2, @"\s", "");
-
         bool stringEquals = String.Equals(
             normalized1,
             normalized2,
             StringComparison.OrdinalIgnoreCase);
-
         return stringEquals;
     }
-
     //[MethodImpl(MethodImplOptions.AggressiveInlining)]
     //public static string WrapWith(string value, char v, bool _trimWrapping = false)
     //{
     //    // TODO: Make with StringBuilder, because of SH.WordAfter and so
     //    return WrapWith(value, v.ToString(), _trimWrapping);
     //}
-
     //[MethodImpl(MethodImplOptions.AggressiveInlining)]
     //public static string WrapWith(string value, string h, bool _trimWrapping = false)
     //{
     //    return h + (_trimWrapping ? Trim(value, h) : value) + h;
     //}
-
     //public static string SHReplace.ReplaceAll4(string t, string to, string from)
     //{
     //    while (t.Contains(from))
     //    {
     //        t = t.Replace(from, to);
     //    }
-
     //    return t;
     //}
-
-
-
-
-
-
-
-
     public static bool ContainsOnly(string floorS, List<char> numericChars)
     {
         if (floorS.Length == 0)
         {
             return false;
         }
-
         foreach (char item in floorS)
         {
             if (!numericChars.Contains(item))
@@ -1793,17 +1479,9 @@ public partial class SH : SHSH
                 return false;
             }
         }
-
         return true;
     }
-
-
-
-
-
-
     #region MyRegion
-
     ///// <summary>
     /////     This can be only one
     ///// </summary>
@@ -1814,20 +1492,9 @@ public partial class SH : SHSH
     //    // TODO: Delete after all app working
     //    return JoinString(delimiter, new List<string>2(parts));
     //} //
-
     #endregion
-
     //        #region  from SHShared64.cs
-
-
-
-
-
-
-
     //
-
-
     /// <summary>
     ///     Usage: Exc.MethodOfOccuredFromStackTrace
     /// </summary>
@@ -1838,23 +1505,6 @@ public partial class SH : SHSH
         List<string> lines = SHGetLines.GetLines(item);
         return lines.Count == 0 ? string.Empty : lines[0];
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     ///     Usage: Exceptions.FileWasntFoundInDirectory
     /// </summary>
@@ -1869,28 +1519,18 @@ public partial class SH : SHSH
             {
                 sb = sb.ToLower();
             }
-
             return nazevPP[0].ToString().ToUpper() + sb;
         }
-
         return null;
     }
-
     public static string InBrackets(string podlazi)
     {
         return GetTextBetweenTwoCharsInts(podlazi, podlazi.IndexOf('('), podlazi.IndexOf(')'));
     }
-
-
-
-
-
-
     //public static string JoinNL(params string[] parts)
     //{
     //    return SHJoin.JoinString(Environment.NewLine, parts);
     //}
-
     /// <summary>
     ///     Usage: Exceptions.ArrayElementContainsUnallowedStrings
     ///     Return which a3 is contained in A1. if a2 and A3 contains only 1 element, check for contains these first element
@@ -1920,10 +1560,8 @@ public partial class SH : SHSH
                 }
             }
         }
-
         return founded;
     }
-
     public static List<char> ContainsAnyChar(/*T itemT,*/  /*IList<T> containsT,*/
         string item, bool checkInCaseOnlyOneString, IList<char> contains)
     {
@@ -1942,10 +1580,8 @@ public partial class SH : SHSH
                 }
             }
         }
-
         return founded;
     }
-
     /// <summary>
     ///
     /// </summary>
@@ -1979,39 +1615,25 @@ public partial class SH : SHSH
         //        //}
         //    }
         //}
-
         //return founded;
     }
-
-
-
     public static string GetWordOnIndex(string line, int v)
     {
         var p = SHSplit.Split(line, SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true).ToArray());
-
         if (p.Count < v)
         {
             throw new Exception("\"" + line + "\"" + " don't have " + v + " words");
         }
-
         return p[v];
     }
-
-
-
-
-
     public static bool ContainsUpper(string d)
     {
         return d.Any(char.IsUpper);
     }
-
     public static bool ContainsLower(string d)
     {
         return d.Any(char.IsLower);
     }
-
-
     //
     //        public static bool ContainsOnly(string floorS, List<char> numericChars)
     //        {
@@ -2042,8 +1664,6 @@ public partial class SH : SHSH
     //            return nazevPP[0].ToString().ToLower() + sb;
     //        }
     //        #endregion
-
-
     //
     //        /// <summary>
     //        /// Format - use string.Format with error checking, as only one can be use wich { } [ ] chars in text
@@ -2082,16 +1702,12 @@ public partial class SH : SHSH
     //        {
     //            return h + SHTrim.Trim(value, h) + h;
     //        }
-
-
     //
     //        public static string SHReplace.ReplaceOnce(string text, string xmlns, string empty)
     //        {
     //            throw new NotImplementedException();
     //        }
     //
-
-
     // Nev�m co tu d�l� tohle. V�echny metody maj� po�ad� delimiter/parts, tahle opa�n�
     //    /// <summary>
     //    /// Will be delete after final refactoring
@@ -2106,19 +1722,15 @@ public partial class SH : SHSH
     //        {
     //            return string.Empty;
     //        }
-
     //        var d = delimiter.ToString();
-
     //        StringBuilder sb = new StringBuilder();
     //        foreach (var item in parts)
     //        {
     //        sb.Append(item.ToString() + d);
     //    }
-
     //    var vr = sb.ToString();
     //    return vr.Substring(0, vr.Length - d.Length);
     //}
-
     //
     //        public static string Trim(string s, string args)
     //        {
@@ -2128,8 +1740,6 @@ public partial class SH : SHSH
     //            return s;
     //        }
     //
-
-
     //        public static Type type = typeof(SH);
     //
     //        #region
@@ -2143,8 +1753,6 @@ public partial class SH : SHSH
     //            nazevPP = FirstCharUpper(nazevPP);
     //        }
     //
-
-
     //
     //        /// <summary>
     //        /// Stejn� jako metoda SHReplace.ReplaceAll, ale bere si do A3 pouze jedin� parametr, nikoliv jejich pole
@@ -2195,11 +1803,8 @@ public partial class SH : SHSH
     //        }
     //        #endregion
     #endregion
-
     #region MyRegion
     #region MyRegion
-
-
     /// <summary>
     /// notAllowedInRanges can be Func<int, bool> (delegát který vrací zda daný index může být použít pro end) or FromToList
     ///
@@ -2218,7 +1823,6 @@ public partial class SH : SHSH
     {
         return GetTextBetweenTwoChars(p, after, before, throwExceptionIfNotContains, notAllowedInRanges, endLastIndexOf);
     }
-
     public static string GetTextBetweenTwoChars(string p, char beginS, char endS, bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
     {
         int num = p.IndexOf(beginS);
@@ -2238,7 +1842,6 @@ public partial class SH : SHSH
                 }
             }
         }
-
         if (num == -1 || num2 == -1)
         {
             if (throwExceptionIfNotContains)
@@ -2249,15 +1852,11 @@ public partial class SH : SHSH
             {
                 return null;
             }
-
             return p;
         }
-
         return GetTextBetweenTwoCharsInts(p, num, num2);
     }
-
     #endregion
-
     public static List<string> ValuesBetweenQuotes(string str, bool insertAgainToQm, bool apos = false)
     {
         string q = "\"";
@@ -2265,18 +1864,14 @@ public partial class SH : SHSH
         {
             q = "'";
         }
-
         return ValuesBetweenQuotesOrApos(str, insertAgainToQm, q);
     }
-
     public static List<string> ValuesBetweenQuotesAndApos(string str, bool insertAgainToQm, bool onlyWhichIsNotInT = false)
     {
         List<string> ls = ValuesBetweenQuotesOrApos(str, insertAgainToQm, "\"", onlyWhichIsNotInT);
         ls.AddRange(ValuesBetweenQuotesOrApos(str, insertAgainToQm, "'", onlyWhichIsNotInT));
-
         return ls;
     }
-
     static List<string> ValuesBetweenQuotesOrApos(string str, bool insertAgainToQm, string q, bool onlyWhichIsNotInT = false)
     {
         var ch = q[0];
@@ -2286,15 +1881,11 @@ public partial class SH : SHSH
         foreach (var item in matches)
         {
             var itemS = item.ToString();
-
 #if DEBUG
             if (itemS.Contains("Module registration is not provided!"))
             {
-
             }
 #endif
-
-
             if (onlyWhichIsNotInT)
             {
                 if (str.Contains("t(" + itemS + ")"))
@@ -2302,7 +1893,6 @@ public partial class SH : SHSH
                     continue;
                 }
             }
-
             if (insertAgainToQm)
             {
                 result.Add(itemS);
@@ -2312,12 +1902,9 @@ public partial class SH : SHSH
                 result.Add(itemS.TrimEnd(ch).TrimStart(ch));
             }
         }
-
         //SunamoCollectionsShared.CASH.RemoveStringsEmpty2(result);
-
         return result;
     }
-
     public static bool ContainsAtLeastOne(string p, List<string> aggregate)
     {
         foreach (var item in aggregate)
@@ -2329,15 +1916,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Dont automatically change case
     /// </summary>
@@ -2354,7 +1932,6 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
     /// <summary>
     /// When there is no number, append 1
     /// Otherwise incr.
@@ -2372,8 +1949,6 @@ public partial class SH : SHSH
         }
         acronym = acronym + "1";
     }
-
-
     /// <summary>
     /// Nothing can be null
     /// </summary>
@@ -2386,7 +1961,6 @@ public partial class SH : SHSH
         var dx = GetLineIndexFromCharIndex(content, dx2);
         return lines[dx];
     }
-
     /// <summary>
     /// Return index, therefore x-1
     /// </summary>
@@ -2397,13 +1971,6 @@ public partial class SH : SHSH
         var lineNumber = input.Take(pos).Count(c => c == '\n') + 1;
         return lineNumber - 1;
     }
-
-
-
-
-
-
-
     public static int AnotherOtherThanLetterOrDigit(string content, int v)
     {
         int i = v;
@@ -2418,16 +1985,11 @@ public partial class SH : SHSH
         //i--;
         return i--;
     }
-
     public static string LastChars(string v1, int v2)
     {
         return v1.Substring(v1.Length - v2);
-
         //mystring.Substring(Math.Max(0, mystring.Length - 4));
     }
-
-
-
     public static string TabToNewLine(string v)
     {
         //Environment.NewLine
@@ -2437,12 +1999,10 @@ public partial class SH : SHSH
         l = l.Where(d => d.Trim() != string.Empty).ToList();
         return string.Join(Environment.NewLine, l);
     }
-
     public static bool IsAllLower(string ext)
     {
         return IsAllLower(ext, char.IsLower);
     }
-
     private static bool IsAllLower(string ext, Func<char, bool> isLower)
     {
         for (int i = 0; i < ext.Length; i++)
@@ -2454,38 +2014,26 @@ public partial class SH : SHSH
         }
         return true;
     }
-
     public static bool IsAllUpper(string ext)
     {
         return IsAllLower(ext, char.IsUpper);
     }
-
     public static bool ContainsBracket(string t, bool mustBeLeftAndRight = false)
     {
         List<char> left, right;
         left = right = null;
         return ContainsBracket(t, ref left, ref right, mustBeLeftAndRight);
     }
-
     protected static bool s_cs = false;
-
     static SH()
     {
         s_cs = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "cs";
         Init();
-
-
     }
-
-
-
-
-
     public static List<int> IndexesOfChars(string input, char ch)
     {
         return IndexesOfCharsList(input, new List<char>(ch));
     }
-
     /// <summary>
     /// IndexesOfChars - char
     /// ReturnOccurencesOfString - string
@@ -2503,8 +2051,6 @@ public partial class SH : SHSH
         dx.Sort();
         return dx;
     }
-
-
     public static bool ContainsBracket(string t, ref List<char> left, ref List<char> right, bool mustBeLeftAndRight = false)
     {
         left = SH.ContainsAnyChar(t, false, AllLists.leftBrackets);
@@ -2523,14 +2069,8 @@ public partial class SH : SHSH
                 return true;
             }
         }
-
-
-
         return false;
     }
-
-
-
     public static char ClosingBracketFor(char v)
     {
         foreach (var item in bracketsLeft)
@@ -2540,13 +2080,9 @@ public partial class SH : SHSH
                 return bracketsRight[item.Key];
             }
         }
-
         ThrowEx.IsNotAllowed(v + " as bracket");
         return char.MaxValue;
     }
-
-
-
     /// <summary>
     /// Get text after cz#cd => #cd
     /// </summary>
@@ -2561,9 +2097,6 @@ public partial class SH : SHSH
         }
         return string.Empty;
     }
-
-
-
     public static string PadRight(string empty, string newLine, int v)
     {
         StringBuilder sb = new StringBuilder(empty);
@@ -2573,7 +2106,6 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
     public static void RemoveLastCharSb(StringBuilder sb)
     {
         if (sb.Length > 0)
@@ -2581,13 +2113,11 @@ public partial class SH : SHSH
             sb.Remove(sb.Length - 1, 1);
         }
     }
-
     public static string RemoveUselessWhitespaces(string innerText)
     {
         var p = SHSplit.SplitChar(innerText);
         return string.Join(AllStrings.space, p);
     }
-
     /// <summary>
     /// Is used in btnShortTextOfLyrics
     /// Short text but always keep whole paragraps
@@ -2600,8 +2130,6 @@ public partial class SH : SHSH
     {
         //var delimiter = SH.PadRight(string.Empty, Environment.NewLine, 2);
         var p = SHSplit.SplitChar(c, AllChars.whiteSpacesChars.ToArray());
-
-
         while (c.Length + p.Count > maxLength)
         {
             if (p.Count > 1)
@@ -2616,41 +2144,15 @@ public partial class SH : SHSH
                 break;
             }
         }
-
         if (maxLength < c.Length)
         {
-
         }
-
         return c;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static T ToNumber<T>(Func<string, T> parse, string v)
     {
         return parse.Invoke(v);
     }
-
-
-
-
-
     public static string RepairQuotes(string c)
     {
         c = c.Replace(AllStrings.lq, AllStrings.qm);
@@ -2659,17 +2161,9 @@ public partial class SH : SHSH
         c = c.Replace(AllStrings.ra, AllStrings.apostrophe);
         return c;
     }
-
-
-
-
-
-
-
     public static bool IsNumbered(string v)
     {
         int i = 0;
-
         foreach (var item in v)
         {
             if (char.IsNumber(item))
@@ -2689,14 +2183,8 @@ public partial class SH : SHSH
                 return false;
             }
         }
-
         return false;
     }
-
-
-
-
-
     public static string InsertEndingBracket(string v, char startingBracket)
     {
         var cb = ClosingBracketFor(startingBracket);
@@ -2704,27 +2192,22 @@ public partial class SH : SHSH
         var occE = SH.ReturnOccurencesOfString(v, cb.ToString());
         return InsertEndingBracket(v, occB, occE, startingBracket);
     }
-
     private static string InsertEndingBracket(string songName, List<int> countStart, List<int> countEnd, char startingBracket)
     {
         return InsertEndingBracketWorker(songName, countStart.Count, countEnd.Count, new List<char>(), startingBracket);
     }
-
     public static string InsertEndingBracket(string songName, List<char> countStart, List<char> countEnd)
     {
         return InsertEndingBracketWorker(songName, countStart.Count, countEnd.Count, countStart, char.MaxValue);
     }
-
     public static string InsertEndingBracketWorker(string songName, int countStartCount, int countEndCount, List<char> countStart, char startingBracket)
     {
         var min = Math.Min(countStartCount, countEndCount);
         var max = Math.Max(countStartCount, countEndCount);
-
         if (countStartCount < countEndCount)
         {
             return songName;
         }
-
         if (startingBracket != char.MaxValue)
         {
             var to = max - min;
@@ -2734,13 +2217,9 @@ public partial class SH : SHSH
                 countStart.Add(startingBracket);
             }
         }
-
-
-
         songName = InsertEndingBrackets(songName, countStart, min, max);
         return songName;
     }
-
     private static string InsertEndingBrackets(string songName, List<char> countStart, int min, int max)
     {
         var to = max - 1;
@@ -2753,21 +2232,16 @@ public partial class SH : SHSH
             }
             songName += bracketsRight[SH.GetBracketFromBegin(countStart[i])];
         }
-
         return songName;
     }
-
     public static string PairsBracketsToCompleteBlock(string input)
     {
 #if DEBUG
         if (input.Contains("name, price,"))
         {
-
         }
 #endif
-
         List<char> add = new List<char>();
-
         foreach (var item in input)
         {
             if (bracketsLeftList.Contains(item))
@@ -2784,13 +2258,10 @@ public partial class SH : SHSH
                 }
             }
         }
-
         StringBuilder sb = new StringBuilder(input);
-
         if (add.Count > 0)
         {
             sb.AppendLine();
-
             for (int i = add.Count - 1; i >= 0; i--)
             {
                 Brackets b = GetBracketFromBegin(add[i]);
@@ -2798,7 +2269,6 @@ public partial class SH : SHSH
             }
             sb.Append(AllChars.sc);
         }
-
         var result = sb.ToString();
         if (input == result)
         {
@@ -2806,13 +2276,11 @@ public partial class SH : SHSH
         }
         return result.ToUnixLineEnding();
     }
-
     private static Brackets GetBracketFromBegin(char v)
     {
         bool end = false;
         return GetBracketFromBegin(v, ref end, false);
     }
-
     private static Brackets GetBracketFromBegin(char v, ref bool end, bool throwExIsNotBracket)
     {
         switch (v)
@@ -2836,14 +2304,11 @@ public partial class SH : SHSH
                 }
                 break;
         }
-
         return Brackets.None;
     }
-
     public static List<char> IncludeBrackets(string s, bool starting)
     {
         List<char> containsBracket = new List<char>();
-
         if (starting)
         {
             foreach (var item in s)
@@ -2864,28 +2329,8 @@ public partial class SH : SHSH
                 }
             }
         }
-
         return containsBracket;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static bool IsValidISO(string input)
     {
         // ISO-8859-1 je to samé jako latin1 https://en.wikipedia.org/wiki/ISO/IEC_8859-1
@@ -2893,18 +2338,6 @@ public partial class SH : SHSH
         String result = Encoding.GetEncoding("ISO-8859-1").GetString(bytes);
         return String.Equals(input, result);
     }
-
-
-
-
-
-
-
-
-
-
-
-
     private static bool IsInFirstXCharsTheseLetters(string p, int pl, params char[] letters)
     {
         for (int i = 0; i < pl; i++)
@@ -2919,7 +2352,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
     private static string ShortForLettersCount(string p, int p_2, out bool pridatTriTecky)
     {
         pridatTriTecky = false;
@@ -2927,8 +2359,6 @@ public partial class SH : SHSH
         p = p.Trim();
         int pl = p.Length;
         bool jeDelsiA1 = p_2 <= pl;
-
-
         if (jeDelsiA1)
         {
             if (SH.IsInFirstXCharsTheseLetters(p, p_2, AllChars.space))
@@ -2936,19 +2366,16 @@ public partial class SH : SHSH
                 int dexMezery = 0;
                 string d = p; //p.Substring(p.Length - zkratitO);
                 int to = d.Length;
-
                 int napocitano = 0;
                 for (int i = 0; i < to; i++)
                 {
                     napocitano++;
-
                     if (d[i] == AllChars.space)
                     {
                         if (napocitano >= p_2)
                         {
                             break;
                         }
-
                         dexMezery = i;
                     }
                 }
@@ -2967,18 +2394,14 @@ public partial class SH : SHSH
                 return p.Substring(0, p_2);
             }
         }
-
         return p;
     }
-
     public static bool ContainsOnlyCase(string between, bool upper, bool ignoreOtherThanLetters = false)
     {
         bool isLetter = false;
-
         foreach (var item in between)
         {
             isLetter = char.IsLetter(item);
-
             if (isLetter || (!isLetter && ignoreOtherThanLetters))
             {
                 if (upper)
@@ -3001,27 +2424,13 @@ public partial class SH : SHSH
                 return false;
             }
         }
-
         return true;
     }
-
-
     public static string ShortForLettersCount(string p, int p_2)
     {
         bool pridatTriTecky = false;
         return ShortForLettersCount(p, p_2, out pridatTriTecky);
     }
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Insert prefix starting with +
     /// </summary>
@@ -3037,13 +2446,6 @@ public partial class SH : SHSH
         p[0] = AllStrings.lb + p[0] + AllStrings.rb;
         return string.Join(AllStrings.space, p);
     }
-
-
-
-
-
-
-
     public static bool ContainsVariable(string innerHtml)
     {
         return ContainsVariable(AllChars.lcub, AllChars.rcub, innerHtml);
@@ -3057,7 +2459,6 @@ public partial class SH : SHSH
         StringBuilder sbNepridano = new StringBuilder();
         StringBuilder sbPridano = new StringBuilder();
         bool inVariable = false;
-
         foreach (var item in innerHtml)
         {
             if (item == p)
@@ -3093,14 +2494,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
-
-
-
     public static List<int> GetVariablesInString(string innerHtml)
     {
         return GetVariablesInString(AllChars.lcub, AllChars.rcub, innerHtml);
@@ -3111,12 +2504,10 @@ public partial class SH : SHSH
     {
         /// Vrátí mi formáty, které jsou v A1 od 0 do A2-1
         /// A1={0} {2} {3} A2=3 G=0,2
-
         List<int> vr = new List<int>();
         StringBuilder sbNepridano = new StringBuilder();
         //StringBuilder sbPridano = new StringBuilder();
         bool inVariable = false;
-
         foreach (var item in innerHtml)
         {
             if (item == p)
@@ -3135,7 +2526,6 @@ public partial class SH : SHSH
                 {
                     vr.Add(nt);
                 }
-
                 sbNepridano.Clear();
             }
             else if (inVariable)
@@ -3145,9 +2535,6 @@ public partial class SH : SHSH
         }
         return vr;
     }
-
-
-
     /// <summary>
     /// Really return list, for string join value
     /// </summary>
@@ -3159,7 +2546,6 @@ public partial class SH : SHSH
         return split.Distinct().ToList();
         //return CAG.RemoveDuplicitiesList(new List<string>(split));
     }
-
     /// <summary>
     /// G zda je jedinz znak v A1 s dia.
     /// </summary>
@@ -3167,44 +2553,6 @@ public partial class SH : SHSH
     {
         return slovo != SH.TextWithoutDiacritic(slovo);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Snaž se tuto metodu využívat co nejméně, je zbytečná.
     /// </summary>
@@ -3213,7 +2561,6 @@ public partial class SH : SHSH
     {
         return s;
     }
-
     /// <summary>
     /// Pokud je poslední znak v A1 A2, odstraním ho
     /// </summary>
@@ -3232,12 +2579,8 @@ public partial class SH : SHSH
             }
             return nazevTabulky.Substring(0, nazevTabulky.Length - 1);
         }
-
         return nazevTabulky;
     }
-
-
-
     // takhle to bylo předtím ale teď to tu mám 2x se stejnými parametry
     //[MethodImpl(MethodImplOptions.AggressiveInlining)]
     //public static string WrapWith(string value, char v, bool _trimWrapping = false)
@@ -3245,7 +2588,6 @@ public partial class SH : SHSH
     //    // TODO: Make with StringBuilder, because of SH.WordAfter and so
     //    return WrapWith(value, v.ToString(), _trimWrapping);
     //}
-
     /// <summary>
     /// Vše tu funguje výborně
     /// Metoda pokud chci vybrat ze textu A1 posledních p_2 znaků které jsou v celku(oddělené mezerami) a vložit před ně ...
@@ -3263,7 +2605,6 @@ public partial class SH : SHSH
         vr = vr.Replace(AllStrings.bs, string.Empty);
         return vr;
     }
-
     public static bool ContainsOtherChatThanLetterAndDigit(string p)
     {
         foreach (char item in p)
@@ -3275,13 +2616,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
-
-
-
-
     public static string GetOddIndexesOfWord(string hash)
     {
         int polovina = hash.Length / 2;
@@ -3295,14 +2629,8 @@ public partial class SH : SHSH
         }
         return sb.ToString();
     }
-
-
     #region GetPartsByLocation
-
-
-
     #endregion
-
     ///// <summary>
     ///// This can be only one
     ///// </summary>
@@ -3312,13 +2640,6 @@ public partial class SH : SHSH
     //{
     //    return se.SHJoin.JoinIList(delimiter, parts);
     //}
-
-
-
-
-
-
-
     /// <summary>
     /// Údajně detekuje i japonštinu a podpobné jazyky
     /// </summary>
@@ -3340,17 +2661,12 @@ public partial class SH : SHSH
         {
             return true;
         }
-
         if (text.Any(c => c >= 0x20000 && c <= 0xFA2D))
         {
             return true;
         }
-
         return false;
     }
-
-
-
     /// <summary>
     /// Nevraci znaky na indexech ale zda nektere znaky maji rozsah char definovany v A2,3
     /// </summary>
@@ -3361,30 +2677,18 @@ public partial class SH : SHSH
     {
         return text.Where(e => e >= min && e <= max).Count() != 0;
     }
-
-
-
-
-
     ///// <param name="nazevPP"></param>
     ///// <param name="only"></param>
     //public static string FirstCharUpper(string nazevPP, bool only = false)
     //{
     //    return se.SH.FirstCharUpper(nazevPP, only);
     //}
-
-
-
-
     public static List<string> RemoveDuplicatesNone(string p1, string delimiter)
     {
         var split = SHSplit.SplitNone(p1, delimiter);
         split = split.Distinct().ToList();
         return split;
     }
-
-
-
     /// <summary>
     /// Most of Love me like you do have in title - from Fifty shades of grey
     /// </summary>
@@ -3422,7 +2726,6 @@ public partial class SH : SHSH
         title = title.Replace(AllStrings.doubleSpace, string.Empty).Trim(); //SHReplace.ReplaceAll(title, "", AllStrings.doubleSpace).Trim();
         return title;
     }
-
     /// <summary>
     /// A2,3 can be string or char
     /// </summary>
@@ -3434,7 +2737,6 @@ public partial class SH : SHSH
         Regex regex = new Regex(string.Format("\\{0}.*?\\{1}", begin, end));
         return regex.Replace(s, string.Empty);
     }
-
     /// <summary>
     /// Je dobré před voláním této metody převést bílé znaky v A1 na mezery
     /// </summary>
@@ -3445,7 +2747,6 @@ public partial class SH : SHSH
     {
         StringBuilder prava = new StringBuilder();
         StringBuilder slovo = new StringBuilder();
-
         // Teď to samé udělám i pro levou stranu
         StringBuilder leva = new StringBuilder();
         for (int i = stred - 1; i >= 0; i--)
@@ -3501,7 +2802,6 @@ public partial class SH : SHSH
                 slovo.Append(ch);
             }
         }
-
         string p = prava.ToString().TrimStart(AllChars.space) + AllStrings.space + slovo.ToString();
         p = p.TrimStart(AllChars.space);
         string vr = "";
@@ -3515,9 +2815,6 @@ public partial class SH : SHSH
         }
         return vr;
     }
-
-
-
     /// <summary>
     /// Vše tu funguje výborně
     /// G text z A1, ktery bude obsahovat max A2 písmen - ne slov, protože někdo tam může vložit příliš dlouhé slova a nevypadalo by to pak hezky.
@@ -3530,8 +2827,6 @@ public partial class SH : SHSH
         p = p.Trim();
         int pl = p.Length;
         bool jeDelsiA1 = p_2 <= pl;
-
-
         if (jeDelsiA1)
         {
             if (SH.IsInLastXCharsTheseLetters(p, p_2, AllChars.space))
@@ -3539,19 +2834,16 @@ public partial class SH : SHSH
                 int dexMezery = 0;
                 string d = p; //p.Substring(p.Length - zkratitO);
                 int to = d.Length;
-
                 int napocitano = 0;
                 for (int i = to - 1; i >= 0; i--)
                 {
                     napocitano++;
-
                     if (d[i] == AllChars.space)
                     {
                         if (napocitano >= p_2)
                         {
                             break;
                         }
-
                         dexMezery = i;
                     }
                 }
@@ -3568,10 +2860,8 @@ public partial class SH : SHSH
                 return " ... " + p.Substring(p.Length - p_2);
             }
         }
-
         return p;
     }
-
     public static List<FromToWord> ReturnOccurencesOfStringFromToWord(string celyObsah, params string[] hledaneSlova)
     {
         if (hledaneSlova == null || hledaneSlova.Length == 0)
@@ -3619,7 +2909,6 @@ public partial class SH : SHSH
         }
         return vr;
     }
-
     private static bool IsInLastXCharsTheseLetters(string p, int pl, params char[] letters)
     {
         for (int i = p.Length - 1; i >= pl; i--)
@@ -3634,23 +2923,7 @@ public partial class SH : SHSH
         }
         return false;
     }
-
     //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Oddělovač může být pouze jediný znak, protože se to pak předává do metody s parametrem int!
     /// If A1 dont have index A2, all chars
@@ -3660,25 +2933,18 @@ public partial class SH : SHSH
     public static string GetFirstPartByLocation(string p1, char deli)
     {
         int dx = p1.IndexOf(deli);
-
         return GetFirstPartByLocation(p1, dx);
     }
-
     public static string GetFirstPartByLocation(string p1, int dx)
     {
         string p, z;
         p = p1;
-
         if (dx < p1.Length)
         {
             GetPartsByLocation(out p, out z, p1, dx);
         }
-
         return p;
     }
-
-
-
     /// <summary>
     /// return whether A1 ends with anything with A2
     /// </summary>
@@ -3695,7 +2961,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
     /// <summary>
     /// Auto trim
     /// </summary>
@@ -3710,7 +2975,6 @@ public partial class SH : SHSH
         var t = GetTextBetween(p, after, before, out dxOfFounded, 0, throwExceptionIfNotContains);
         return t;
     }
-
     /// <summary>
     /// Auto trim
     /// </summary>
@@ -3754,20 +3018,12 @@ public partial class SH : SHSH
                 //vr = p;
             }
         }
-
         return vr.Trim();
     }
-
     public static bool EndsWith(string input, string endsWith)
     {
         return input.EndsWith(endsWith);
     }
-
-
-
-
-
-
     public static bool RemovePrefix(ref string s, string v)
     {
         if (s.StartsWith(v))
@@ -3777,9 +3033,6 @@ public partial class SH : SHSH
         }
         return false;
     }
-
-
-
     public static string GetToFirstChar(string input, int indexOfChar)
     {
         if (indexOfChar != -1)
@@ -3788,11 +3041,6 @@ public partial class SH : SHSH
         }
         return input;
     }
-
-
-
-
-
     /// <summary>
     /// Tato metoda byla výchozí, jen se jmenovala NullToString
     /// OrEmpty pro odliseni od metody NullToStringOrEmpty
@@ -3807,7 +3055,6 @@ public partial class SH : SHSH
         var s = v.ToString();
         return s;
     }
-
     public static bool ContainsFromEnd(string p1, char p2, out int ContainsFromEndResult)
     {
         for (int i = p1.Length - 1; i >= 0; i--)
@@ -3821,10 +3068,6 @@ public partial class SH : SHSH
         ContainsFromEndResult = -1;
         return false;
     }
-
-
-
-
     public static string FirstWhichIsNotEmpty(params string[] s)
     {
         foreach (var item in s)
@@ -3836,7 +3079,6 @@ public partial class SH : SHSH
         }
         return "";
     }
-
     /// <summary>
     /// Whether A1 is under A2
     /// </summary>
@@ -3846,7 +3088,6 @@ public partial class SH : SHSH
     {
         return IsMatchRegex(name, mask, AllChars.q, AllChars.asterisk);
     }
-
     private static bool IsMatchRegex(string str, string pat, char singleWildcard, char multipleWildcard)
     {
         // If I compared .vs with .vs, return false before
@@ -3854,7 +3095,6 @@ public partial class SH : SHSH
         {
             return true;
         }
-
         string escapedSingle = Regex.Escape(new string(singleWildcard, 1));
         string escapedMultiple = Regex.Escape(new string(multipleWildcard, 1));
         pat = Regex.Escape(pat);
@@ -3863,9 +3103,6 @@ public partial class SH : SHSH
         Regex reg = new Regex(pat);
         return reg.IsMatch(str);
     }
-
-
-
     /// <summary>
     /// Return joined with space
     /// </summary>
@@ -3874,9 +3111,6 @@ public partial class SH : SHSH
     {
         return FirstCharOfEveryWordUpper(v, AllChars.dash);
     }
-
-
-
     /// <summary>
     /// Return joined with space
     /// </summary>
@@ -3892,12 +3126,6 @@ public partial class SH : SHSH
         //p = CAChangeContent.ChangeContent0(null, p, FirstCharUpper);
         return string.Join(AllStrings.space, p);
     }
-
-
-
-
-
-
     public static bool IsNullOrWhiteSpace(string s)
     {
         if (s != null)
@@ -3907,27 +3135,18 @@ public partial class SH : SHSH
         }
         return true;
     }
-
-
-
-
-
     public static bool HasTextRightFormat(string r, TextFormatData tfd)
     {
         if (tfd.trimBefore)
         {
             r = r.Trim();
         }
-
         long tfdOverallLength = 0;
-
         foreach (var item in tfd)
         {
             tfdOverallLength += (item.fromTo.to - item.fromTo.from) + 1;
         }
-
         int partsCount = tfd.Count;
-
         int actualCharFormatData = 0;
         CharFormatData actualFormatData = tfd[actualCharFormatData];
         CharFormatData followingFormatData = tfd[actualCharFormatData + 1];
@@ -3945,12 +3164,10 @@ public partial class SH : SHSH
         long from = actualFormatData.fromTo.FromL;
         long remains = actualFormatData.fromTo.ToL;
         int tfdCountM1 = tfd.Count - 1;
-
         while (true)
         {
             bool canBeAnyChar = actualFormatData.mustBe == null || actualFormatData.mustBe.Length == 0; //SunamoCollectionsShared.CASH.IsEmptyOrNull();
             bool isRightChar = false;
-
             if (canBeAnyChar)
             {
                 isRightChar = true;
@@ -3962,7 +3179,6 @@ public partial class SH : SHSH
                 {
                     return false;
                 }
-
                 isRightChar = actualFormatData.mustBe.Any(d => d == r[actualChar]); //CAGSH.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
@@ -3971,14 +3187,12 @@ public partial class SH : SHSH
                     remains--;
                 }
             }
-
             if (!isRightChar)
             {
                 if (r.Length <= actualChar)
                 {
                     return false;
                 }
-
                 isRightChar = followingFormatData.mustBe.Any(d => d == r[actualChar]);  //CAGSH.IsEqualToAnyElement<char>(, );
                 if (!isRightChar)
                 {
@@ -3988,18 +3202,15 @@ public partial class SH : SHSH
                 {
                     return false;
                 }
-
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualCharFormatData++;
                     processed++;
                     actualChar++;
-
                     if (!CASH.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
                     {
                         return false;
                     }
-
                     actualFormatData = tfd[actualCharFormatData];
                     if (CASH.HasIndex(actualCharFormatData + 1, tfd))
                     {
@@ -4009,13 +3220,11 @@ public partial class SH : SHSH
                     {
                         followingFormatData = CharFormatData.Templates.Any;
                     }
-
                     processed = 0;
                     remains = actualFormatData.fromTo.to;
                     remains--;
                 }
             }
-
             if (actualChar == tfdOverallLength)
             {
                 if (actualChar == r.Length)
@@ -4023,10 +3232,7 @@ public partial class SH : SHSH
                     //break;
                     return true;
                 }
-
-
             }
-
             if (remains == 0)
             {
                 ++actualCharFormatData;
@@ -4043,13 +3249,11 @@ public partial class SH : SHSH
                 {
                     followingFormatData = CharFormatData.Templates.Any;
                 }
-
                 processed = 0;
                 remains = actualFormatData.fromTo.to;
             }
         }
     }
-
     /// <param name="text"></param>
     /// <param name="append"></param>
     public static string AppendIfDontEndingWith(string text, string append)
@@ -4060,22 +3264,7 @@ public partial class SH : SHSH
         }
         return text + append;
     }
-
-
-
-
-
-
     #endregion
-
     #region MyRegion
-
-
-
-
-
     #endregion
-
-
-
 }
