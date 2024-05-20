@@ -1,3 +1,5 @@
+
+namespace SunamoString;
 //namespace SunamoString;
 //internal class SH
 //{

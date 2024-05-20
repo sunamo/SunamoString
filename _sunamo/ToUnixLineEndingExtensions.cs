@@ -1,3 +1,4 @@
+namespace SunamoString;
 
 
 internal static partial class ToUnixLineEndingExtensions
