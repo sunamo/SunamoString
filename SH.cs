@@ -6,6 +6,8 @@ SunamoString
 #endif
 ;
 using Diacritics.Extensions;
+using SunamoString._sunamo;
+
 public partial class SH : SHSH
 {
     #region 
@@ -1390,48 +1392,46 @@ public partial class SH : SHSH
     /// <returns></returns>
     public static int FirstWordWhichIsNumber(string nameTrim, int probablyIndex, bool joinAnotherWordsIfIsAlsoNumber = false)
     {
-        throw new NotImplementedException();
-        //var p = SHSplit.Split(nameTrim, AllStrings.space);
-        //if (p.Count > probablyIndex)
-        //{
-        //    if (BTS.IsInt(p[probablyIndex]))
-        //    {
-        //        if (joinAnotherWordsIfIsAlsoNumber)
-        //        {
-        //            string s = BTS.lastInt + SunamoNumbers.NH.JoinAnotherTokensIfIsNumber(p, probablyIndex + 1);
-        //            return int.Parse(s);
-        //        }
-        //        return BTS.lastInt;
-        //    }
-        //    else
-        //    {
-        //        return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
-        //    }
-        //}
-        //else
-        //{
-        //    return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
-        //}
-        //return int.MinValue;
+        var p = SHSplit.Split(nameTrim, AllStrings.space);
+        if (p.Count > probablyIndex)
+        {
+            if (BTS.IsInt(p[probablyIndex]))
+            {
+                if (joinAnotherWordsIfIsAlsoNumber)
+                {
+                    string s = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(p, probablyIndex + 1);
+                    return int.Parse(s);
+                }
+                return BTS.lastInt;
+            }
+            else
+            {
+                return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
+            }
+        }
+        else
+        {
+            return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
+        }
+        return int.MinValue;
     }
     public static int FirstWordWhichIsNumberAllIndexes(List<string> p, bool joinAnotherWordsIfIsAlsoNumber = true)
     {
-        throw new NotImplementedException();
-        //int i = 0;
-        //foreach (var item in p)
-        //{
-        //    if (BTS.IsInt(item))
-        //    {
-        //        i++;
-        //        if (joinAnotherWordsIfIsAlsoNumber)
-        //        {
-        //            string s = BTS.lastInt + SunamoNumbers.NH.JoinAnotherTokensIfIsNumber(p, i);
-        //            return int.Parse(s);
-        //        }
-        //        return BTS.lastInt;
-        //    }
-        //}
-        //return int.MinValue;
+        int i = 0;
+        foreach (var item in p)
+        {
+            if (BTS.IsInt(item))
+            {
+                i++;
+                if (joinAnotherWordsIfIsAlsoNumber)
+                {
+                    string s = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(p, i);
+                    return int.Parse(s);
+                }
+                return BTS.lastInt;
+            }
+        }
+        return int.MinValue;
     }
     public static bool CompareStringIgnoreWhitespaces2(string s1, string s2)
     {
@@ -1601,14 +1601,14 @@ public partial class SH : SHSH
         ////
         //if (contains.Count() == 1 && checkInCaseOnlyOneString)
         //{
-        //    throw new NotImplementedException();
+        //    ThrowEx.NotImplementedMethod();
         //    //item.Contains(contains.First());
         //}
         //else
         //{
         //    foreach (var c in contains)
         //    {
-        //        //throw new NotImplementedException();
+        //        //ThrowEx.NotImplementedMethod();
         //        //if (item.Contains(c))
         //        //{
         //        //    founded.Add(BTS.CastToByT<T>(c, isChar));
@@ -1705,7 +1705,7 @@ public partial class SH : SHSH
     //
     //        public static string SHReplace.ReplaceOnce(string text, string xmlns, string empty)
     //        {
-    //            throw new NotImplementedException();
+    //            ThrowEx.NotImplementedMethod();
     //        }
     //
     // Nev�m co tu d�l� tohle. V�echny metody maj� po�ad� delimiter/parts, tahle opa�n�

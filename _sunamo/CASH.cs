@@ -6,7 +6,7 @@ namespace SunamoString;
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace SunamoString._sunamo
+//namespace SunamoString
 //{
 internal class CASH
 {

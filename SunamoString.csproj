@@ -42,6 +42,9 @@
     <Compile Include="..\SunamoData\Data\AB.cs" Link="_linked\SunamoData\Data\AB.cs" />
     <Compile Include="..\SunamoEnums\Enums\FromToUse.cs" Link="_linked\SunamoEnums\Enums\FromToUse.cs" />
     <Compile Include="..\SunamoExceptions\OnlyInSE\Types.cs" Link="_linked\SunamoExceptions\OnlyInSE\Types.cs" />
+    <Compile Include="..\SunamoXlfKeys\XlfKeys.cs" Link="_linked\SunamoXlfKeys\XlfKeys.cs" />
+    <Compile Include="..\SunamoRegex\Wildcard.cs" Link="_linked\SunamoRegex\Wildcard.cs" />
+    <Compile Include="..\SunamoRegex\WildcardHelper.cs" Link="_linked\SunamoRegex\WildcardHelper.cs" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoString</DefineConstants>
