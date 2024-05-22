@@ -5,9 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 //using SunamoValues;
-public class SHSH
+internal class SHSH
 {
-    public static string WhiteSpaceFromStart(string v)
+    internal static string WhiteSpaceFromStart(string v)
     {
         StringBuilder sb = new StringBuilder();
         foreach (var item in v)
@@ -34,7 +34,7 @@ public class SHSH
     /// <param name="term"></param>
     /// <param name="enoughIsContainsAttribute"></param>
     /// <param name="caseSensitive"></param>
-    public static bool ContainsBoolBool(string input, string term, bool enoughIsContainsAttribute, bool caseSensitive)
+    internal static bool ContainsBoolBool(string input, string term, bool enoughIsContainsAttribute, bool caseSensitive)
     {
         return Contains(input, term, enoughIsContainsAttribute ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName, caseSensitive);
     }
@@ -47,7 +47,7 @@ public class SHSH
     /// <param name="term"></param>
     /// <param name="searchStrategy"></param>
     /// <param name="caseSensitive"></param>
-    public static bool Contains(string input, string term, SearchStrategy searchStrategy, bool caseSensitive)
+    internal static bool Contains(string input, string term, SearchStrategy searchStrategy, bool caseSensitive)
     {
         if (term != "")
         {
@@ -101,7 +101,7 @@ public class SHSH
     /// </summary>
     /// <param name="item"></param>
     /// <param name="contains"></param>
-    public static bool IsContained(string item, ref string contains)
+    internal static bool IsContained(string item, ref string contains)
     {
         var (negation, contains2) = IsNegationTuple(contains);
         contains = contains2;
@@ -120,7 +120,7 @@ public class SHSH
     /// </summary>
     /// <param name="input"></param>
     /// <param name="allWords"></param>
-    public static bool ContainsAll(string input, IList<string> allWords, ContainsCompareMethod ccm = ContainsCompareMethod.WholeInput)
+    internal static bool ContainsAll(string input, IList<string> allWords, ContainsCompareMethod ccm = ContainsCompareMethod.WholeInput)
     {
         if (ccm == ContainsCompareMethod.SplitToWords)
         {
@@ -165,11 +165,11 @@ public class SHSH
     /// </summary>
     /// <param name="input"></param>
     /// <param name="what"></param>
-    public static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace)
+    internal static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace)
     {
         return Contains(input, term, searchStrategy, true);
     }
-    public static string PrefixIfNotStartedWith(string item, string http, bool skipWhitespaces = false)
+    internal static string PrefixIfNotStartedWith(string item, string http, bool skipWhitespaces = false)
     {
         string whitespaces = string.Empty;
         if (skipWhitespaces)
@@ -183,7 +183,7 @@ public class SHSH
         }
         return whitespaces + item;
     }
-    public static string RemoveLastChar(string artist)
+    internal static string RemoveLastChar(string artist)
     {
         return artist.Substring(0, artist.Length - 1);
     }
@@ -193,7 +193,7 @@ public class SHSH
     /// <param name="text"></param>
     /// <param name="postfix"></param>
     /// <returns></returns>
-    public static string PostfixIfNotEmpty(string text, string postfix)
+    internal static string PostfixIfNotEmpty(string text, string postfix)
     {
         if (text.Length != 0)
         {
@@ -204,7 +204,7 @@ public class SHSH
         }
         return text;
     }
-    public static string AddBeforeUpperChars(string text, char add, bool preserveAcronyms)
+    internal static string AddBeforeUpperChars(string text, char add, bool preserveAcronyms)
     {
         if (string.IsNullOrWhiteSpace(text))
             return string.Empty;
@@ -221,7 +221,7 @@ public class SHSH
         }
         return newText.ToString();
     }
-    public static string RemoveEndingPairCharsWhenDontHaveStarting(string vr, string cbl, string cbr)
+    internal static string RemoveEndingPairCharsWhenDontHaveStarting(string vr, string cbl, string cbr)
     {
         List<int> removeOnIndexes = new List<int>();
         var sb = new StringBuilder(vr);
@@ -279,7 +279,7 @@ public class SHSH
         //}
         return sb.ToString();
     }
-    public static List<Tuple<int, int>> GetPairsStartAndEnd(List<int> occL, List<int> occR, ref List<int> onlyLeft, ref List<int> onlyRight)
+    internal static List<Tuple<int, int>> GetPairsStartAndEnd(List<int> occL, List<int> occR, ref List<int> onlyLeft, ref List<int> onlyRight)
     {
         var l = new List<Tuple<int, int>>();
         onlyLeft = occL.ToList();
@@ -387,17 +387,17 @@ public class SHSH
         result.Reverse();
         return result;
     }
-    public static string RemoveAndInsertReplace(string s, int startIndex, string what, string to)
+    internal static string RemoveAndInsertReplace(string s, int startIndex, string what, string to)
     {
         s = s.Remove(startIndex, what.Length);
         s = s.Insert(startIndex, to);
         return s;
     }
-    public static string JoinMakeUpTo2NumbersToZero(string d, int[] d2)
+    internal static string JoinMakeUpTo2NumbersToZero(string d, int[] d2)
     {
         return d;
     }
-    public static string ReplaceOnce(string input, string what, string zaco)
+    internal static string ReplaceOnce(string input, string what, string zaco)
     {
         if (what == "")
         {
@@ -410,12 +410,12 @@ public class SHSH
         }
         return input.Substring(0, pos) + zaco + input.Substring(pos + what.Length);
     }
-    public static string ReplaceOnceIfStartedWith(string what, string replaceWhat, string zaCo)
+    internal static string ReplaceOnceIfStartedWith(string what, string replaceWhat, string zaCo)
     {
         bool replaced;
         return ReplaceOnceIfStartedWith(what, replaceWhat, zaCo, out replaced);
     }
-    public static string ReplaceOnceIfStartedWith(string what, string replaceWhat, string zaCo, out bool replaced)
+    internal static string ReplaceOnceIfStartedWith(string what, string replaceWhat, string zaCo, out bool replaced)
     {
         replaced = false;
         if (what.StartsWith(replaceWhat))
@@ -425,7 +425,7 @@ public class SHSH
         }
         return what;
     }
-    public static string NormalizeString(string s)
+    internal static string NormalizeString(string s)
     {
         if (s.Contains(AllChars.nbsp))
         {
@@ -452,7 +452,7 @@ public class SHSH
     /// <param name="vcem"></param>
     /// <param name="co"></param>
     /// <returns></returns>
-    public static List<int> ReturnOccurencesOfString(string vcem, string co)
+    internal static List<int> ReturnOccurencesOfString(string vcem, string co)
     {
         vcem = NormalizeString(vcem);
         List<int> Results = new List<int>();
@@ -472,7 +472,7 @@ public class SHSH
         }
         return Results;
     }
-    public static List<int> TabOrSpaceNextTo(string input)
+    internal static List<int> TabOrSpaceNextTo(string input)
     {
         var tabs = ReturnOccurencesOfString(input, AllStrings.tab);
         // nevím k čemu to tu je ale když jsem měl řetězec b nopCommerce\tSimplCommerce\tSmartStoreNET\tgrandnode\tKartris tak mi to vrátilo navíc o 2 \t kde nikdy nebyly
@@ -494,18 +494,18 @@ public class SHSH
         //}
         return tabs;
     }
-    public static string WrapWithBs(string commitMessage)
+    internal static string WrapWithBs(string commitMessage)
     {
         return WrapWithChar(commitMessage, AllChars.bs);
     }
     #region MyRegion
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string WrapWith(string value, string h)
+    internal static string WrapWith(string value, string h)
     {
         return h + value + h;
     }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string WrapWithChar(string value, char v, bool _trimWrapping = false, bool alsoIfIsWhitespaceOrEmpty = true)
+    internal static string WrapWithChar(string value, char v, bool _trimWrapping = false, bool alsoIfIsWhitespaceOrEmpty = true)
     {
         if (string.IsNullOrWhiteSpace(value) && !alsoIfIsWhitespaceOrEmpty)
         {
@@ -515,15 +515,15 @@ public class SHSH
         return WrapWith(_trimWrapping ? value.Trim() : value, v.ToString());
     }
     #endregion
-    public static string WrapWithSpace(string originalLogin)
+    internal static string WrapWithSpace(string originalLogin)
     {
         return WrapWithChar(originalLogin, AllChars.space);
     }
-    public static string WrapWithQm(string commitMessage)
+    internal static string WrapWithQm(string commitMessage)
     {
         return WrapWithQm(commitMessage, true);
     }
-    public static string WrapWithIf(string value, string v, Func<string, string, bool> f)
+    internal static string WrapWithIf(string value, string v, Func<string, string, bool> f)
     {
         if (f.Invoke(value, v))
         {
@@ -531,11 +531,11 @@ public class SHSH
         }
         return value;
     }
-    public static string WrapWithQm(string commitMessage, bool alsoIfIsWhitespaceOrEmpty = true)
+    internal static string WrapWithQm(string commitMessage, bool alsoIfIsWhitespaceOrEmpty = true)
     {
         return WrapWithChar(commitMessage, AllChars.qm, alsoIfIsWhitespaceOrEmpty);
     }
-    public static int OccurencesOfStringIn(string source, string p_2)
+    internal static int OccurencesOfStringIn(string source, string p_2)
     {
         return source.Split(new string[] { p_2 }, StringSplitOptions.None).Length - 1;
     }
@@ -546,7 +546,7 @@ public class SHSH
     /// <param name="za"></param>
     /// <param name="text"></param>
     /// <param name="pozice"></param>
-    public static void GetPartsByLocation(out string pred, out string za, string text, int pozice)
+    internal static void GetPartsByLocation(out string pred, out string za, string text, int pozice)
     {
         if (pozice == -1)
         {
@@ -566,13 +566,13 @@ public class SHSH
             }
         }
     }
-    public static (string, string) GetPartsByLocationNoOutInt(string text, int pozice)
+    internal static (string, string) GetPartsByLocationNoOutInt(string text, int pozice)
     {
         string pred, za;
         GetPartsByLocation(out pred, out za, text, pozice);
         return (pred, za);
     }
-    public static (string, string) GetPartsByLocationNoOut(string text, char or)
+    internal static (string, string) GetPartsByLocationNoOut(string text, char or)
     {
         GetPartsByLocation(out var pred, out var za, text, or);
         return (pred, za);
@@ -581,7 +581,7 @@ public class SHSH
     /// <param name="za"></param>
     /// <param name="text"></param>
     /// <param name="or"></param>
-    public static void GetPartsByLocation(out string pred, out string za, string text, char or)
+    internal static void GetPartsByLocation(out string pred, out string za, string text, char or)
     {
         int dex = text.IndexOf(or);
         GetPartsByLocation(out pred, out za, text, dex);
@@ -592,7 +592,7 @@ public class SHSH
     /// <param name="o"></param>
     /// <param name="nt"></param>
     /// <returns></returns>
-    public static bool NotAllowedInRanges(object o, int nt)
+    internal static bool NotAllowedInRanges(object o, int nt)
     {
         if (o is Func<int, bool>)
         {
@@ -619,7 +619,7 @@ public class SHSH
     /// <param name="p"></param>
     /// <param name="begin"></param>
     /// <param name="end"></param>
-    public static string GetTextBetweenTwoChars(string p, char beginS, char endS,
+    internal static string GetTextBetweenTwoChars(string p, char beginS, char endS,
     bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
     {
         var begin = p.IndexOf(beginS);
@@ -652,7 +652,7 @@ public class SHSH
         }
         return p;
     }
-    public static string GetTextBetweenTwoCharsInts(string p, int begin, int end)
+    internal static string GetTextBetweenTwoCharsInts(string p, int begin, int end)
     {
         if (end > begin)
             // a(1) - 1,3
@@ -661,11 +661,11 @@ public class SHSH
         //return p.Substring(begin+1, end - begin - 1);
         return p;
     }
-    public static void FirstCharUpper(ref string nazevPP)
+    internal static void FirstCharUpper(ref string nazevPP)
     {
         nazevPP = FirstCharUpper(nazevPP);
     }
-    public static string FirstCharUpper(string nazevPP)
+    internal static string FirstCharUpper(string nazevPP)
     {
         if (nazevPP.Length == 1)
         {
@@ -674,7 +674,7 @@ public class SHSH
         string sb = nazevPP.Substring(1);
         return nazevPP[0].ToString().ToUpper() + sb;
     }
-    public static (bool, string) IsNegationTuple(string contains)
+    internal static (bool, string) IsNegationTuple(string contains)
     {
         if (contains[0] == '!')
         {
@@ -691,7 +691,7 @@ public class SHSH
     /// <param name="v1"></param>
     /// <param name="methodName"></param>
     /// <param name="v2"></param>
-    public static string ConcatIfBeforeHasValue(params string[] className)
+    internal static string ConcatIfBeforeHasValue(params string[] className)
     {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < className.Length; i++)
@@ -705,12 +705,12 @@ public class SHSH
         }
         return result.ToString();
     }
-    public static string FromSpace160To32(string text)
+    internal static string FromSpace160To32(string text)
     {
         text = Regex.Replace(text, @"\p{Z}", " ");
         return text;
     }
-    public static bool IsNumber(string str, params char[] nextAllowedChars)
+    internal static bool IsNumber(string str, params char[] nextAllowedChars)
     {
         foreach (var item in str)
         {
@@ -724,7 +724,7 @@ public class SHSH
         }
         return true;
     }
-    public static string MakeUpToXChars(int p, int p_2)
+    internal static string MakeUpToXChars(int p, int p_2)
     {
         StringBuilder sb = new StringBuilder();
         string d = p.ToString();
@@ -736,7 +736,7 @@ public class SHSH
         sb.Append(d);
         return sb.ToString();
     }
-    public static char GetFirstChar(string arg)
+    internal static char GetFirstChar(string arg)
     {
         return arg[0];
     }

@@ -1,10 +1,10 @@
 namespace SunamoString;
 
 
-public class ABC : List<AB>//, IList<AB>
+internal class ABC : List<AB>//, IList<AB>
 {
-    public static ABC Empty = new ABC();
-    public ABC()
+    internal static ABC Empty = new ABC();
+    internal ABC()
     {
     }
     public override string ToString()
@@ -16,21 +16,21 @@ public class ABC : List<AB>//, IList<AB>
         }
         return sb.ToString();
     }
-    public int Length
+    internal int Length
     {
         get
         {
             return Count;
         }
     }
-    public ABC(int capacity) : base(capacity)
+    internal ABC(int capacity) : base(capacity)
     {
         for (int i = 0; i < capacity; i++)
         {
             this.Add(null);
         }
     }
-    public ABC(params Object[] setsNameValue)
+    internal ABC(params Object[] setsNameValue)
     {
         if (setsNameValue.Length == 0)
         {
@@ -86,7 +86,7 @@ public class ABC : List<AB>//, IList<AB>
             }
         }
     }
-    public ABC(params AB[] abc)
+    internal ABC(params AB[] abc)
     {
         // TODO: Complete member initialization
         this.AddRange(abc);
@@ -94,11 +94,11 @@ public class ABC : List<AB>//, IList<AB>
     /// <summary>
     /// Must be [] due to SQL viz  https://stackoverflow.com/questions/9149919/no-mapping-exists-from-object-type-system-collections-generic-list-when-executin
     /// </summary>
-    public Object[] OnlyBs()
+    internal Object[] OnlyBs()
     {
         return OnlyBsList().ToArray();
     }
-    public List<object> OnlyBsList()
+    internal List<object> OnlyBsList()
     {
         List<object> o = new List<object>(this.Count);
         for (int i = 0; i < this.Count; i++)
@@ -107,7 +107,7 @@ public class ABC : List<AB>//, IList<AB>
         }
         return o;
     }
-    public List<string> OnlyAs()
+    internal List<string> OnlyAs()
     {
         List<string> o = new List<string>(this.Count);
         CASunamoExceptions.InitFillWith(o, this.Count);
@@ -117,7 +117,7 @@ public class ABC : List<AB>//, IList<AB>
         }
         return o;
     }
-    public static List<object> OnlyBs(List<AB> arr)
+    internal static List<object> OnlyBs(List<AB> arr)
     {
         return arr.Select(d => d.B).ToList();
     }

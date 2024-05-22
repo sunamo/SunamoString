@@ -1,12 +1,12 @@
-﻿namespace SunamoString;
+namespace SunamoString;
 
-public partial class BTS
+internal partial class BTS
 {
     //        #region  from BTSShared64.cs
-    public static int lastInt = -1;
-    public static long lastLong = -1;
-    public static float lastFloat = -1;
-    public static double lastDouble = -1;
+    internal static int lastInt = -1;
+    internal static long lastLong = -1;
+    internal static float lastFloat = -1;
+    internal static double lastDouble = -1;
 
     ///// <summary>
     /////     Usage: Usage: Exceptions.ArrayElementContainsUnallowedStrings->SH.ContainsAny
@@ -15,12 +15,12 @@ public partial class BTS
     ///// <param name="c"></param>
     ///// <param name="isChar"></param>
     ///// <returns></returns>
-    //public static T CastToByT<T>(string c, bool isChar)
+    //internal static T CastToByT<T>(string c, bool isChar)
     //{
     //    return isChar ? (T)(dynamic)c.First() : (T)(dynamic)c;
     //}
 
-    public static string Replace(ref string id, bool replaceCommaForDot)
+    internal static string Replace(ref string id, bool replaceCommaForDot)
     {
         if (replaceCommaForDot)
         {
@@ -30,7 +30,7 @@ public partial class BTS
         return id;
     }
 
-    public static bool IsFloat(string id, bool replace = false)
+    internal static bool IsFloat(string id, bool replace = false)
     {
         if (id == null)
         {
@@ -41,7 +41,7 @@ public partial class BTS
         return float.TryParse(id.Replace(AllStrings.comma, AllStrings.dot), out lastFloat);
     }
 
-    public static bool IsDouble(string id, bool replace = false)
+    internal static bool IsDouble(string id, bool replace = false)
     {
         if (id == null)
         {
@@ -60,7 +60,7 @@ public partial class BTS
     /// <param name="excIfIsFloat"></param>
     /// <param name="replaceCommaForDot"></param>
     /// <returns></returns>
-    public static bool IsInt(string id, bool excIfIsFloat = false, bool replaceCommaForDot = false)
+    internal static bool IsInt(string id, bool excIfIsFloat = false, bool replaceCommaForDot = false)
     {
         if (id == null)
         {
@@ -86,7 +86,7 @@ public partial class BTS
         return vr;
     }
 
-    public static bool IsLong(string id, bool excIfIsDouble = false, bool replaceCommaForDot = false)
+    internal static bool IsLong(string id, bool excIfIsDouble = false, bool replaceCommaForDot = false)
     {
         if (id == null)
         {

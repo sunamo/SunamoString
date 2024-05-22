@@ -30,7 +30,7 @@ internal class SHReplace
         return vstup;
     }
 
-    public static string ReplaceManyFromString(string input, string v, string delimiter)
+    internal static string ReplaceManyFromString(string input, string v, string delimiter)
     {
         string methodName = "ReplaceManyFromString";
         var l = SHGetLines.GetLines(v);
