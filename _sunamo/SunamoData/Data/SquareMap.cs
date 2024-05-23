@@ -1,17 +1,17 @@
 namespace SunamoString;
 
 
-internal class SquareMap
+public class SquareMap
 {
-    internal List<int> cub = new List<int>();
-    internal List<int> sqb = new List<int>();
-    internal List<int> b = new List<int>();
-    internal List<int> ecub = new List<int>();
-    internal List<int> esqb = new List<int>();
-    internal List<int> eb = new List<int>();
-    internal void Add(Object /*Brackets*/ b2, bool end, int i)
+    public List<int> cub = new List<int>();
+    public List<int> sqb = new List<int>();
+    public List<int> b = new List<int>();
+    public List<int> ecub = new List<int>();
+    public List<int> esqb = new List<int>();
+    public List<int> eb = new List<int>();
+    public void Add(Object /*Brackets*/ b2, bool end, int i)
     {
-        /*Spíše než na spoléhaní na internal Brackets tak to dočasně zakomentuji.
+        /*Spíše než na spoléhaní na public Brackets tak to dočasně zakomentuji.
          * Je tu cycle detected mezi SunamoData a SunamoString 
          */
         //if (end)

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SunamoString._sunamo;
-internal class NH
+public class NH
 {
-    internal static string JoinAnotherTokensIfIsNumber(List<string> p, int i)
+    public static string JoinAnotherTokensIfIsNumber(List<string> p, int i)
     {
         StringBuilder sb = new StringBuilder();
 

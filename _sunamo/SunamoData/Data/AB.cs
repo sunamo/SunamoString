@@ -1,23 +1,23 @@
 namespace SunamoString;
 
 
-internal class AB
+public class AB
 {
-    internal static Type type = typeof(AB);
-    internal string A = null;
-    internal object B = null;
-    internal AB(string a, object b)
+    public static Type type = typeof(AB);
+    public string A = null;
+    public object B = null;
+    public AB(string a, object b)
     {
         A = a;
         B = b;
     }
-    internal static AB Get(Type a, object b)
+    public static AB Get(Type a, object b)
     {
         return new AB(a.FullName, b);
     }
     /// <param name="a"></param>
     /// <param name="b"></param>
-    internal static AB Get(string a, object b)
+    public static AB Get(string a, object b)
     {
         return new AB(a, b);
     }

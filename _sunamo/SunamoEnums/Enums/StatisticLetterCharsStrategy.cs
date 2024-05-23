@@ -1,7 +1,7 @@
 namespace SunamoString;
 
 
-internal enum StatisticLetterCharsStrategy
+public enum StatisticLetterCharsStrategy
 {
     AddAsFirst,
     IgnoreCompletely

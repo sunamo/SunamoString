@@ -1,14 +1,14 @@
 namespace SunamoString;
 
 
-internal class SquareMapLines
+public class SquareMapLines
 {
-    internal Dictionary<int, List<int>> cub;
-    internal Dictionary<int, List<int>> sqb;
-    internal Dictionary<int, List<int>> b;
-    internal Dictionary<int, List<int>> ecub;
-    internal Dictionary<int, List<int>> esqb;
-    internal Dictionary<int, List<int>> eb;
+    public Dictionary<int, List<int>> cub;
+    public Dictionary<int, List<int>> sqb;
+    public Dictionary<int, List<int>> b;
+    public Dictionary<int, List<int>> ecub;
+    public Dictionary<int, List<int>> esqb;
+    public Dictionary<int, List<int>> eb;
     void Init(int ccub, int csqb, int cb)
     {
         cub = new Dictionary<int, List<int>>(ccub);
@@ -18,22 +18,22 @@ internal class SquareMapLines
         esqb = new Dictionary<int, List<int>>(csqb);
         eb = new Dictionary<int, List<int>>(cb);
     }
-    internal SquareMapLines(SquareMap m)
+    public SquareMapLines(SquareMap m)
     {
         Init(m.cub.Count, m.sqb.Count, m.b.Count);
     }
-    internal SquareMapLines()
+    public SquareMapLines()
     {
         Init(0, 0, 0);
     }
     /// <summary>
-    /// Musí být internal kvůli Brackets které nemůžu importovat přímo z SunamoString kvůli Cycle detected
+    /// Musí být public kvůli Brackets které nemůžu importovat přímo z SunamoString kvůli Cycle detected
     /// </summary>
     /// <param name="b2"></param>
     /// <param name="end"></param>
     /// <param name="i"></param>
     /// <param name="line"></param>
-    internal void Add(/*Brackets*/ Object b2, bool end, int i, int line)
+    public void Add(/*Brackets*/ Object b2, bool end, int i, int line)
     {
         // čti koment ve SquareMap.Add proč Object a zakomentováno zde.
         // Dalo by se to vyřešit tím že Brackets dám do samostatného nugetu ale už  to tu mám že mám v nugetu jen 1 enum

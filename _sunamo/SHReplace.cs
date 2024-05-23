@@ -3,10 +3,10 @@ namespace SunamoString;
 
 
 //namespace SunamoString;
-internal class SHReplace
+public class SHReplace
 {
-    //internal static Func<string, string, string, string> ReplaceAll;
-    internal static string ReplaceAll(string vstup, string zaCo, params string[] co)
+    //public static Func<string, string, string, string> ReplaceAll;
+    public static string ReplaceAll(string vstup, string zaCo, params string[] co)
     {
         //Stupid, zaCo can be null
 
@@ -30,7 +30,7 @@ internal class SHReplace
         return vstup;
     }
 
-    internal static string ReplaceManyFromString(string input, string v, string delimiter)
+    public static string ReplaceManyFromString(string input, string v, string delimiter)
     {
         string methodName = "ReplaceManyFromString";
         var l = SHGetLines.GetLines(v);

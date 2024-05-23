@@ -1,7 +1,7 @@
 namespace SunamoString;
-internal class DictionaryHelper
+public class DictionaryHelper
 {
-    internal static void AddOrPlus<T>(Dictionary<T, int> sl, T key, int p)
+    public static void AddOrPlus<T>(Dictionary<T, int> sl, T key, int p)
     {
         if (sl.ContainsKey(key))
             sl[key] += p;
