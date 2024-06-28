@@ -1,3 +1,5 @@
+
+namespace SunamoString;
 using Diacritics.Extensions;
 
 
