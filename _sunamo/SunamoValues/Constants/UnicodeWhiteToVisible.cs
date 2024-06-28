@@ -1,10 +1,10 @@
 namespace SunamoString;
 
 
-public class UnicodeWhiteToVisible
+internal class UnicodeWhiteToVisible
 {
-    public const char space = '¤';
-    public const char carriageReturn = '¶';
-    public const char newLine = '¬';
-    public const char tab = '¦';
+    internal const char space = '¤';
+    internal const char carriageReturn = '¶';
+    internal const char newLine = '¬';
+    internal const char tab = '¦';
 }

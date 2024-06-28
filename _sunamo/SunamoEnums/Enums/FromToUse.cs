@@ -1,7 +1,7 @@
 namespace SunamoString;
 
 
-public enum FromToUse
+internal enum FromToUse
 {
     DateTime,
     Unix,

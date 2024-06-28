@@ -1,9 +1,9 @@
 namespace SunamoString;
 
 
-public class FromToWord
+internal class FromToWord
 {
-    public int from = 0;
-    public int to = 0;
-    public string word = "";
+    internal int from = 0;
+    internal int to = 0;
+    internal string word = "";
 }

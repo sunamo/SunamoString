@@ -8,13 +8,13 @@ namespace SunamoString;
 
 //namespace SunamoString
 //{
-public class CASH
+internal class CASH
 {
-    public static bool HasIndex(int dex, Array col)
+    internal static bool HasIndex(int dex, Array col)
     {
         return col.Length > dex;
     }
-    public static bool HasIndex(int p, IList nahledy)
+    internal static bool HasIndex(int p, IList nahledy)
     {
         if (p < 0)
         {
@@ -27,9 +27,9 @@ public class CASH
         return false;
     }
 
-    //        public static Func<Object[], Object[]> ConvertListStringWrappedInArray;
-    //        public static Func<int, IList, bool> HasIndex;
-    //        public static Func<List<int>, int, int> FirstValueHigherThan;
+    //        internal static Func<Object[], Object[]> ConvertListStringWrappedInArray;
+    //        internal static Func<int, IList, bool> HasIndex;
+    //        internal static Func<List<int>, int, int> FirstValueHigherThan;
 
 
     //    }
