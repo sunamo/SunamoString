@@ -1,10 +1,3 @@
-namespace
-#if SunamoWikipedia
-SunamoWikipedia
-#else
-SunamoString
-#endif
-;
 using Diacritics.Extensions;
 
 
