@@ -36,7 +36,7 @@ internal class SHSH
     /// <param name="caseSensitive"></param>
     internal static bool ContainsBoolBool(string input, string term, bool enoughIsContainsAttribute, bool caseSensitive)
     {
-        return Contains(input, term, enoughIsContainsAttribute ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName, caseSensitive);
+        return Contains(input, term, enoughIsContainsAttribute ? SearchStrategyString.AnySpaces : SearchStrategyString.ExactlyName, caseSensitive);
     }
     /// <summary>
     /// AnySpaces - split A2 by spaces and A1 must contains all parts
@@ -47,11 +47,11 @@ internal class SHSH
     /// <param name="term"></param>
     /// <param name="searchStrategy"></param>
     /// <param name="caseSensitive"></param>
-    internal static bool Contains(string input, string term, SearchStrategy searchStrategy, bool caseSensitive)
+    internal static bool Contains(string input, string term, SearchStrategyString searchStrategy, bool caseSensitive)
     {
         if (term != "")
         {
-            if (searchStrategy == SearchStrategy.ExactlyName)
+            if (searchStrategy == SearchStrategyString.ExactlyName)
             {
                 if (caseSensitive)
                 {
@@ -64,7 +64,7 @@ internal class SHSH
             }
             else
             {
-                if (searchStrategy == SearchStrategy.FixedSpace)
+                if (searchStrategy == SearchStrategyString.FixedSpace)
                 {
                     if (caseSensitive)
                     {
@@ -165,7 +165,7 @@ internal class SHSH
     /// </summary>
     /// <param name="input"></param>
     /// <param name="what"></param>
-    internal static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace)
+    internal static bool Contains(string input, string term, SearchStrategyString searchStrategy = SearchStrategyString.FixedSpace)
     {
         return Contains(input, term, searchStrategy, true);
     }

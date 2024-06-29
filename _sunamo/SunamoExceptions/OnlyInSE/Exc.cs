@@ -1,5 +1,5 @@
 
-namespace SunamoString;
+namespace SunamoStringShared;
 using System.Diagnostics;
 using System.Text;
 

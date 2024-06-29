@@ -7,7 +7,7 @@ internal class ABC : List<AB>//, IList<AB>
     internal ABC()
     {
     }
-    internal override string ToString()
+    public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
         foreach (var item in this)

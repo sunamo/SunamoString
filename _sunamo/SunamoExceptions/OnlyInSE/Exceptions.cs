@@ -1,5 +1,5 @@
 
-namespace SunamoString;
+namespace SunamoStringShared;
 using System.Collections;
 using System.Net;
 using System.Text;

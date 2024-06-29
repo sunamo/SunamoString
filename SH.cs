@@ -721,7 +721,7 @@ public partial class SH : SHSH
     /// <param name="canBeDifferentCount"></param>
     /// <param name="typeDynamics"></param>
     /// <param name="tfd"></param>
-    public static bool AllHaveRightFormat(bool canBeDifferentCount, List<string> typeDynamics, List<TextFormatData> tfd)
+    public static bool AllHaveRightFormat(bool canBeDifferentCount, List<string> typeDynamics, List<TextFormatDataString> tfd)
     {
         if (!canBeDifferentCount)
         {
@@ -740,7 +740,7 @@ public partial class SH : SHSH
         }
         return true;
     }
-    public static bool HasCharRightFormat(char ch, CharFormatData cfd)
+    public static bool HasCharRightFormat(char ch, CharFormatDataString cfd)
     {
         if (cfd.upper.HasValue)
         {
@@ -1023,15 +1023,15 @@ public partial class SH : SHSH
     /// </summary>
     /// <param name="vcem"></param>
     /// <param name="co"></param>
-    public static List<FromTo> ReturnOccurencesOfStringFromTo(string vcem, string co)
+    public static List<FromToString> ReturnOccurencesOfStringFromTo(string vcem, string co)
     {
         int l = co.Length;
-        List<FromTo> Results = new List<FromTo>();
+        List<FromToString> Results = new List<FromToString>();
         for (int Index = 0; Index < vcem.Length - co.Length + 1; Index++)
         {
             if (vcem.Substring(Index, co.Length) == co)
             {
-                FromTo ft = new FromTo();
+                FromToString ft = new FromToString();
                 ft.from = Index;
                 ft.to = Index + l - 1;
                 Results.Add(ft);
@@ -3130,7 +3130,7 @@ public partial class SH : SHSH
         }
         return true;
     }
-    public static bool HasTextRightFormat(string r, TextFormatData tfd)
+    public static bool HasTextRightFormat(string r, TextFormatDataString tfd)
     {
         if (tfd.trimBefore)
         {
@@ -3143,8 +3143,8 @@ public partial class SH : SHSH
         }
         int partsCount = tfd.Count;
         int actualCharFormatData = 0;
-        CharFormatData actualFormatData = tfd[actualCharFormatData];
-        CharFormatData followingFormatData = tfd[actualCharFormatData + 1];
+        CharFormatDataString actualFormatData = tfd[actualCharFormatData];
+        CharFormatDataString followingFormatData = tfd[actualCharFormatData + 1];
         //int charCount = r.Length;
         //if (tfd.requiredLength != -1)
         //{
@@ -3213,7 +3213,7 @@ public partial class SH : SHSH
                     }
                     else
                     {
-                        followingFormatData = CharFormatData.Templates.Any;
+                        followingFormatData = CharFormatDataString.Templates.Any;
                     }
                     processed = 0;
                     remains = actualFormatData.fromTo.to;
@@ -3242,7 +3242,7 @@ public partial class SH : SHSH
                 }
                 else
                 {
-                    followingFormatData = CharFormatData.Templates.Any;
+                    followingFormatData = CharFormatDataString.Templates.Any;
                 }
                 processed = 0;
                 remains = actualFormatData.fromTo.to;

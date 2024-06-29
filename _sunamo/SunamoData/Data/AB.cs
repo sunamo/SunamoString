@@ -21,7 +21,7 @@ internal class AB
     {
         return new AB(a, b);
     }
-    internal override string ToString()
+    public override string ToString()
     {
         return A + AllStrings.cs2 + B;
     }

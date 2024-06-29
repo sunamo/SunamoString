@@ -1,4 +1,4 @@
-namespace SunamoString;
+namespace SunamoStringShared;
 
 
 internal class SHSE
