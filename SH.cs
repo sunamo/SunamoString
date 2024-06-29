@@ -2857,14 +2857,14 @@ public partial class SH : SHSH
         }
         return p;
     }
-    public static List<FromToWord> ReturnOccurencesOfStringFromToWord(string celyObsah, params string[] hledaneSlova)
+    public static List<FromToWordString> ReturnOccurencesOfStringFromToWord(string celyObsah, params string[] hledaneSlova)
     {
         if (hledaneSlova == null || hledaneSlova.Length == 0)
         {
-            return new List<FromToWord>();
+            return new List<FromToWordString>();
         }
         celyObsah = celyObsah.ToLower();
-        List<FromToWord> vr = new List<FromToWord>();
+        List<FromToWordString> vr = new List<FromToWordString>();
         int l = celyObsah.Length;
         for (int i = 0; i < l; i++)
         {
@@ -2892,7 +2892,7 @@ public partial class SH : SHSH
                 }
                 if (vsechnoStejne)
                 {
-                    FromToWord ftw = new FromToWord();
+                    FromToWordString ftw = new FromToWordString();
                     ftw.from = i;
                     ftw.to = i + pridat - 1;
                     ftw.word = item;
