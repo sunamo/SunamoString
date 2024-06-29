@@ -16,7 +16,7 @@ public class TT
         return name.TrimEnd(AllChars.colon) + ": " + value;
     }
 
-    public static string NameValue(ABC winrar, string delimiter)
+    public static string NameValue(ABCString winrar, string delimiter)
     {
         StringBuilder builder = new StringBuilder();
         foreach (var item in winrar)

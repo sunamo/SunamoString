@@ -1,7 +1,7 @@
 namespace SunamoString;
 
 
-internal class SquareMapLines
+public class SquareMapLines
 {
     internal Dictionary<int, List<int>> cub;
     internal Dictionary<int, List<int>> sqb;

@@ -5,7 +5,7 @@ namespace SunamoString;
 ///     Must have always entered both from and to
 ///     None of event could have unlimited time!
 /// </summary>
-internal class FromToString : FromToTSHString<long>
+public class FromToString : FromToTSHString<long>
 {
     internal static FromToString Empty = new(true);
     internal FromToString()
@@ -26,7 +26,7 @@ internal class FromToString : FromToTSHString<long>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="ftUse"></param>
-    internal FromToString(long from, long to, FromToUse ftUse = FromToUse.DateTime)
+    internal FromToString(long from, long to, FromToUseString ftUse = FromToUseString.DateTime)
     {
         this.from = from;
         this.to = to;

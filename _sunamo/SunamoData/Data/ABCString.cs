@@ -1,10 +1,10 @@
 namespace SunamoString;
 
 
-internal class ABC : List<AB>//, IList<AB>
+public class ABCString : List<ABString>//, IList<AB>
 {
-    internal static ABC Empty = new ABC();
-    internal ABC()
+    internal static ABCString Empty = new ABCString();
+    internal ABCString()
     {
     }
     public override string ToString()
@@ -23,14 +23,14 @@ internal class ABC : List<AB>//, IList<AB>
             return Count;
         }
     }
-    internal ABC(int capacity) : base(capacity)
+    internal ABCString(int capacity) : base(capacity)
     {
         for (int i = 0; i < capacity; i++)
         {
             this.Add(null);
         }
     }
-    internal ABC(params Object[] setsNameValue)
+    internal ABCString(params Object[] setsNameValue)
     {
         if (setsNameValue.Length == 0)
         {
@@ -46,7 +46,7 @@ internal class ABC : List<AB>//, IList<AB>
             t2 = o2.GetType();
         }
         //var t2 = setsNameValue[0][0].GetType();
-        if (t2 == typeof(AB))
+        if (t2 == typeof(ABString))
         {
             //var abc = null;
             //if (true)
@@ -56,24 +56,24 @@ internal class ABC : List<AB>//, IList<AB>
             {
                 var snv = setsNameValue[i];
                 t2 = snv.GetType();
-                if (t2 == AB.type)
+                if (t2 == ABString.type)
                 {
-                    this.Add((AB)snv);
+                    this.Add((ABString)snv);
                 }
                 else
                 {
                     var ie = (IList)snv;
                     foreach (var item in ie)
                     {
-                        var ab = (AB)item;
+                        var ab = (ABString)item;
                         Add(ab);
                     }
                 }
             }
         }
-        else if (t == typeof(ABC))
+        else if (t == typeof(ABCString))
         {
-            var abc = (ABC)o;
+            var abc = (ABCString)o;
             this.AddRange(abc);
         }
         else
@@ -82,11 +82,11 @@ internal class ABC : List<AB>//, IList<AB>
             //var setsNameValue = CA.TwoDimensionParamsIntoOne(setsNameValue2);
             for (int i = 0; i < setsNameValue.Length; i++)
             {
-                this.Add(AB.Get(setsNameValue[i].ToString(), setsNameValue[++i]));
+                this.Add(ABString.Get(setsNameValue[i].ToString(), setsNameValue[++i]));
             }
         }
     }
-    internal ABC(params AB[] abc)
+    internal ABCString(params ABString[] abc)
     {
         // TODO: Complete member initialization
         this.AddRange(abc);
@@ -117,7 +117,7 @@ internal class ABC : List<AB>//, IList<AB>
         }
         return o;
     }
-    internal static List<object> OnlyBs(List<AB> arr)
+    internal static List<object> OnlyBs(List<ABString> arr)
     {
         return arr.Select(d => d.B).ToList();
     }

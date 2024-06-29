@@ -1,7 +1,7 @@
 namespace SunamoString;
 
 
-internal class SquareMap
+public class SquareMap
 {
     internal List<int> cub = new List<int>();
     internal List<int> sqb = new List<int>();

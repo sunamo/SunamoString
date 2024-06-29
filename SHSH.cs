@@ -119,9 +119,9 @@ public class SHSH
     /// </summary>
     /// <param name="input"></param>
     /// <param name="allWords"></param>
-    public static bool ContainsAll(string input, IList<string> allWords, ContainsCompareMethod ccm = ContainsCompareMethod.WholeInput)
+    public static bool ContainsAll(string input, IList<string> allWords, ContainsCompareMethodString ccm = ContainsCompareMethodString.WholeInput)
     {
-        if (ccm == ContainsCompareMethod.SplitToWords)
+        if (ccm == ContainsCompareMethodString.SplitToWords)
         {
             foreach (var item in allWords)
             {
@@ -131,7 +131,7 @@ public class SHSH
                 }
             }
         }
-        else if (ccm == ContainsCompareMethod.Negations)
+        else if (ccm == ContainsCompareMethodString.Negations)
         {
             foreach (var item in allWords)
             {
@@ -142,7 +142,7 @@ public class SHSH
                 }
             }
         }
-        else if (ccm == ContainsCompareMethod.WholeInput)
+        else if (ccm == ContainsCompareMethodString.WholeInput)
         {
             foreach (var item in allWords)
             {
@@ -453,7 +453,7 @@ public class SHSH
     /// <returns></returns>
     public static List<int> ReturnOccurencesOfString(string vcem, string co)
     {
-        vcem = NormalizeString(vcem);
+
         List<int> Results = new List<int>();
         for (int Index = 0; Index < (vcem.Length - co.Length) + 1; Index++)
         {

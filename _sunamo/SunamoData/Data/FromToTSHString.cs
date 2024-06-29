@@ -1,17 +1,17 @@
 namespace SunamoString;
 
 
-internal class FromToTSHString<T>
+public class FromToTSHString<T>
 {
-    
+
     internal bool empty;
     protected long fromL;
-    internal FromToUse ftUse = FromToUse.DateTime;
+    internal FromToUseString ftUse = FromToUseString.DateTime;
     protected long toL;
     internal FromToTSHString()
     {
         var t = typeof(T);
-        if (t == Types.tInt) ftUse = FromToUse.None;
+        if (t == Types.tInt) ftUse = FromToUseString.None;
     }
     /// <summary>
     ///     Use Empty contstant outside of class
@@ -28,7 +28,7 @@ internal class FromToTSHString<T>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="ftUse"></param>
-    internal FromToTSHString(T from, T to, FromToUse ftUse = FromToUse.DateTime) : this()
+    internal FromToTSHString(T from, T to, FromToUseString ftUse = FromToUseString.DateTime) : this()
     {
         this.from = from;
         this.to = to;
