@@ -1,5 +1,5 @@
 
-namespace SunamoStringShared;
+namespace SunamoString;
 internal class AllStrings
 {
     internal const string dot = ".";

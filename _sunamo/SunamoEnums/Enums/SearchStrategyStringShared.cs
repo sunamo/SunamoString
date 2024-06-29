@@ -1,4 +1,4 @@
-namespace SunamoStringShared;
+namespace SunamoString;
 
 
 /// <summary>
