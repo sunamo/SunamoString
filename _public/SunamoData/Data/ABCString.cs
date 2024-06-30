@@ -1,10 +1,10 @@
 namespace SunamoString;
 
 
-public class ABCString : List<ABString>//, IList<AB>
+public class ABCString : List<ABString>
 {
-    internal static ABCString Empty = new ABCString();
-    internal ABCString()
+    public static ABCString Empty = new ABCString();
+    public ABCString()
     {
     }
     public override string ToString()
@@ -16,21 +16,21 @@ public class ABCString : List<ABString>//, IList<AB>
         }
         return sb.ToString();
     }
-    internal int Length
+    public int Length
     {
         get
         {
             return Count;
         }
     }
-    internal ABCString(int capacity) : base(capacity)
+    public ABCString(int capacity) : base(capacity)
     {
         for (int i = 0; i < capacity; i++)
         {
             this.Add(null);
         }
     }
-    internal ABCString(params Object[] setsNameValue)
+    public ABCString(params Object[] setsNameValue)
     {
         if (setsNameValue.Length == 0)
         {
@@ -45,13 +45,13 @@ public class ABCString : List<ABString>//, IList<AB>
             var o2 = s.Count != 0 ? s[0] : null;
             t2 = o2.GetType();
         }
-        //var t2 = setsNameValue[0][0].GetType();
+        
         if (t2 == typeof(ABString))
         {
-            //var abc = null;
-            //if (true)
-            //{
-            //}
+            
+            
+            
+            
             for (int i = 0; i < setsNameValue.Length; i++)
             {
                 var snv = setsNameValue[i];
@@ -78,27 +78,27 @@ public class ABCString : List<ABString>//, IList<AB>
         }
         else
         {
-            // Dont use like idiot TwoDimensionParamsIntoOne where is not needed - just iterate. Must more use radio and less blindness
-            //var setsNameValue = CA.TwoDimensionParamsIntoOne(setsNameValue2);
+            
+            
             for (int i = 0; i < setsNameValue.Length; i++)
             {
                 this.Add(ABString.Get(setsNameValue[i].ToString(), setsNameValue[++i]));
             }
         }
     }
-    internal ABCString(params ABString[] abc)
+    public ABCString(params ABString[] abc)
     {
-        // TODO: Complete member initialization
+        
         this.AddRange(abc);
     }
-    /// <summary>
-    /// Must be [] due to SQL viz  https://stackoverflow.com/questions/9149919/no-mapping-exists-from-object-type-system-collections-generic-list-when-executin
-    /// </summary>
-    internal Object[] OnlyBs()
+    
+    
+    
+    public Object[] OnlyBs()
     {
         return OnlyBsList().ToArray();
     }
-    internal List<object> OnlyBsList()
+    public List<object> OnlyBsList()
     {
         List<object> o = new List<object>(this.Count);
         for (int i = 0; i < this.Count; i++)
@@ -107,7 +107,7 @@ public class ABCString : List<ABString>//, IList<AB>
         }
         return o;
     }
-    internal List<string> OnlyAs()
+    public List<string> OnlyAs()
     {
         List<string> o = new List<string>(this.Count);
         CASunamoExceptions.InitFillWith(o, this.Count);
@@ -117,7 +117,7 @@ public class ABCString : List<ABString>//, IList<AB>
         }
         return o;
     }
-    internal static List<object> OnlyBs(List<ABString> arr)
+    public static List<object> OnlyBs(List<ABString> arr)
     {
         return arr.Select(d => d.B).ToList();
     }
