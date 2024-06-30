@@ -1,6 +1,6 @@
 namespace SunamoString;
 
-internal partial class BTS
+internal class BTS
 {
     //        #region  from BTSShared64.cs
     internal static int lastInt = -1;

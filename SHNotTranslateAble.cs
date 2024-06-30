@@ -6,7 +6,7 @@ namespace SunamoString;
 
 
 
-public static partial class SHNotTranslateAble
+public static class SHNotTranslateAble
 {
     /// <summary>
     /// Due to app take to2 which is \\\\" and first line dont have ending quote

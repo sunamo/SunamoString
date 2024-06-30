@@ -3,7 +3,7 @@ namespace SunamoString;
 using Diacritics.Extensions;
 
 
-public partial class SH : SHSH
+public class SH : SHSH
 {
     #region 
     /*
