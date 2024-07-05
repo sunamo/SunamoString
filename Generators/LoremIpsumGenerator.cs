@@ -1,4 +1,4 @@
-namespace SunamoString;
+namespace SunamoString.Generators;
 
 public static class LoremIpsumGenerator
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SunamoString;
+namespace SunamoString._sunamo.SunamoNumbers;
 internal class NH
 {
     internal static string JoinAnotherTokensIfIsNumber(List<string> p, int i)

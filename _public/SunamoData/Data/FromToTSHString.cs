@@ -1,4 +1,4 @@
-namespace SunamoString;
+namespace SunamoString._public.SunamoData.Data;
 
 
 public class FromToTSHString<T>

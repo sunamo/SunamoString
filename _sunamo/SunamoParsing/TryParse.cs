@@ -1,4 +1,4 @@
-namespace SunamoString;
+namespace SunamoString._sunamo.SunamoParsing;
 
 
 internal class TryParse

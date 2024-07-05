@@ -1,4 +1,4 @@
-namespace SunamoString;
+namespace SunamoString.Delegates;
 
 public class StringDelegates
 {

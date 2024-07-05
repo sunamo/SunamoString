@@ -1,4 +1,4 @@
-namespace SunamoString;
+namespace SunamoString._sunamo.SunamoExceptions.OnlyInSE;
 
 using System.Collections;
 using System.Text;
