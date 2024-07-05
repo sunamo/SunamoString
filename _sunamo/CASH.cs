@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 internal class CASH
 {
-    public static bool HasIndex(int dex, Array col)
+    internal static bool HasIndex(int dex, Array col)
     {
         return col.Length > dex;
     }
-    public static bool HasIndex(int p, IList nahledy)
+    internal static bool HasIndex(int p, IList nahledy)
     {
         if (p < 0)
         {
