@@ -1,4 +1,3 @@
-
 namespace SunamoString._sunamo.SunamoExceptions._AddedToAllCsproj;
 internal class CASunamoExceptions
 {

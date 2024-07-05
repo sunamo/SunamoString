@@ -40,3 +40,7 @@ global using SunamoString._sunamo.SunamoExceptions.OnlyInSE;
 global using SunamoString._sunamo.SunamoExceptions._AddedToAllCsproj;
 global using SunamoString._sunamo.SunamoValues.Constants;
 global using SunamoString._sunamo.SunamoValues.Values;
+global using Diacritics.Extensions;
+global using System.Diagnostics;
+global using System.Net;
+global using System.Threading.Tasks;

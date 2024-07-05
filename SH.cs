@@ -1,6 +1,4 @@
-
 namespace SunamoString;
-using Diacritics.Extensions;
 
 
 public class SH : SHSH

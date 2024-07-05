@@ -1,8 +1,4 @@
-
 namespace SunamoString;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
 //using SunamoValues;
 public class SHSH
 {
