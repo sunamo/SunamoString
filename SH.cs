@@ -1,6 +1,5 @@
 namespace SunamoString;
 
-
 public class SH : SHSH
 {
     public static string ToPascalCase(string str)
@@ -99,7 +98,7 @@ public class SH : SHSH
     }
     public static string SwitchSwap(string co, string v)
     {
-        var p = SHSplit.Split(co, v);
+        var p = SHSplit.SplitMore(co, v);
         if (p.Count == 2)
         {
             return p[1] + AllStrings.comma + p[0];
@@ -887,7 +886,7 @@ public class SH : SHSH
     }
     public static List<string> GetLinesList(string p)
     {
-        return SHSplit.Split(p, Environment.NewLine).ToList();
+        return SHSplit.SplitMore(p, Environment.NewLine).ToList();
     }
     public static string GetStringNL(List<string> list)
     {
@@ -1264,13 +1263,13 @@ public class SH : SHSH
         }
         return p;
     }
-    //public static List<string> SplitChar(string parametry, params char[] deli)
+    //public static List<string> SplitCharMore(string parametry, params char[] deli)
     //{
-    //    return se.SHSplit.SplitChar(parametry, deli);
+    //    return se.SHSplit.SplitCharMore(parametry, deli);
     //}
     //public static List<string> Split(string parametry, params string[] deli)
     //{
-    //    return se.SHSplit.Split(parametry, deli);
+    //    return se.SHSplit.SplitMore(parametry, deli);
     //}
     /// <summary>
     /// Will be delete after final refactoring
@@ -1410,7 +1409,7 @@ public class SH : SHSH
     /// <returns></returns>
     public static int FirstWordWhichIsNumber(string nameTrim, int probablyIndex, bool joinAnotherWordsIfIsAlsoNumber = false)
     {
-        var p = SHSplit.Split(nameTrim, AllStrings.space);
+        var p = SHSplit.SplitMore(nameTrim, AllStrings.space);
         if (p.Count > probablyIndex)
         {
             if (BTS.IsInt(p[probablyIndex]))
@@ -1637,7 +1636,7 @@ public class SH : SHSH
     }
     public static string GetWordOnIndex(string line, int v)
     {
-        var p = SHSplit.Split(line, SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true).ToArray());
+        var p = SHSplit.SplitMore(line, SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces(true).ToArray());
         if (p.Count < v)
         {
             throw new Exception("\"" + line + "\"" + " don't have " + v + " words");
@@ -1942,7 +1941,7 @@ public class SH : SHSH
     /// <returns></returns>
     public static string FirstCharOfEveryWordPart(string value, string deli)
     {
-        var p = SHSplit.Split(value, deli);
+        var p = SHSplit.SplitMore(value, deli);
         StringBuilder sb = new StringBuilder();
         foreach (var item in p)
         {
@@ -2133,7 +2132,7 @@ public class SH : SHSH
     }
     public static string RemoveUselessWhitespaces(string innerText)
     {
-        var p = SHSplit.SplitChar(innerText);
+        var p = SHSplit.SplitCharMore(innerText);
         return string.Join(AllStrings.space, p);
     }
     /// <summary>
@@ -2147,7 +2146,7 @@ public class SH : SHSH
     public static string ShortToLengthByParagraph(string c, int maxLength)
     {
         //var delimiter = SH.PadRight(string.Empty, Environment.NewLine, 2);
-        var p = SHSplit.SplitChar(c, AllChars.whiteSpacesChars.ToArray());
+        var p = SHSplit.SplitCharMore(c, AllChars.whiteSpacesChars.ToArray());
         while (c.Length + p.Count > maxLength)
         {
             if (p.Count > 1)
@@ -2460,7 +2459,7 @@ public class SH : SHSH
             return string.Empty;
         }
         v = NormalizeString(v);
-        var p = SHSplit.Split(v, AllStrings.space);
+        var p = SHSplit.SplitMore(v, AllStrings.space);
         p[0] = AllStrings.lb + p[0] + AllStrings.rb;
         return string.Join(AllStrings.space, p);
     }
@@ -2560,7 +2559,7 @@ public class SH : SHSH
     /// <param name="p2"></param>
     public static List<string> RemoveDuplicates(string input, string delimiter)
     {
-        var split = SHSplit.Split(input, delimiter);
+        var split = SHSplit.SplitMore(input, delimiter);
         return split.Distinct().ToList();
         //return CAG.RemoveDuplicitiesList(new List<string>(split));
     }
@@ -3136,7 +3135,7 @@ public class SH : SHSH
     /// <param name="dash"></param>
     private static string FirstCharOfEveryWordUpper(string v, char dash)
     {
-        var p = SHSplit.SplitChar(v, dash);
+        var p = SHSplit.SplitCharMore(v, dash);
         for (int i = 0; i < p.Count; i++)
         {
             p[i] = SH.FirstCharUpper(p[i]);

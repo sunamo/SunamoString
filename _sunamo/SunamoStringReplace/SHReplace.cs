@@ -36,7 +36,7 @@ internal class SHReplace
         var l = SHGetLines.GetLines(v);
         foreach (var item in l)
         {
-            var p = SHSunamoExceptions.Split(item, delimiter);
+            var p = SHSplit.SplitMore(item, delimiter);
             p = p.ConvertAll(d => d.Trim());
             string from, to;
             from = to = null;

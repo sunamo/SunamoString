@@ -1,4 +1,5 @@
 namespace SunamoString;
+
 //using SunamoValues;
 public class SHSH
 {
@@ -74,12 +75,12 @@ public class SHSH
                 {
                     if (caseSensitive)
                     {
-                        var allWords = term.Split(new String[] { AllStrings.space }, StringSplitOptions.RemoveEmptyEntries).ToList();// SHSplit.Split(term, );
+                        var allWords = term.Split(new String[] { AllStrings.space }, StringSplitOptions.RemoveEmptyEntries).ToList();// SHSplit.SplitMore(term, );
                         return ContainsAll(input, allWords);
                     }
                     else
                     {
-                        var allWords = term.Split(new String[] { AllStrings.space }, StringSplitOptions.RemoveEmptyEntries).ToList();// SHSplit.Split(term, AllStrings.space);
+                        var allWords = term.Split(new String[] { AllStrings.space }, StringSplitOptions.RemoveEmptyEntries).ToList();// SHSplit.SplitMore(term, AllStrings.space);
                         for (int i = 0; i < allWords.Count; i++)
                         {
                             allWords[i] = allWords[i].ToLower();
