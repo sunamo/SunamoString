@@ -3,6 +3,31 @@ namespace SunamoString;
 
 public class SH : SHSH
 {
+    public static string ToPascalCase(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return str;
+        // Rozdělení řetězce na slova
+        string[] words = str.Split(' ');
+        // Kapitalizace prvního písmene každého slova
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].Length > 0)
+            {
+                words[i] = words[i][0].ToString().ToUpper() + words[i].Substring(1);
+            }
+        }
+        // Spojení slov do Pascal konvence
+        return string.Join("", words);
+    }
+
+    public static bool StartWithWhitespace(string s)
+    {
+        // toto nefungovalo
+        //return new List<char>(['\n', '\r', '\t', ' ']).Any(d => s.StartsWith(d));
+        return s.TrimStart() != s;
+    }
+
     #region 
     /*
      * Můžou být pouze zde a nikoliv ve SunamoStringData
