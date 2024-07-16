@@ -31,7 +31,7 @@ public class SH
     /// <param name="caseSensitive"></param>
     public static bool ContainsBoolBool(string input, string term, bool enoughIsContainsAttribute, bool caseSensitive)
     {
-        return Contains(input, term, enoughIsContainsAttribute ? SearchStrategyStringShared.AnySpaces : SearchStrategyStringShared.ExactlyName, caseSensitive);
+        return Contains(input, term, enoughIsContainsAttribute ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName, caseSensitive);
     }
     /// <summary>
     /// AnySpaces - split A2 by spaces and A1 must contains all parts
@@ -42,11 +42,11 @@ public class SH
     /// <param name="term"></param>
     /// <param name="searchStrategy"></param>
     /// <param name="caseSensitive"></param>
-    public static bool Contains(string input, string term, SearchStrategyStringShared searchStrategy, bool caseSensitive)
+    public static bool Contains(string input, string term, SearchStrategy searchStrategy, bool caseSensitive)
     {
         if (term != "")
         {
-            if (searchStrategy == SearchStrategyStringShared.ExactlyName)
+            if (searchStrategy == SearchStrategy.ExactlyName)
             {
                 if (caseSensitive)
                 {
@@ -59,7 +59,7 @@ public class SH
             }
             else
             {
-                if (searchStrategy == SearchStrategyStringShared.FixedSpace)
+                if (searchStrategy == SearchStrategy.FixedSpace)
                 {
                     if (caseSensitive)
                     {
@@ -160,7 +160,7 @@ public class SH
     /// </summary>
     /// <param name="input"></param>
     /// <param name="what"></param>
-    public static bool Contains(string input, string term, SearchStrategyStringShared searchStrategy = SearchStrategyStringShared.FixedSpace)
+    public static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace)
     {
         return Contains(input, term, searchStrategy, true);
     }

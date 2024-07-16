@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>24.7.16.2</Version>
+    <Version>24.7.16.3</Version>
     <Description>A large number of methods for string operations</Description>
     <Authors>www.sunamo.cz</Authors>
     <Copyright>www.sunamo.cz</Copyright>
@@ -12,12 +12,14 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReleaseNotes>Enum renamed</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Diacritics" Version="3.3.27" />
     <None Include="readme.md" Pack="True" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="_sunamo\SunamoEnums\Enums\" />
     <Folder Include="_sunamo\SunamoStringShared\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
