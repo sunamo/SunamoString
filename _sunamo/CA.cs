@@ -1,9 +1,7 @@
-﻿namespace SunamoString._sunamo;
-
+//namespace SunamoString._sunamo;
 
 internal class CA
 {
-
     internal static void InitFillWith(List<string> datas, int pocet, string initWith = Consts.stringEmpty)
     {
         InitFillWith<string>(datas, pocet, initWith);
@@ -62,7 +60,7 @@ internal class CA
     {
         var first = First(v2);
         if (Count(v2) == 1 && (first == "System.Collections.Generic.List`1[System.String]" ||
-        first == "System.Collections.Generic.List`1[System.Object]")) return true;
+                               first == "System.Collections.Generic.List`1[System.Object]")) return true;
         return false;
     }
 
@@ -84,4 +82,13 @@ internal class CA
         }
         return false;
     }
+
+    internal static bool IsListStringWrappedInArray<T>(List<T> v2)
+    {
+        var first = v2.First().ToString();
+        if (v2.Count == 1 && (first == "System.Collections.Generic.List`1[System.String]" ||
+                              first == "System.Collections.Generic.List`1[System.Object]")) return true;
+        return false;
+    }
+
 }

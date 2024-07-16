@@ -1,8 +1,7 @@
-namespace SunamoString;
+//namespace SunamoString;
 
-public class SH
+internal class SH
 {
-
     public static string WhiteSpaceFromStart(string v)
     {
         StringBuilder sb = new StringBuilder();
@@ -210,8 +209,8 @@ public class SH
         {
             if (char.IsUpper(text[i]))
                 if ((text[i - 1] != add && !char.IsUpper(text[i - 1])) ||
-                (preserveAcronyms && char.IsUpper(text[i - 1]) &&
-                i < text.Length - 1 && !char.IsUpper(text[i + 1])))
+                    (preserveAcronyms && char.IsUpper(text[i - 1]) &&
+                     i < text.Length - 1 && !char.IsUpper(text[i + 1])))
                     newText.Append(add);
             newText.Append(text[i]);
         }
@@ -354,7 +353,7 @@ public class SH
         //l.AddRange(l2);
         occL.Sort();
         var result = l; //l.OrderByDescending(d => d.Item1).ToList();
-                        //
+        //
         List<int> alreadyProcessed = new List<int>();
         int dx = -1;
         for (int y = 0; y < result.Count; y++)
@@ -616,7 +615,7 @@ public class SH
     /// <param name="begin"></param>
     /// <param name="end"></param>
     public static string GetTextBetweenTwoChars(string p, char beginS, char endS,
-    bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
+        bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
     {
         var begin = p.IndexOf(beginS);
         var end = -1;
@@ -771,12 +770,12 @@ public class SH
             bracketsLeft.Add(Brackets.Curly, '{');
             bracketsLeft.Add(Brackets.Square, '[');
             bracketsLeft.Add(Brackets.Normal, '(');
-            bracketsLeftList = bracketsLeft.Values.ToList();
+            bracketsLeftList = Enumerable.ToList<char>(bracketsLeft.Values);
             bracketsRight = new Dictionary<Brackets, char>();
             bracketsRight.Add(Brackets.Curly, '}');
             bracketsRight.Add(Brackets.Square, ']');
             bracketsRight.Add(Brackets.Normal, ')');
-            bracketsRightList = bracketsRight.Values.ToList();
+            bracketsRightList = Enumerable.ToList<char>(bracketsRight.Values);
         }
     }
     #endregion
@@ -800,8 +799,8 @@ public class SH
     public static List<int> GetIndexesOfLinesStartingWith(List<string> list, Func<string, bool> predicate)
     {
         List<int> allIndices = list.Select((s, i) => new { Str = s, Index = i })
-    .Where(x => predicate(x.Str))
-    .Select(x => x.Index).ToList();
+            .Where(x => predicate(x.Str))
+            .Select(x => x.Index).ToList();
         return allIndices;
     }
     public static string RemoveLinesWhichContains(string p, string c)
@@ -924,8 +923,8 @@ public class SH
     }
     public static string ReplaceBrackets(string item, Brackets from, Brackets to)
     {
-        item = item.Replace(bracketsLeft[from], bracketsLeft[to]);
-        item = item.Replace(bracketsRight[from], bracketsRight[to]);
+        item = item.Replace((char)bracketsLeft[from], bracketsLeft[to]);
+        item = item.Replace((char)bracketsRight[from], bracketsRight[to]);
         return item;
     }
     public static List<int> ContainsAnyFromElement(StringBuilder s, IList<string> list)
@@ -1137,7 +1136,7 @@ public class SH
     }
     public static List<string> AddSpaceAfterFirstLetterForEveryAndSort(List<string> input)
     {
-        _sunamo.CA.Trim(input);
+        CA.Trim(input);
         for (int i = 0; i < input.Count; i++)
         {
             input[i] = input[i].Insert(1, AllStrings.space);
@@ -1754,7 +1753,7 @@ public class SH
         }
         string result = stringBuilder.ToString();
         return string.Join("_", result.Split(new char[] { '_' }
-        , StringSplitOptions.RemoveEmptyEntries)); // remove duplicate underscores
+            , StringSplitOptions.RemoveEmptyEntries)); // remove duplicate underscores
     }
     public static string StripFunctationsAndSymbols(string p)
     {
@@ -2337,7 +2336,7 @@ public class SH
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public static List<T> ContainsAny<T>(/*T itemT,*/ /*IList<T> containsT,*/
-       bool checkInCaseOnlyOneString, T item, IList<T> contains)
+        bool checkInCaseOnlyOneString, T item, IList<T> contains)
     {
         throw new Exception("Tahle metoda je celá špatně, používat vždy jinou. Je tu stejná metoda ContainsAny jen negenerická");
         //Type type = typeof(T);
@@ -2708,7 +2707,7 @@ public class SH
         //Environment.NewLine
         v = v.Replace("\t", "\r");
         var l = SHGetLines.GetLines(v);
-        _sunamo.CA.Trim(l);
+        CA.Trim(l);
         l = l.Where(d => d.Trim() != string.Empty).ToList();
         return string.Join(Environment.NewLine, l);
     }
@@ -2978,7 +2977,7 @@ public class SH
             for (int i = add.Count - 1; i >= 0; i--)
             {
                 Brackets b = GetBracketFromBegin(add[i]);
-                sb.Append(bracketsRight[b]);
+                sb.Append((char)bracketsRight[b]);
             }
             sb.Append(AllChars.sc);
         }
@@ -3920,12 +3919,12 @@ public class SH
                     actualCharFormatData++;
                     processed++;
                     actualChar++;
-                    if (!_sunamo.CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
+                    if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
                     {
                         return false;
                     }
                     actualFormatData = tfd[actualCharFormatData];
-                    if (_sunamo.CA.HasIndex(actualCharFormatData + 1, tfd))
+                    if (CA.HasIndex(actualCharFormatData + 1, tfd))
                     {
                         followingFormatData = tfd[actualCharFormatData + 1];
                     }
@@ -3949,12 +3948,12 @@ public class SH
             if (remains == 0)
             {
                 ++actualCharFormatData;
-                if (!_sunamo.CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
+                if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar)
                 {
                     return false;
                 }
                 actualFormatData = tfd[actualCharFormatData];
-                if (_sunamo.CA.HasIndex(actualCharFormatData + 1, tfd))
+                if (CA.HasIndex(actualCharFormatData + 1, tfd))
                 {
                     followingFormatData = tfd[actualCharFormatData + 1];
                 }
@@ -4079,7 +4078,7 @@ public class SH
     public static string NullToStringOrDefault(object n, string v)
     {
         throw new Exception(
-        "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
+            "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
         return null;
         //return n == null ? " " + Consts.nulled : AllStrings.space + v.ToString();
     }
@@ -4107,4 +4106,6 @@ public class SH
         while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
         return name;
     }
+
+
 }
