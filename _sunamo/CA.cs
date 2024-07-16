@@ -1,4 +1,4 @@
-//namespace SunamoString._sunamo;
+namespace SunamoString._sunamo;
 
 internal class CA
 {

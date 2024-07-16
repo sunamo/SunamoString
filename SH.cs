@@ -1,6 +1,6 @@
-//namespace SunamoString;
+namespace SunamoString;
 
-internal class SH
+public class SH
 {
     public static string WhiteSpaceFromStart(string v)
     {
