@@ -1,7 +1,5 @@
 namespace SunamoString;
 
-
-
 /// <summary>
 /// Text Templates
 /// </summary>

@@ -1,7 +1,6 @@
 namespace SunamoString._sunamo.SunamoExceptions;
 
-
-internal class SHSE
+internal class SH
 {
     internal static string JoinNL(List<string> l)
     {
@@ -72,7 +71,7 @@ internal class SHSE
         throw new Exception(
         "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
         return null;
-        //return n == null ? " " + ConstsSE.nulled : AllStrings.space + v.ToString();
+        //return n == null ? " " + Consts.nulled : AllStrings.space + v.ToString();
     }
     /// <summary>
     ///     Usage: BadFormatOfElementInList

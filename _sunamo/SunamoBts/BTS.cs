@@ -93,7 +93,7 @@ internal class BTS
             return false;
         }
 
-        id = id.Replace(" ", ""); //SHReplaceSH.ReplaceAll4(, "", " ");
+        id = id.Replace(" ", ""); //SHReplace.ReplaceAll4(, "", " ");
         Replace(ref id, replaceCommaForDot);
 
         bool vr = long.TryParse(id, out lastLong);

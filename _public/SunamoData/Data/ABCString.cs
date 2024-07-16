@@ -1,6 +1,5 @@
 namespace SunamoString._public.SunamoData.Data;
 
-
 public class ABCString : List<ABString>
 {
     public static ABCString Empty = new ABCString();

@@ -1,4 +1,5 @@
 namespace SunamoString._sunamo.SunamoNumbers;
+
 internal class NH
 {
     internal static string JoinAnotherTokensIfIsNumber(List<string> p, int i)

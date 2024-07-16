@@ -1,7 +1,5 @@
 namespace SunamoString._sunamo.SunamoStringReplace;
 
-
-
 //namespace SunamoString;
 internal class SHReplace
 {

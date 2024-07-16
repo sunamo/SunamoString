@@ -1,7 +1,6 @@
 namespace SunamoString._sunamo.SunamoExceptions.InSunamoIsDerivedFrom;
 
-
-internal class CASE
+internal class CA
 {
     internal static void InitFillWith(List<string> datas, int pocet, string initWith = Consts.stringEmpty)
     {
