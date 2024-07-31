@@ -2,6 +2,55 @@ namespace SunamoString;
 
 public class SH
 {
+    /// <summary>
+    /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
+    /// </summary>
+    /// <param name="input"></param>
+    /// <param name="term"></param>
+    /// <param name="searchStrategy"></param>
+    /// <param name="caseSensitive"></param>
+    /// <returns></returns>
+    public static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false)
+    {
+
+
+        if (!caseSensitive)
+        {
+            input = input.ToLower();
+            term = term.ToLower();
+        }
+
+        // musel bych dotáhnout min 2 metody a další enumy
+        if (searchStrategy == SearchStrategy.ExactlyName)
+        {
+            return input == term;
+        }
+
+        if (searchStrategy == SearchStrategy.AnySpaces)
+        {
+            var nonLetterNumberChars = input.Where(ch => !char.IsLetterOrDigit(ch)).ToList();
+            nonLetterNumberChars.AddRange(term.Where(ch => !char.IsLetterOrDigit(ch)));
+            nonLetterNumberChars = nonLetterNumberChars.Distinct().ToList();
+            var nonLetterNumberCharsArray = nonLetterNumberChars.ToArray();
+
+            var pInput = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+            var pTerm = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+            bool containsAll = true;
+            foreach (var item in pTerm)
+            {
+                if (!pInput.Contains(item))
+                {
+                    containsAll = false;
+                    break;
+                }
+            }
+
+            return containsAll;
+        }
+
+        return input.Contains(term);
+    }
+
     public static string WhiteSpaceFromStart(string v)
     {
         StringBuilder sb = new StringBuilder();
