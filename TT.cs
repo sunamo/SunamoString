@@ -1,7 +1,7 @@
 namespace SunamoString;
 
 /// <summary>
-/// Text Templates
+///     Text Templates
 /// </summary>
 public class TT
 {
@@ -15,11 +15,8 @@ public class TT
 
     public static string NameValue(ABCString winrar, string delimiter)
     {
-        StringBuilder builder = new StringBuilder();
-        foreach (var item in winrar)
-        {
-            builder.Append(NameValue(item.A, item.B.ToString()) + delimiter);
-        }
+        var builder = new StringBuilder();
+        foreach (var item in winrar) builder.Append(NameValue(item.A, item.B.ToString()) + delimiter);
         return builder.ToString();
     }
 }

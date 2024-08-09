@@ -1,31 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Version>24.7.31.1</Version>
-    <Description>A large number of methods for string operations</Description>
-    <Authors>www.sunamo.cz</Authors>
-    <Copyright>www.sunamo.cz</Copyright>
-    <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/sunamo/SunamoString.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PackageReleaseNotes>Improved searching when contains non digit/letter</PackageReleaseNotes>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Diacritics" Version="3.3.27" />
-    <None Include="readme.md" Pack="True" PackagePath="." />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_sunamo\SunamoEnums\Enums\" />
-    <Folder Include="_sunamo\SunamoStringShared\" />
-  </ItemGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoString;SunamoString.csproj</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoString;SunamoString.csproj</DefineConstants>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Version>24.7.31.1</Version>
+        <Description>A large number of methods for string operations</Description>
+        <Authors>www.sunamo.cz</Authors>
+        <Copyright>www.sunamo.cz</Copyright>
+        <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/sunamo/SunamoString.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageReleaseNotes>Improved searching when contains non digit/letter</PackageReleaseNotes>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Diacritics" Version="3.3.27"/>
+        <None Include="readme.md" Pack="True" PackagePath="."/>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="_sunamo\SunamoEnums\Enums\"/>
+        <Folder Include="_sunamo\SunamoStringShared\"/>
+    </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DefineConstants>$(DefineConstants);ASYNC;SunamoString;SunamoString.csproj</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DefineConstants>$(DefineConstants);ASYNC;SunamoString;SunamoString.csproj</DefineConstants>
+    </PropertyGroup>
 </Project>

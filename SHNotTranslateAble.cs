@@ -1,14 +1,9 @@
 namespace SunamoString;
 
-
-
-
-
-
 public static class SHNotTranslateAble
 {
     /// <summary>
-    /// Due to app take to2 which is \\\\" and first line dont have ending quote
+    ///     Due to app take to2 which is \\\\" and first line dont have ending quote
     /// </summary>
     /// <param name="value"></param>
     public static string DecodeSlashEncodedString(string value)
