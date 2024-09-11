@@ -1,4 +1,6 @@
+
 namespace SunamoString;
+using SunamoString._public;
 
 public class SH
 {
@@ -9,12 +11,14 @@ public class SH
     public static string xMismatchCountInInputArraysOfSHAllHaveRightFormat =
         "MismatchCountInInputArraysOfSHAllHaveRightFormat";
 
-    public static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
+    public static bool ContainsCl(string input, StringOrStringList termO, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
     {
+        string term = null;
+
         if (!caseSensitive)
         {
             input = input.ToLower();
-            term = term.ToLower();
+            term = termO.GetString().ToLower();
         }
 
         // musel bych dotáhnout min 2 metody a další enumy
@@ -25,13 +29,19 @@ public class SH
 
         if (searchStrategy == SearchStrategy.AnySpaces)
         {
-            var nonLetterNumberChars = input.Where(ch => !char.IsLetterOrDigit(ch)).ToList();
-            nonLetterNumberChars.AddRange(term.Where(ch => !char.IsLetterOrDigit(ch)));
-            nonLetterNumberChars = nonLetterNumberChars.Distinct().ToList();
-            var nonLetterNumberCharsArray = nonLetterNumberChars.ToArray();
+            var pInput = input.Split(input.Where(ch => !char.IsLetterOrDigit(ch)).ToArray(), StringSplitOptions.RemoveEmptyEntries);
+            var pTerm = termO.GetList();
 
-            var pInput = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
-            var pTerm = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+            if (pInput.Length == 1)
+            {
+                foreach (var item in pTerm)
+                {
+                    if (!input.Contains(item))
+                    {
+                        return false;
+                    }
+                }
+            }
 
             if (isEnoughPartialContainsOfSplitted)
             {

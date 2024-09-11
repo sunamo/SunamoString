@@ -36,3 +36,4 @@ global using SunamoString;
 global using SunamoString.Delegates;
 global using SunamoString.Generators;
 global using SunamoString._sunamo.SunamoParsing;
+global using SunamoString._public;
