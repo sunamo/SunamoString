@@ -11,7 +11,7 @@ public class FromToTSHString<T>
     public FromToTSHString()
     {
         var t = typeof(T);
-        if (t == Types.tInt) ftUse = FromToUseString.None;
+        if (t == typeof(int)) ftUse = FromToUseString.None;
     }
 
 

@@ -1,4 +1,3 @@
-
 namespace SunamoString;
 using SunamoString._public;
 
@@ -1065,7 +1064,7 @@ public class SH
     }
 
     /// <summary>
-    ///     když je v souboru rozsypaný čaj, přečíst přes TF.ReadAllText, převést přes SH.ChangeEncodingProcessWrongCharacters.
+    ///     když je v souboru rozsypaný čaj, přečíst přes File.ReadAllText, převést přes SH.ChangeEncodingProcessWrongCharacters.
     ///     Pokud u žádného není text smysluplný, je to beznadějně poškozené.
     ///     V opačném případě 10 kódování by mělo být v pořádku.
     /// </summary>
