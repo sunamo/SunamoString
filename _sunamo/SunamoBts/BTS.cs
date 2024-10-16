@@ -38,7 +38,7 @@ internal class BTS
         }
 
         Replace(ref id, replace);
-        return float.TryParse(id.Replace(AllStrings.comma, AllStrings.dot), out lastFloat);
+        return float.TryParse(id.Replace(",", "."), out lastFloat);
     }
 
     internal static bool IsDouble(string id, bool replace = false)
@@ -49,7 +49,7 @@ internal class BTS
         }
 
         Replace(ref id, replace);
-        return double.TryParse(id.Replace(AllStrings.comma, AllStrings.dot), out lastDouble);
+        return double.TryParse(id.Replace(",", "."), out lastDouble);
     }
 
 

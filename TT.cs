@@ -10,7 +10,7 @@ public class TT
     /// <param name="value"></param>
     public static string NameValue(string name, string value)
     {
-        return name.TrimEnd(AllChars.colon) + ": " + value;
+        return name.TrimEnd(':') + ": " + value;
     }
 
     public static string NameValue(ABCString winrar, string delimiter)

@@ -1,27 +1,25 @@
 namespace SunamoString._public.SunamoData.Data;
 
 
-
-
-
 public class CharFormatDataString
 {
-    
-    
-    
-    
+
+
+
+
     public bool? upper = false;
-    
-    
-    
+
+
+
     public char[] mustBe = null;
     public static class Templates
     {
-        public static CharFormatDataString dash = Get(null, new FromToString(1, 1), AllChars.dash);
-        public static CharFormatDataString notNumber = Get(null, new FromToString(1, 1), AllChars.notNumber);
-        
-        
-        
+        static char notNumberChar = (char)9;
+        public static CharFormatDataString dash = Get(null, new FromToString(1, 1), '-');
+        public static CharFormatDataString notNumber = Get(null, new FromToString(1, 1), notNumberChar);
+
+
+
         public static CharFormatDataString twoLetterNumber;
         static Templates()
         {
@@ -42,18 +40,20 @@ public class CharFormatDataString
     }
     public static CharFormatDataString GetOnlyNumbers(FromToString requiredLength)
     {
+        LetterAndDigitCharService letterAndDigitChar = new();
+
         CharFormatDataString data = new CharFormatDataString();
         data.fromTo = requiredLength;
-        data.mustBe = AllChars.numericChars.ToArray();
+        data.mustBe = letterAndDigitChar.numericChars.ToArray();
         return data;
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     public static CharFormatDataString Get(bool? upper, FromToString fromTo, params char[] mustBe)
     {
         CharFormatDataString data = new CharFormatDataString(upper, mustBe);
