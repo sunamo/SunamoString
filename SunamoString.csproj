@@ -16,12 +16,16 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Diacritics" Version="3.3.27" />
-    <None Include="readme.md" Pack="True" PackagePath="." />
+    <Compile Remove="_sunamo\SunamoEnums\**" />
+    <Compile Remove="_sunamo\SunamoStringShared\**" />
+    <EmbeddedResource Remove="_sunamo\SunamoEnums\**" />
+    <EmbeddedResource Remove="_sunamo\SunamoStringShared\**" />
+    <None Remove="_sunamo\SunamoEnums\**" />
+    <None Remove="_sunamo\SunamoStringShared\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="_sunamo\SunamoEnums\Enums\" />
-    <Folder Include="_sunamo\SunamoStringShared\" />
+    <PackageReference Include="Diacritics" Version="3.3.27" />
+    <None Include="readme.md" Pack="True" PackagePath="." />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoString;SunamoString.csproj</DefineConstants>
