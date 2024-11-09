@@ -3623,7 +3623,7 @@ public class SH
                 //return p;
             }
 
-            vr = p.Substring(dxOfFounded, length).Trim();
+            vr = p.Substring(dxOfFounded, length);
         }
         else
         {
@@ -3635,7 +3635,7 @@ public class SH
             //vr = p;
         }
 
-        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničil i 
+        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničili i tam kde bylo AllChars.space. Doteď jsem vůbec nevěděl co to způsobuje a to jsem už tímhle opravil celé pinp. 
         return vr;
     }
 
