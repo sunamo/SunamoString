@@ -3635,7 +3635,8 @@ public class SH
             //vr = p;
         }
 
-        return vr.Trim();
+        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničil i 
+        return vr;
     }
 
     public static bool EndsWith(string input, string endsWith)
