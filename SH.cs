@@ -2150,7 +2150,7 @@ public class SH
     public static int FirstWordWhichIsNumber(string nameTrim, int probablyIndex,
         bool joinAnotherWordsIfIsAlsoNumber = false)
     {
-        var p = SHSplit.SplitMore(nameTrim, "");
+        var p = SHSplit.SplitMore(nameTrim, " ");
         if (p.Count > probablyIndex)
         {
             if (BTS.IsInt(p[probablyIndex]))
@@ -3363,7 +3363,7 @@ public class SH
             if (dex != -1) title = title.Substring(0, dex + 1);
         }
 
-        title = title.Replace("", string.Empty)
+        title = title.Replace(" ", string.Empty)
             .Trim(); //SHReplace.ReplaceAll(title, "", "").Trim();
         return title;
     }

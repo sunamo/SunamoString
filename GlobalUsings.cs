@@ -35,3 +35,4 @@ global using SunamoString.Generators;
 global using SunamoString._public;
 global using SunamoString._sunamo.SunamoParsing;
 global using SunamoString._sunamo.SunamoStringData;
+global using SunamoString.Extensions;
