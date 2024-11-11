@@ -127,13 +127,13 @@ public class SH
 
             if (caseSensitive)
             {
-                var allWords = term.Split(new[] { "" }, StringSplitOptions.RemoveEmptyEntries)
+                var allWords = term.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
                     .ToList(); // SHSplit.SplitMore(term, );
                 return ContainsAll(input, allWords);
             }
             else
             {
-                var allWords = term.Split(new[] { "" }, StringSplitOptions.RemoveEmptyEntries)
+                var allWords = term.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
                     .ToList(); // SHSplit.SplitMore(term, "");
                 for (var i = 0; i < allWords.Count; i++) allWords[i] = allWords[i].ToLower();
                 return ContainsAll(input.ToLower(), allWords);
@@ -497,9 +497,7 @@ public class SH
             // 32 space
             var ch = subs[0];
             var ch2 = co[0];
-            if (subs == "")
-            {
-            }
+
 
             if (subs == co)
                 Results.Add(Index);
@@ -812,7 +810,7 @@ public class SH
             input = input.ToLower();
         }
 
-        if (!input.Contains(s)) return input + "" + s;
+        if (!input.Contains(s)) return input + " " + s;
         return input;
     }
 
@@ -990,7 +988,7 @@ public class SH
     public static string ConcatSpace(IList r)
     {
         var sb = new StringBuilder();
-        foreach (string item in r) sb.Append(item + "");
+        foreach (string item in r) sb.Append(item + " ");
         return sb.ToString();
     }
 
@@ -1042,14 +1040,14 @@ public class SH
         if (HasIndex(b, text, false))
         {
             sb.Append(text.Substring(b, before));
-            sb.Append("");
+            sb.Append(" ");
         }
 
         sb.Append(centerString);
         if (HasIndex(a, text, false))
         {
             sb.Append(text.Substring(a, after));
-            sb.Append("");
+            sb.Append(" ");
         }
 
         return sb.ToString();
@@ -1104,7 +1102,7 @@ public class SH
     public static List<string> AddSpaceAfterFirstLetterForEveryAndSort(List<string> input)
     {
         CA.Trim(input);
-        for (var i = 0; i < input.Count; i++) input[i] = input[i].Insert(1, "");
+        for (var i = 0; i < input.Count; i++) input[i] = input[i].Insert(1, " ");
         input.Sort();
         return input;
     }
@@ -1127,15 +1125,15 @@ public class SH
         if (after)
         {
             dxsColons = ReturnOccurencesOfString(text, colon);
-            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Insert(dxsColons[i] + 1, "");
-            dxsColons = ReturnOccurencesOfString(sb.ToString(), colon + "");
+            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Insert(dxsColons[i] + 1, " ");
+            dxsColons = ReturnOccurencesOfString(sb.ToString(), colon + "  ");
             for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Remove(dxsColons[i] + 1, 1);
         }
         else
         {
             dxsColons = ReturnOccurencesOfString(text, colon);
-            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Insert(dxsColons[i], "");
-            dxsColons = ReturnOccurencesOfString(sb.ToString(), "" + colon);
+            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Insert(dxsColons[i], " ");
+            dxsColons = ReturnOccurencesOfString(sb.ToString(), "  " + colon);
             for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Remove(dxsColons[i], 1);
         }
 
@@ -1778,7 +1776,7 @@ public class SH
     public static string NullToStringOrDefault(object n)
     {
         //return NullToStringOrDefault(n, null);
-        return n == null ? " " + "(null)" : "" + n;
+        return n == null ? " " + "(null)" : " " + n;
     }
 
     /// <summary>
@@ -2842,7 +2840,7 @@ public class SH
             if (p.Count > 1)
             {
                 p.RemoveAt(p.Count - 1);
-                c = string.Join("", p);
+                c = string.Join(" ", p);
             }
             else
             {
@@ -3123,9 +3121,9 @@ public class SH
     {
         if (string.IsNullOrWhiteSpace(v)) return string.Empty;
         v = NormalizeString(v);
-        var p = SHSplit.SplitMore(v, "");
+        var p = SHSplit.SplitMore(v, " ");
         p[0] = "(" + p[0] + ")";
-        return string.Join("", p);
+        return string.Join(" ", p);
     }
 
     public static bool ContainsVariable(string innerHtml)
@@ -3401,8 +3399,8 @@ public class SH
                 slovo.Clear();
                 if (ts != "")
                 {
-                    leva.Insert(0, ts + "");
-                    if (leva.Length + "".Length + ts.Length > naKazdeStrane) break;
+                    leva.Insert(0, ts + " ");
+                    if (leva.Length + " ".Length + ts.Length > naKazdeStrane) break;
                 }
             }
             else
@@ -3411,7 +3409,7 @@ public class SH
             }
         }
 
-        var l = slovo + "" + leva.ToString().TrimEnd(' ');
+        var l = slovo + " " + leva.ToString().TrimEnd(' ');
         l = l.TrimEnd(' ');
         naKazdeStrane += naKazdeStrane - l.Length;
         slovo.Clear();
@@ -3425,8 +3423,8 @@ public class SH
                 slovo.Clear();
                 if (ts != "")
                 {
-                    prava.Append("" + ts);
-                    if (prava.Length + "".Length + ts.Length > naKazdeStrane) break;
+                    prava.Append(" " + ts);
+                    if (prava.Length + " ".Length + ts.Length > naKazdeStrane) break;
                 }
             }
             else
@@ -3438,7 +3436,7 @@ public class SH
         var p = prava.ToString().TrimStart(' ') + "" + slovo;
         p = p.TrimStart(' ');
         var vr = "";
-        if (celyObsah.Contains(l + "") && celyObsah.Contains("" + p))
+        if (celyObsah.Contains(l + " ") && celyObsah.Contains(" " + p))
             vr = l + "" + p;
         else
             vr = l + p;
@@ -3736,7 +3734,7 @@ public class SH
         var p = SHSplit.SplitCharMore(v, dash);
         for (var i = 0; i < p.Count; i++) p[i] = FirstCharUpper(p[i]);
         //p = CAChangeContent.ChangeContent0(null, p, FirstCharUpper);
-        return string.Join("", p);
+        return string.Join(" ", p);
     }
 
     public static bool IsNullOrWhiteSpace(string s)

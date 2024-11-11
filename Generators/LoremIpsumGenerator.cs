@@ -63,7 +63,7 @@ public static class LoremIpsumGenerator
                 sb.Append(".");
                 break;
             }
-            sb.Append("" + word);
+            sb.Append(" " + word);
         }
         return sb.ToString();
     }
