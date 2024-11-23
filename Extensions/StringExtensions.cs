@@ -18,9 +18,9 @@ public static class StringExtensions
             .ToArray());
     }
 
-    public static string FromSpace160To32(this string input)
+    public static string FromSpace160To32(this string text)
     {
-        return SH.FromSpace160To32(input);
+        return Regex.Replace(text, @"\p{Z}", " ");
     }
 
     public static IList<string> SplitAndKeep(this string s, List<string> delims)
