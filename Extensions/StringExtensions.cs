@@ -18,6 +18,11 @@ public static class StringExtensions
             .ToArray());
     }
 
+    public static string FromSpace160To32(this string input)
+    {
+        return SH.FromSpace160To32(input);
+    }
+
     public static IList<string> SplitAndKeep(this string s, List<string> delims)
     {
         //    // delims allow only char[], not List<string>

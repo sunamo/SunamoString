@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>24.11.11.2</Version>
+    <Version>24.11.23.1</Version>
     <Description>A large number of methods for string operations</Description>
     <Authors>www.sunamo.cz</Authors>
     <Copyright>www.sunamo.cz</Copyright>
@@ -12,7 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PackageReleaseNotes>Fix empty string for spaces</PackageReleaseNotes>
+    <PackageReleaseNotes>Added extension method</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
@@ -24,7 +24,7 @@
     <None Remove="_sunamo\SunamoStringShared\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Diacritics" Version="3.3.27" />
+    <PackageReference Include="Diacritics" Version="3.3.29" />
     <None Include="readme.md" Pack="True" PackagePath="." />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
