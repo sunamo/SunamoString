@@ -12,10 +12,6 @@ internal class SHSplit
         return p.Split(newLine, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 
-    internal static List<string> SplitNoneChar(string p, params char[] newLine)
-    {
-        return p.Split(newLine, StringSplitOptions.None).ToList();
-    }
     internal static List<string> SplitNone(string p, params string[] newLine)
     {
         return p.Split(newLine, StringSplitOptions.None).ToList();
@@ -26,8 +22,4 @@ internal class SHSplit
         return p.Split(newLine, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 
-    internal static List<string> SplitCharNone(string p, params char[] newLine)
-    {
-        return p.Split(newLine, StringSplitOptions.None).ToList();
-    }
 }

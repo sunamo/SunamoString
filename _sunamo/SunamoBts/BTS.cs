@@ -86,29 +86,5 @@ internal class BTS
         return vr;
     }
 
-    internal static bool IsLong(string id, bool excIfIsDouble = false, bool replaceCommaForDot = false)
-    {
-        if (id == null)
-        {
-            return false;
-        }
-
-        id = id.Replace(" ", ""); //SHReplace.ReplaceAll4(, "", " ");
-        Replace(ref id, replaceCommaForDot);
-
-        bool vr = long.TryParse(id, out lastLong);
-        if (!vr)
-        {
-            if (IsDouble(id))
-            {
-                if (excIfIsDouble)
-                {
-                    throw new Exception(id + " is float but is calling IsInt");
-                }
-            }
-        }
-
-        return vr;
-    }
     //        #endregion
 }

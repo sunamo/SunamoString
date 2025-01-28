@@ -11,18 +11,5 @@ internal class TryParse
     {
         internal static Integer Instance = new Integer();
         internal int lastInt = -1;
-        /// <summary>
-        /// Vrátí True pokud se podaří vyparsovat, jinak false.
-        /// Výsledek najdeš v proměnné lastInt
-        /// </summary>
-        /// <param name="p"></param>
-        internal bool TryParseInt(string p)
-        {
-            if (int.TryParse(p, out lastInt))
-            {
-                return true;
             }
-            return false;
-        }
-    }
 }

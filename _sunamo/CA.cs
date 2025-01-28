@@ -2,22 +2,11 @@ namespace SunamoString._sunamo;
 
 internal class CA
 {
-    internal static void InitFillWith(List<string> datas, int pocet, string initWith = "")
-    {
-        InitFillWith<string>(datas, pocet, initWith);
-    }
     internal static void InitFillWith<T>(List<T> datas, int pocet, T initWith)
     {
         for (int i = 0; i < pocet; i++)
         {
             datas.Add(initWith);
-        }
-    }
-    internal static void InitFillWith<T>(List<T> arr, int columns)
-    {
-        for (int i = 0; i < columns; i++)
-        {
-            arr.Add(default);
         }
     }
     /// <summary>
@@ -56,20 +45,9 @@ internal class CA
         foreach (var item in v2) return item.ToString();
         return null;
     }
-    internal static bool IsListStringWrappedInArray(IEnumerable v2)
-    {
-        var first = First(v2);
-        if (Count(v2) == 1 && (first == "System.Collections.Generic.List`1[System.String]" ||
-                               first == "System.Collections.Generic.List`1[System.Object]")) return true;
-        return false;
-    }
 
 
 
-    internal static bool HasIndex(int dex, Array col)
-    {
-        return col.Length > dex;
-    }
     internal static bool HasIndex(int p, IList nahledy)
     {
         if (p < 0)
@@ -83,12 +61,5 @@ internal class CA
         return false;
     }
 
-    internal static bool IsListStringWrappedInArray<T>(List<T> v2)
-    {
-        var first = v2.First().ToString();
-        if (v2.Count == 1 && (first == "System.Collections.Generic.List`1[System.String]" ||
-                              first == "System.Collections.Generic.List`1[System.Object]")) return true;
-        return false;
-    }
 
 }
