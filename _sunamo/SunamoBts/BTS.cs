@@ -41,16 +41,6 @@ internal class BTS
         return float.TryParse(id.Replace(",", "."), out lastFloat);
     }
 
-    internal static bool IsDouble(string id, bool replace = false)
-    {
-        if (id == null)
-        {
-            return false;
-        }
-
-        Replace(ref id, replace);
-        return double.TryParse(id.Replace(",", "."), out lastDouble);
-    }
 
 
     /// <summary>
