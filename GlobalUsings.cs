@@ -36,3 +36,7 @@ global using SunamoString._public;
 global using SunamoString._sunamo.SunamoParsing;
 global using SunamoString._sunamo.SunamoStringData;
 global using SunamoString.Extensions;
+
+global using ILogger = Microsoft.Extensions.Logging.ILogger;
+global using Microsoft.Extensions.Logging;
+global using NullLogger = Microsoft.Extensions.Logging.Abstractions.NullLogger;

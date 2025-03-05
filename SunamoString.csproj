@@ -22,6 +22,7 @@
     <EmbeddedResource Remove="_sunamo\SunamoStringShared\**" />
     <None Remove="_sunamo\SunamoEnums\**" />
     <None Remove="_sunamo\SunamoStringShared\**" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" Pack="True" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Diacritics" Version="3.3.29" />
