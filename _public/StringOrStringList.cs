@@ -1,7 +1,4 @@
 namespace SunamoString._public;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 public class StringOrStringList
 {
@@ -9,15 +6,12 @@ public class StringOrStringList
     {
         String = s;
     }
-
     public StringOrStringList(List<string> list)
     {
         List = list;
     }
-
     public string String { get; private set; }
     public List<string> List { get; private set; }
-
     public string GetString()
     {
         if (String != null)
@@ -32,10 +26,8 @@ public class StringOrStringList
             }
             return String;
         }
-
         throw new Exception("Both is null");
     }
-
     public List<string> GetList()
     {
         if (String != null)
@@ -43,7 +35,6 @@ public class StringOrStringList
             if (List == null)
             {
                 var nonLetterNumberChars = String.Where(ch => !char.IsLetterOrDigit(ch)).ToArray();
-
                 List = SH.SplitCharMore(String, nonLetterNumberChars);
             }
             return List;
@@ -52,7 +43,6 @@ public class StringOrStringList
         {
             return List;
         }
-
         throw new Exception("Both is null");
     }
 }
