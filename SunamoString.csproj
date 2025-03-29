@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>24.11.23.1</Version>
+    <Version>25.3.29.1</Version>
     <Description>A large number of methods for string operations</Description>
     <Authors>www.sunamo.cz</Authors>
     <Copyright>www.sunamo.cz</Copyright>
@@ -12,7 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PackageReleaseNotes>Added extension method</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated nuget to latest versions</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
@@ -22,7 +22,7 @@
     <EmbeddedResource Remove="_sunamo\SunamoStringShared\**" />
     <None Remove="_sunamo\SunamoEnums\**" />
     <None Remove="_sunamo\SunamoStringShared\**" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" Pack="True" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" Pack="True" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Diacritics" Version="3.3.29" />
