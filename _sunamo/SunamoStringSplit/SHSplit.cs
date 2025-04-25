@@ -17,7 +17,7 @@ internal class SHSplit
         return p.Split(newLine, StringSplitOptions.None).ToList();
     }
 
-    internal static List<string> SplitCharMore(string p, params char[] newLine)
+    internal static List<string> SplitChar(string p, params char[] newLine)
     {
         return p.Split(newLine, StringSplitOptions.RemoveEmptyEntries).ToList();
     }

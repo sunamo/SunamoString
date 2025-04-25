@@ -35,7 +35,7 @@ public class StringOrStringList
             if (List == null)
             {
                 var nonLetterNumberChars = String.Where(ch => !char.IsLetterOrDigit(ch)).ToArray();
-                List = SH.SplitCharMore(String, nonLetterNumberChars);
+                List = SH.SplitChar(String, nonLetterNumberChars);
             }
             return List;
         }

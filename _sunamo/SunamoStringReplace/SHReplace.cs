@@ -34,7 +34,7 @@ internal class SHReplace
         var l = SHGetLines.GetLines(v);
         foreach (var item in l)
         {
-            var p = SHSplit.SplitMore(item, delimiter);
+            var p = SHSplit.Split(item, delimiter);
             p = p.ConvertAll(d => d.Trim());
             string from, to;
             from = to = null;
