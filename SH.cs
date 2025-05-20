@@ -1354,16 +1354,7 @@ public class SH
         if (slozka[a] == znak) return slozka.Substring(0, a);
         return slozka;
     }
-    public static List<string> GetLinesList(string p)
-    {
-        return SHSplit.Split(p, Environment.NewLine).ToList();
-    }
-    public static string GetStringNL(List<string> list)
-    {
-        var sb = new StringBuilder();
-        foreach (var item in list) sb.AppendLine(item);
-        return sb.ToString();
-    }
+
     /// <summary>
     ///     If A1 contains A2, return A2 and all following. Otherwise A1
     /// </summary>
@@ -1513,14 +1504,7 @@ public class SH
         if (indexOfChar != -1) return input.Substring(0, indexOfChar + 1);
         return input;
     }
-    public static string JoinNL(List<string> l)
-    {
-        StringBuilder sb = new();
-        foreach (var item in l) sb.AppendLine(item);
-        var r = string.Empty;
-        r = sb.ToString();
-        return r;
-    }
+
     public static string FirstCharLower(string nazevPP)
     {
         if (nazevPP.Length < 2) return nazevPP;
@@ -1547,26 +1531,7 @@ public class SH
         }
         return delimiter;
     }
-    /// <summary>
-    ///     Musí tu být. split z .net vrací []
-    ///     krom toho je instanční. musel bych měnit hodně kódu kvůli toho
-    /// </summary>
-    /// <param name="s"></param>
-    /// <param name="dot"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public static List<string> SplitChar(string s, params char[] dot)
-    {
-        return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
-    }
-    public static List<string> Split(string s, params string[] dot)
-    {
-        return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
-    }
-    public static List<string> SplitNone(string text, params string[] deli)
-    {
-        return text.Split(deli, StringSplitOptions.None).ToList();
-    }
+
     /// <summary>
     ///     Usage: BadFormatOfElementInList
     ///     If null, return "(null)"
@@ -1601,11 +1566,6 @@ public class SH
     /// <param name="name"></param>
     /// <param name="ext"></param>
     /// <returns></returns>
-    public static string TrimEnd(string name, string ext)
-    {
-        while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
-        return name;
-    }
     #region MyRegion
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string WrapWith(string value, string h)
@@ -1645,8 +1605,6 @@ public class SH
             bracketsRightList = bracketsRight.Values.ToList();
         }
     }
-    #endregion
-    #region TrimStartingAndTrailingChars
     #endregion
     #region MyRegion
     private static Type type = typeof(SH);
@@ -2899,14 +2857,7 @@ public class SH
     {
         return slovo != TextWithoutDiacritic(slovo);
     }
-    /// <summary>
-    ///     Snaž se tuto metodu využívat co nejméně, je zbytečná.
-    /// </summary>
-    /// <param name="s"></param>
-    public static string Copy(string s)
-    {
-        return s;
-    }
+
     /// <summary>
     ///     Pokud je poslední znak v A1 A2, odstraním ho
     /// </summary>
@@ -3475,7 +3426,5 @@ public class SH
         if (text.EndsWith(append)) return text;
         return text + append;
     }
-    #endregion
-    #region MyRegion
     #endregion
 }
