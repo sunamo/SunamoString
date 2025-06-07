@@ -392,10 +392,10 @@ public class SH
         s = s.Insert(startIndex, to);
         return s;
     }
-    public static string JoinMakeUpTo2NumbersToZero(string d, int[] d2)
-    {
-        return d;
-    }
+    //public static string JoinMakeUpTo2NumbersToZero(string d, int[] d2)
+    //{
+    //    return d;
+    //}
     public static string ReplaceOnce(string input, string what, string zaco)
     {
         if (what == "") return input;
@@ -1239,11 +1239,11 @@ public class SH
         if (v1.Length > v2) return v1.Substring(0, v1.Length - v2);
         return v1;
     }
-    public static bool IsAllUnique(List<string> c)
-    {
-        ThrowEx.NotImplementedMethod();
-        return false;
-    }
+    //public static bool IsAllUnique(List<string> c)
+    //{
+    //    ThrowEx.NotImplementedMethod();
+    //    return false;
+    //}
     /// <summary>
     ///     Pokud je A1 true, bere se z A2,3 menší počet prvků
     ///     Simply call HasTextRightFormat for every in A2
@@ -1540,13 +1540,14 @@ public class SH
     /// <param name="n"></param>
     /// <param name="v"></param>
     /// <returns></returns>
-    public static string NullToStringOrDefault(object n, string v)
-    {
-        throw new Exception(
-            "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
-        return null;
-        //return n == null ? " " + "(null)" : "" + v.ToString();
-    }
+    //public static string NullToStringOrDefault(object n, string v)
+    //{
+    //    throw new Exception(
+    //        "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
+    //    return null;
+    //    //return n == null ? " " + "(null)" : "" + v.ToString();
+    //}
+
     /// <summary>
     ///     Usage: BadFormatOfElementInList
     ///     If null, return "(null)"
@@ -2645,13 +2646,17 @@ public class SH
     }
     private static Brackets GetBracketFromBegin(char v, ref bool end, bool throwExIsNotBracket)
     {
+        end = true;
         switch (v)
         {
             case '(':
+                end = false;
                 return Brackets.Normal;
             case '{':
+                end = false;
                 return Brackets.Curly;
             case '[':
+                end = false;
                 return Brackets.Square;
             case ')':
                 return Brackets.Normal;

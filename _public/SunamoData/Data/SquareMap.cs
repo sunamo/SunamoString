@@ -9,44 +9,9 @@ public class SquareMap
     public List<int> ecub = new List<int>();
     public List<int> esqb = new List<int>();
     public List<int> eb = new List<int>();
-    public void Add(Object  b2, bool end, int i)
+#pragma warning disable
+    public void Add(Object b2, bool end, int i)
     {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
+#pragma warning restore
 }
