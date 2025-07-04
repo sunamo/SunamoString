@@ -67,10 +67,6 @@ public class BalancedBrackets
         return false;
     }
 
-    public static void Test(List<char> s)
-    {
-    }
-
     public class stack
     {
         public char[] items = new char[100];

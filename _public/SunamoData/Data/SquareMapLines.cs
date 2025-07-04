@@ -26,55 +26,15 @@ public class SquareMapLines
     {
         Init(0, 0, 0);
     }
-    
-    
-    
-    
-    
-    
-    
-    public void Add( Object b2, bool end, int i, int line)
+
+
+
+
+
+
+#pragma warning disable
+    public void Add(Object b2, bool end, int i, int line)
     {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
+#pragma warning restore
 }
