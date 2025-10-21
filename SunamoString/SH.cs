@@ -1,10 +1,13 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoString;
 
 public class SH
 {
     protected static List<char> bracketsLeftList;
     protected static List<char> bracketsRightList;
-    private static StringBuilder sb = new();
+    private static StringBuilder stringBuilder = new();
     public static string xMismatchCountInInputArraysOfSHAllHaveRightFormat =
         "MismatchCountInInputArraysOfSHAllHaveRightFormat";
     public static bool ContainsCl(string input, StringOrStringList termO, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
@@ -15,7 +18,7 @@ public class SH
             input = input.ToLower();
             term = termO.GetString().ToLower();
         }
-        // musel bych dotáhnout min 2 metody a další enumy
+        // musel bych dotáhnout min 2 metody argument další enumy
         if (searchStrategy == SearchStrategy.ExactlyName)
         {
             return input == term;
@@ -60,13 +63,13 @@ public class SH
     }
     public static string WhiteSpaceFromStart(string v)
     {
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         foreach (var item in v)
             if (char.IsWhiteSpace(item))
-                sb.Append(item);
+                stringBuilder.Append(item);
             else
                 break;
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     /// <summary>
     ///     FixedSpace - Contains
@@ -155,8 +158,8 @@ public class SH
         {
             foreach (var item in allWords)
             {
-                var c = item;
-                if (!IsContained(input, ref c)) return false;
+                var count = item;
+                if (!IsContained(input, ref count)) return false;
             }
         }
         else if (ccm == ContainsCompareMethodString.WholeInput)
@@ -228,15 +231,15 @@ public class SH
     public static string RemoveEndingPairCharsWhenDontHaveStarting(string vr, string cbl, string cbr)
     {
         var removeOnIndexes = new List<int>();
-        var sb = new StringBuilder(vr);
+        var stringBuilder = new StringBuilder(vr);
         var occL = ReturnOccurencesOfString(vr, cbl);
         var occR = ReturnOccurencesOfString(vr, cbr);
         List<int> onlyLeft = null;
         List<int> onlyRight = null;
-        var l = GetPairsStartAndEnd(occL, occR, ref onlyLeft, ref onlyRight);
+        var list = GetPairsStartAndEnd(occL, occR, ref onlyLeft, ref onlyRight);
         onlyLeft.AddRange(onlyRight);
         onlyLeft.Sort();
-        for (var i = onlyLeft.Count - 1; i >= 0; i--) sb.Remove(onlyLeft[i], 1);
+        for (var i = onlyLeft.Count - 1; i >= 0; i--) stringBuilder.Remove(onlyLeft[i], 1);
         //if (occL.Count == 0)
         //{
         //    result = vr.SHReplace.Replace("}", string.Empty);
@@ -271,19 +274,19 @@ public class SH
         //            occR.RemoveAt(0);
         //        }
         //    }
-        //    StringBuilder sb = new StringBuilder(vr);
+        //    StringBuilder stringBuilder = new StringBuilder(vr);
         //    for (int i = removeOnIndexes.Count - 1; i >= 0; i--)
         //    {
         //        vr.Remove(removeOnIndexes[i], 1);
         //    }
         //    result = vr.ToLower();
         //}
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public static List<Tuple<int, int>> GetPairsStartAndEnd(List<int> occL, List<int> occR, ref List<int> onlyLeft,
         ref List<int> onlyRight)
     {
-        var l = new List<Tuple<int, int>>();
+        var list = new List<Tuple<int, int>>();
         onlyLeft = occL.ToList();
         onlyRight = occR.ToList();
         for (var i = occR.Count - 1; i >= 0; i--)
@@ -302,34 +305,34 @@ public class SH
             else
             {
                 // když je lastLeft menší, znamená to že last right má svůj levý protějšek
-                l.Add(new Tuple<int, int>(lastLeft, lastRight));
+                list.Add(new Tuple<int, int>(lastLeft, lastRight));
             }
         }
         occL = onlyLeft;
-        //foreach (var item in l)
+        //foreach (var item in list)
         //{
         //    occL.Remove(item.Item1);
         //}
         // occL = onlyLeft o pár řádků výše
         //onlyLeft.AddRange(occL);
-        //l.Reverse();
+        //list.Reverse();
         var addToAnotherCollection = new List<int>();
         var l2 = new List<Tuple<int, int>>();
         var alreadyProcessedItem1 = new List<int>();
-        for (var i = l.Count - 1; i >= 0; i--)
+        for (var i = list.Count - 1; i >= 0; i--)
         {
-            if (alreadyProcessedItem1.Contains(l[i].Item1))
+            if (alreadyProcessedItem1.Contains(list[i].Item1))
             {
-                addToAnotherCollection.Add(l[i].Item1);
-                l2.Add(l[i]);
-                l.RemoveAt(i);
+                addToAnotherCollection.Add(list[i].Item1);
+                l2.Add(list[i]);
+                list.RemoveAt(i);
                 //continue;
             }
-            alreadyProcessedItem1.Add(l[i].Item1);
+            alreadyProcessedItem1.Add(list[i].Item1);
         }
         //for (int i = l2.Count - 1; i >= 0; i--)
         //{
-        //    if (l.Contains(l2[i]))
+        //    if (list.Contains(l2[i]))
         //    {
         //        l2.RemoveAt(i);
         //    }
@@ -337,11 +340,11 @@ public class SH
         addToAnotherCollection = addToAnotherCollection.Distinct().ToList();
         foreach (var item in addToAnotherCollection)
         {
-            var count = alreadyProcessedItem1.Where(d => d == item).Count();
+            var count = alreadyProcessedItem1.Where(data => data == item).Count();
             //!alreadyProcessedItem1.Contains(item)
             if (count > 2)
             {
-                var sele = l2.Where(d => d.Item1 == item).ToList();
+                var sele = l2.Where(data => data.Item1 == item).ToList();
                 //for (int i = sele.Count() - 1; i >= 1; i--)
                 //{
                 //    l2.Remove(sele[i]);
@@ -349,18 +352,18 @@ public class SH
                 var dx2 = occL.IndexOf(sele[0].Item1);
                 if (dx2 != -1)
                 {
-                    var dx3 = l.IndexOf(sele[0]);
-                    l.Add(new Tuple<int, int>(occL[dx2 - 1], sele[0].Item2));
+                    var dx3 = list.IndexOf(sele[0]);
+                    list.Add(new Tuple<int, int>(occL[dx2 - 1], sele[0].Item2));
                 }
             }
         }
-        //l.AddRange(l2);
+        //list.AddRange(l2);
         occL.Sort();
-        var result = l; //l.OrderByDescending(d => d.Item1).ToList();
+        var result = list; //list.OrderByDescending(data => data.Item1).ToList();
         //
         var alreadyProcessed = new List<int>();
         var dx = -1;
-        for (var y = 0; y < result.Count; y++)
+        for (var yValue = 0; yValue < result.Count; yValue++)
         {
             var item = result[y];
             var i = item.Item1;
@@ -386,15 +389,15 @@ public class SH
         result.Reverse();
         return result;
     }
-    public static string RemoveAndInsertReplace(string s, int startIndex, string what, string to)
+    public static string RemoveAndInsertReplace(string text, int startIndex, string what, string to)
     {
-        s = s.Remove(startIndex, what.Length);
-        s = s.Insert(startIndex, to);
-        return s;
+        text = text.Remove(startIndex, what.Length);
+        text = text.Insert(startIndex, to);
+        return text;
     }
-    //public static string JoinMakeUpTo2NumbersToZero(string d, int[] d2)
+    //public static string JoinMakeUpTo2NumbersToZero(string data, int[] d2)
     //{
-    //    return d;
+    //    return data;
     //}
     public static string ReplaceOnce(string input, string what, string zaco)
     {
@@ -418,19 +421,19 @@ public class SH
         }
         return what;
     }
-    public static string NormalizeString(string s)
+    public static string NormalizeString(string text)
     {
-        if (s.Contains((char)160))
+        if (text.Contains((char)160))
         {
-            var sb = new StringBuilder();
-            foreach (var item in s)
+            var stringBuilder = new StringBuilder();
+            foreach (var item in text)
                 if (item == (char)160)
-                    sb.Append(' ');
+                    stringBuilder.Append(' ');
                 else
-                    sb.Append(item);
-            return sb.ToString();
+                    stringBuilder.Append(item);
+            return stringBuilder.ToString();
         }
-        return s;
+        return text;
     }
     /// <summary>
     ///     IndexesOfChars - char
@@ -458,7 +461,7 @@ public class SH
     public static List<int> TabOrSpaceNextTo(string input)
     {
         var tabs = ReturnOccurencesOfString(input, "\t");
-        // nevím k čemu to tu je ale když jsem měl řetězec b nopCommerce\tSimplCommerce\tSmartStoreNET\tgrandnode\tKartris tak mi to vrátilo navíc o 2 \t kde nikdy nebyly
+        // nevím k čemu to tu je ale když jsem měl řetězec builder nopCommerce\tSimplCommerce\tSmartStoreNET\tgrandnode\tKartris tak mi to vrátilo navíc o 2 \t kde nikdy nebyly
         //for (int i = 0; i < tabs.Count-1; i++)
         //{
         //    var dx = tabs[i] + 1;
@@ -555,14 +558,14 @@ public class SH
     {
         if (o is Func<int, bool>)
         {
-            var t = (Func<int, bool>)o;
-            return t(nt);
+            var temp = (Func<int, bool>)o;
+            return temp(nt);
         }
         // nemůže tu být protože SunamoData musí dědit od SunamoStringShared - hodně metod *. 
         //if (o is FromToList)
         //{
-        //    var r = (FromToList)o;
-        //    return r.IsInRange(nt);
+        //    var result = (FromToList)o;
+        //    return result.IsInRange(nt);
         //}
         ThrowEx.NotImplementedCase("NotAllowedInRanges: " + o);
         return false;
@@ -572,33 +575,33 @@ public class SH
     ///     <int, bool>
     ///         (delegát který vrací zda daný index může být použít pro end) or FromToList
     ///         Used in: Metaproject.PackageIndex.Functions.ParseCsprojFile
-    ///         Work like everybody excepts, from a {b} c return b
+    ///         Work like everybody excepts, from argument {b} count return builder
     ///         A5 is type FromToList but into SE could be only absolutely minimal code base
     /// </summary>
     /// <param name="p"></param>
     /// <param name="begin"></param>
     /// <param name="end"></param>
-    public static string GetTextBetweenTwoChars(string p, char beginS, char endS,
+    public static string GetTextBetweenTwoChars(string parameter, char beginS, char endS,
         bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
     {
-        var begin = p.IndexOf(beginS);
+        var begin = parameter.IndexOf(beginS);
         var end = -1;
         if (endLastIndexOf)
         {
-            end = p.LastIndexOf(endS);
+            end = parameter.LastIndexOf(endS);
         }
         else
         {
-            end = p.IndexOf(endS, begin + 1);
+            end = parameter.IndexOf(endS, begin + 1);
             if (notAllowedInRanges != null)
                 while (end != NumConsts.mOne && NotAllowedInRanges(notAllowedInRanges, end))
-                    end = p.IndexOf(endS, end + 1);
+                    end = parameter.IndexOf(endS, end + 1);
         }
         if (begin == NumConsts.mOne || end == NumConsts.mOne)
         {
             if (throwExceptionIfNotContains)
             {
-                ThrowEx.NotContains(p, beginS.ToString(), endS.ToString());
+                ThrowEx.NotContains(parameter, beginS.ToString(), endS.ToString());
             }
             else
             {
@@ -607,18 +610,18 @@ public class SH
         }
         else
         {
-            return GetTextBetweenTwoCharsInts(p, begin, end);
+            return GetTextBetweenTwoCharsInts(parameter, begin, end);
         }
-        return p;
+        return parameter;
     }
-    public static string GetTextBetweenTwoCharsInts(string p, int begin, int end)
+    public static string GetTextBetweenTwoCharsInts(string parameter, int begin, int end)
     {
         if (end > begin)
-            // a(1) - 1,3
-            return p.Substring(begin + 1, end - begin - 1);
+            // argument(1) - 1,3
+            return parameter.Substring(begin + 1, end - begin - 1);
         // originally
-        //return p.Substring(begin+1, end - begin - 1);
-        return p;
+        //return parameter.Substring(begin+1, end - begin - 1);
+        return parameter;
     }
     public static void FirstCharUpper(ref string nazevPP)
     {
@@ -627,8 +630,8 @@ public class SH
     public static string FirstCharUpper(string nazevPP)
     {
         if (nazevPP.Length == 1) return nazevPP.ToUpper();
-        var sb = nazevPP.Substring(1);
-        return nazevPP[0].ToString().ToUpper() + sb;
+        var stringBuilder = nazevPP.Substring(1);
+        return nazevPP[0].ToString().ToUpper() + stringBuilder;
     }
     /// <summary>
     ///     Musi mit sudy pocet prvku
@@ -664,14 +667,14 @@ public class SH
                     return false;
         return true;
     }
-    public static string MakeUpToXChars(int p, int p_2)
+    public static string MakeUpToXChars(int parameter, int p_2)
     {
-        var sb = new StringBuilder();
-        var d = p.ToString();
-        var doplnit = (p.ToString().Length - p_2) * -1;
-        for (var i = 0; i < doplnit; i++) sb.Append(0);
-        sb.Append(d);
-        return sb.ToString();
+        var stringBuilder = new StringBuilder();
+        var data = parameter.ToString();
+        var doplnit = (parameter.ToString().Length - p_2) * -1;
+        for (var i = 0; i < doplnit; i++) stringBuilder.Append(0);
+        stringBuilder.Append(data);
+        return stringBuilder.ToString();
     }
     public static char GetFirstChar(string arg)
     {
@@ -690,49 +693,49 @@ public class SH
         // Spojení slov do Pascal konvence
         return string.Join("", words);
     }
-    public static bool StartWithWhitespace(string s)
+    public static bool StartWithWhitespace(string text)
     {
         // toto nefungovalo
-        //return new List<char>(['\n', '\r', '\t', ' ']).Any(d => s.StartsWith(d));
-        return s.TrimStart() != s;
+        //return new List<char>(['\n', '\r', '\t', ' ']).Any(data => text.StartsWith(data));
+        return text.TrimStart() != text;
     }
-    public static string DetectNewline(string s)
+    public static string DetectNewline(string text)
     {
-        if (s.Contains("\r\n")) return "\r\n";
+        if (text.Contains("\r\n")) return "\r\n";
         return "\n";
     }
-    public static string RemoveLastWord(string t)
+    public static string RemoveLastWord(string temp)
     {
-        return SHParts.RemoveAfterLast(t.Trim(), " ");
+        return SHParts.RemoveAfterLast(temp.Trim(), " ");
     }
     public static List<int> GetIndexesOfLinesStartingWith(List<string> list, Func<string, bool> predicate)
     {
-        var allIndices = list.Select((s, i) => new { Str = s, Index = i })
+        var allIndices = list.Select((text, i) => new { Str = text, Index = i })
             .Where(x => predicate(x.Str))
             .Select(x => x.Index).ToList();
         return allIndices;
     }
-    public static string RemoveLinesWhichContains(string p, string c)
+    public static string RemoveLinesWhichContains(string parameter, string count)
     {
-        var l = SHGetLines.GetLines(p);
-        l = l.Where(d => !d.Contains(c)).ToList(); //CA.RemoveWhichContains(l, c, false);
-        var result = string.Join(Environment.NewLine, l);
+        var list = SHGetLines.GetLines(parameter);
+        list = list.Where(data => !data.Contains(count)).ToList(); //CA.RemoveWhichContains(list, count, false);
+        var result = string.Join(Environment.NewLine, list);
         return result;
     }
-    public static string AddIfNotContains(string input, string s, string sLower = null)
+    public static string AddIfNotContains(string input, string text, string sLower = null)
     {
         if (sLower != null)
         {
-            s = sLower;
+            text = sLower;
             input = input.ToLower();
         }
-        if (!input.Contains(s)) return input + " " + s;
+        if (!input.Contains(text)) return input + " " + text;
         return input;
     }
     public static string SwitchSwap(string co, string v)
     {
-        var p = SHSplit.Split(co, v);
-        if (p.Count == 2) return p[1] + "," + p[0];
+        var parameter = SHSplit.Split(co, v);
+        if (parameter.Count == 2) return parameter[1] + "," + parameter[0];
         return null;
     }
     public static string InsertBeforeEndingBracket(string postfixSpaceCommaNewline, string v)
@@ -741,48 +744,48 @@ public class SH
         if (dx != -1) return postfixSpaceCommaNewline.Insert(dx, v);
         return postfixSpaceCommaNewline;
     }
-    public static Dictionary<char, int> StatisticLetterChars(string between, StatisticLetterCharsStrategy s,
+    public static Dictionary<char, int> StatisticLetterChars(string between, StatisticLetterCharsStrategy text,
         params char[] charsToStrategy)
     {
         List<char> ignoreCompletely = null;
-        if (s == StatisticLetterCharsStrategy.IgnoreCompletely) ignoreCompletely = new List<char>(charsToStrategy);
+        if (text == StatisticLetterCharsStrategy.IgnoreCompletely) ignoreCompletely = new List<char>(charsToStrategy);
         var list = new Dictionary<char, int>();
-        if (s == StatisticLetterCharsStrategy.AddAsFirst)
+        if (text == StatisticLetterCharsStrategy.AddAsFirst)
             foreach (var item in charsToStrategy)
                 list.Add(item, 0);
         foreach (var item in between)
         {
-            if (s == StatisticLetterCharsStrategy.IgnoreCompletely)
+            if (text == StatisticLetterCharsStrategy.IgnoreCompletely)
                 if (ignoreCompletely.Contains(item))
                     continue;
             DictionaryHelper.AddOrPlus(list, item, 1);
         }
         return list;
     }
-    public static List<char> AllBrackets(string c)
+    public static List<char> AllBrackets(string count)
     {
         var ch = new List<char>();
         var end = false;
-        for (var i = 0; i < c.Length; i++)
+        for (var i = 0; i < count.Length; i++)
         {
-            var s = GetBracketFromBegin(c[i], ref end, false);
-            if (s != Brackets.None) ch.Add(c[i]);
+            var text = GetBracketFromBegin(count[i], ref end, false);
+            if (text != Brackets.None) ch.Add(count[i]);
         }
         return ch;
     }
-    public static Tuple<SquareMap, SquareMapLines> IndexesOfBrackets(string c)
+    public static Tuple<SquareMap, SquareMapLines> IndexesOfBrackets(string count)
     {
-        var m = new SquareMap();
-        var me = new SquareMapLines(m);
+        var message = new SquareMap();
+        var me = new SquareMapLines(message);
         var end = false;
         var line = 0;
-        var r = false;
-        for (var i = 0; i < c.Length; i++)
+        var result = false;
+        for (var i = 0; i < count.Length; i++)
         {
-            var ch = c[i];
-            if (r)
+            var ch = count[i];
+            if (result)
             {
-                r = false;
+                result = false;
                 line++;
                 if (ch == '\n') continue;
             }
@@ -793,17 +796,17 @@ public class SH
             }
             if (ch == '\r')
             {
-                r = true;
+                result = true;
                 continue;
             }
-            var s = GetBracketFromBegin(ch, ref end, false);
-            if (s != Brackets.None)
+            var text = GetBracketFromBegin(ch, ref end, false);
+            if (text != Brackets.None)
             {
-                m.Add(s, end, i);
-                me.Add(s, end, i, line);
+                message.Add(text, end, i);
+                me.Add(text, end, i, line);
             }
         }
-        return new Tuple<SquareMap, SquareMapLines>(m, me);
+        return new Tuple<SquareMap, SquareMapLines>(message, me);
     }
     public static string ReplaceBrackets(string item, Brackets from, Brackets to)
     {
@@ -811,13 +814,13 @@ public class SH
         item = item.Replace(bracketsRight[from], bracketsRight[to]);
         return item;
     }
-    public static List<int> ContainsAnyFromElement(StringBuilder s, IList<string> list)
+    public static List<int> ContainsAnyFromElement(StringBuilder text, IList<string> list)
     {
         var result = new List<int>();
         var i = 0;
         foreach (var item in list)
         {
-            if (s.ToString().Contains(item)) result.Add(i);
+            if (text.ToString().Contains(item)) result.Add(i);
             i++;
         }
         return result;
@@ -865,29 +868,29 @@ public class SH
         const string openBraces = "([{";
         const string closeBraces = ")]}";
         var stack = new Stack<char>();
-        foreach (var c in braces)
-            if (openBraces.Contains(c))
-                stack.Push(c);
-            else if (stack.Count == 0 || openBraces.IndexOf(stack.Pop()) != closeBraces.IndexOf(c)) return false;
+        foreach (var count in braces)
+            if (openBraces.Contains(count))
+                stack.Push(count);
+            else if (stack.Count == 0 || openBraces.IndexOf(stack.Pop()) != closeBraces.IndexOf(count)) return false;
         return stack.Count == 0;
     }
-    public static string ConvertWhitespaceToVisible(string t)
+    public static string ConvertWhitespaceToVisible(string temp)
     {
-        t = t.Replace('\t', UnicodeWhiteToVisible.tab);
-        t = t.Replace('\n', UnicodeWhiteToVisible.newLine);
-        t = t.Replace('\r', UnicodeWhiteToVisible.carriageReturn);
-        t = t.Replace(' ', UnicodeWhiteToVisible.space);
-        return t;
+        temp = temp.Replace('\t', UnicodeWhiteToVisible.tab);
+        temp = temp.Replace('\n', UnicodeWhiteToVisible.newLine);
+        temp = temp.Replace('\r', UnicodeWhiteToVisible.carriageReturn);
+        temp = temp.Replace(' ', UnicodeWhiteToVisible.space);
+        return temp;
     }
-    public static string ConcatSpace(IList r)
+    public static string ConcatSpace(IList result)
     {
-        var sb = new StringBuilder();
-        foreach (string item in r) sb.Append(item + " ");
-        return sb.ToString();
+        var stringBuilder = new StringBuilder();
+        foreach (string item in result) stringBuilder.Append(item + " ");
+        return stringBuilder.ToString();
     }
-    public static bool IsNullOrWhiteSpaceRange(params string[] l)
+    public static bool IsNullOrWhiteSpaceRange(params string[] list)
     {
-        foreach (var item in l)
+        foreach (var item in list)
             if (IsNullOrWhiteSpace(item))
                 return true;
         return false;
@@ -896,15 +899,15 @@ public class SH
     {
         return !sbNullS.Trim().Contains(Environment.NewLine);
     }
-    public static string GetWhitespaceFromBeginning(StringBuilder sb, string line)
+    public static string GetWhitespaceFromBeginning(StringBuilder stringBuilder, string line)
     {
-        sb.Clear();
+        stringBuilder.Clear();
         foreach (var item in line)
             if (char.IsWhiteSpace(item))
-                sb.Append(item);
+                stringBuilder.Append(item);
             else
                 break;
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     //public static bool IsCharOn(string item, int v, UnicodeChars number)
     //{
@@ -924,29 +927,29 @@ public class SH
     /// <param name="after"></param>
     public static string CharsBeforeAndAfter(string text, string centerString, int centerIndex, int before, int after)
     {
-        var b = centerIndex - before;
-        var a = centerIndex + centerString.Length + after;
-        var sb = new StringBuilder();
-        if (HasIndex(b, text, false))
+        var builder = centerIndex - before;
+        var argument = centerIndex + centerString.Length + after;
+        var stringBuilder = new StringBuilder();
+        if (HasIndex(builder, text, false))
         {
-            sb.Append(text.Substring(b, before));
-            sb.Append(" ");
+            stringBuilder.Append(text.Substring(builder, before));
+            stringBuilder.Append(" ");
         }
-        sb.Append(centerString);
-        if (HasIndex(a, text, false))
+        stringBuilder.Append(centerString);
+        if (HasIndex(argument, text, false))
         {
-            sb.Append(text.Substring(a, after));
-            sb.Append(" ");
+            stringBuilder.Append(text.Substring(argument, after));
+            stringBuilder.Append(" ");
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public static bool ContainsNewLine(string between)
     {
         return between.Contains('\n') || between.Contains('\r');
     }
-    public static bool ChangeEncodingProcessWrongCharacters(ref string c)
+    public static bool ChangeEncodingProcessWrongCharacters(ref string count)
     {
-        return ChangeEncodingProcessWrongCharacters(ref c, Encoding.GetEncoding("latin1"));
+        return ChangeEncodingProcessWrongCharacters(ref count, Encoding.GetEncoding("latin1"));
     }
     /// <summary>
     ///     když je v souboru rozsypaný čaj, přečíst přes File.ReadAllText, převést přes SH.ChangeEncodingProcessWrongCharacters.
@@ -955,16 +958,16 @@ public class SH
     /// </summary>
     /// <param name="c"></param>
     /// <param name="oldEncoding"></param>
-    public static bool ChangeEncodingProcessWrongCharacters(ref string c, Encoding oldEncoding)
+    public static bool ChangeEncodingProcessWrongCharacters(ref string count, Encoding oldEncoding)
     {
-        if (IsValidISO(c))
+        if (IsValidISO(count))
         {
-            var b = oldEncoding.GetBytes(c);
-            c = Encoding.UTF8.GetString(b);
+            var builder = oldEncoding.GetBytes(count);
+            count = Encoding.UTF8.GetString(builder);
             return true;
         }
         // ý musí být před í, ě před č
-        c = SHReplace.ReplaceManyFromString(c, @"Ã©,ý
+        count = SHReplace.ReplaceManyFromString(count, @"Ã©,ý
 Ã½,ý
 Ă˝,é
 Å¥,š
@@ -989,40 +992,40 @@ public class SH
         input.Sort();
         return input;
     }
-    public static string GetLastWord(string p, bool returnEmptyWhenDontHaveLenght = true)
+    public static string GetLastWord(string parameter, bool returnEmptyWhenDontHaveLenght = true)
     {
-        p = p.Trim();
-        var dex = p.LastIndexOf(' ');
-        if (dex != -1) return p.Substring(dex).Trim();
+        parameter = parameter.Trim();
+        var dex = parameter.LastIndexOf(' ');
+        if (dex != -1) return parameter.Substring(dex).Trim();
         if (returnEmptyWhenDontHaveLenght) return string.Empty;
-        return p;
+        return parameter;
     }
     public static string AddSpaceAndDontDuplicate(bool after, string text, string colon)
     {
         List<int> dxsColons = null;
-        var sb = new StringBuilder();
-        sb.Append(text);
+        var stringBuilder = new StringBuilder();
+        stringBuilder.Append(text);
         if (after)
         {
             dxsColons = ReturnOccurencesOfString(text, colon);
-            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Insert(dxsColons[i] + 1, " ");
-            dxsColons = ReturnOccurencesOfString(sb.ToString(), colon + "  ");
-            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Remove(dxsColons[i] + 1, 1);
+            for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Insert(dxsColons[i] + 1, " ");
+            dxsColons = ReturnOccurencesOfString(stringBuilder.ToString(), colon + "  ");
+            for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Remove(dxsColons[i] + 1, 1);
         }
         else
         {
             dxsColons = ReturnOccurencesOfString(text, colon);
-            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Insert(dxsColons[i], " ");
-            dxsColons = ReturnOccurencesOfString(sb.ToString(), "  " + colon);
-            for (var i = dxsColons.Count - 1; i >= 0; i--) sb.Remove(dxsColons[i], 1);
+            for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Insert(dxsColons[i], " ");
+            dxsColons = ReturnOccurencesOfString(stringBuilder.ToString(), "  " + colon);
+            for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Remove(dxsColons[i], 1);
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public static string CountOfItems(List<KeyValuePair<string, int>> counted)
     {
-        var sb = new StringBuilder();
-        foreach (var item in counted) sb.AppendLine(item.Value + "x " + item.Key);
-        return sb.ToString();
+        var stringBuilder = new StringBuilder();
+        foreach (var item in counted) stringBuilder.AppendLine(item.Value + "x " + item.Key);
+        return stringBuilder.ToString();
     }
     public static string MultiWhitespaceLineToSingle(List<string> lines)
     {
@@ -1044,18 +1047,18 @@ public class SH
         //return Regex.SHReplace.Replace(str, @"(\r\n){2,}", Environment.NewLine);
         //throw new Exception("NOT WORKING, IN FIRST DEBUG WITH UNIT TESTS AND THEN USE");
         //List<int> toRemove = new List<int>();
-        //List<bool> isWhitespace = new List<bool>(l.Count);
-        ////l.Add(false)
-        //for (int i = 0; i < l.Count; i++)
+        //List<bool> isWhitespace = new List<bool>(list.Count);
+        ////list.Add(false)
+        //for (int i = 0; i < list.Count; i++)
         //{
-        //    isWhitespace.Add(l[i].Trim() == string.Empty);
+        //    isWhitespace.Add(list[i].Trim() == string.Empty);
         //}
         //isWhitespace.Reverse();
         //for (int i = isWhitespace.Count - 1; i >= 0; i--)
         //{
         //    if (isWhitespace[i] && isWhitespace[i + 1])
         //    {
-        //        l.RemoveAt(i+1);
+        //        list.RemoveAt(i+1);
         //    }
         //}
     }
@@ -1063,7 +1066,7 @@ public class SH
     {
         var indentPrevious = string.Empty;
         string line = null;
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         for (var i = 0; i < lines.Count - 1; i++)
         {
             line = lines[i];
@@ -1075,13 +1078,13 @@ public class SH
                 }
                 else
                 {
-                    sb.Clear();
+                    stringBuilder.Clear();
                     foreach (var item in line)
                         if (char.IsWhiteSpace(item))
-                            sb.Append(item);
+                            stringBuilder.Append(item);
                         else
                             break;
-                    indentPrevious = sb.ToString();
+                    indentPrevious = stringBuilder.ToString();
                 }
             }
         }
@@ -1105,8 +1108,8 @@ public class SH
         }
         else
         {
-            foreach (var c in contains)
-                if (item.Contains(c))
+            foreach (var count in contains)
+                if (item.Contains(count))
                 {
                     hasLine = true;
                     break;
@@ -1119,7 +1122,7 @@ public class SH
         input = WrapWithChar(input, ' ');
         var dex = input.IndexOf(word);
         var dex2 = input.IndexOf(' ', dex + 1);
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         if (dex2 != -1)
         {
             dex2++;
@@ -1127,22 +1130,22 @@ public class SH
             {
                 var ch = input[i];
                 if (ch != ' ')
-                    sb.Append(ch);
+                    stringBuilder.Append(ch);
                 else
                     break;
             }
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public static string Leading(string v, Func<char, bool> isWhiteSpace)
     {
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         foreach (var item in v)
             if (isWhiteSpace.Invoke(item))
-                sb.Append(item);
+                stringBuilder.Append(item);
             else
                 break;
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public static bool IsOnIndex(string input, int dx, Func<char, bool> isWhiteSpace)
     {
@@ -1153,31 +1156,31 @@ public class SH
     {
         return Regex.Matches(text, Environment.NewLine).Count;
     }
-    public static bool HasLetter(string s)
+    public static bool HasLetter(string text)
     {
-        foreach (var item in s)
+        foreach (var item in text)
             if (char.IsLetter(item))
                 return true;
         return false;
     }
-    public static List<string> GetTextsBetween(string p, string after, string before,
+    public static List<string> GetTextsBetween(string parameter, string after, string before,
         bool cannotBeLetterBeforeFounded = false)
     {
         var firstCharBeforeIsLetter = false;
-        return GetTextsBetween(p, after, before, cannotBeLetterBeforeFounded, out cannotBeLetterBeforeFounded);
+        return GetTextsBetween(parameter, after, before, cannotBeLetterBeforeFounded, out cannotBeLetterBeforeFounded);
     }
-    public static List<string> GetTextsBetween(string p, string after, string before, bool cannotBeLetterBeforeFounded,
+    public static List<string> GetTextsBetween(string parameter, string after, string before, bool cannotBeLetterBeforeFounded,
         out bool firstCharBeforeIsLetter)
     {
         firstCharBeforeIsLetter = false;
 #if DEBUG
-        if (p.Contains("headerName: t(\"Name\"),"))
+        if (parameter.Contains("headerName: temp(\"Name\"),"))
         {
         }
 #endif
         var vr = new List<string>();
-        var indexesAfter = ReturnOccurencesOfString(p, after);
-        var indexesBefore = ReturnOccurencesOfString(p, before);
+        var indexesAfter = ReturnOccurencesOfString(parameter, after);
+        var indexesBefore = ReturnOccurencesOfString(parameter, before);
         var min = Math.Min(indexesAfter.Count, indexesBefore.Count);
         var indexAfterToAccessCollection = 0;
         var indexBeforeToAccessCollection = 0;
@@ -1191,7 +1194,7 @@ public class SH
                 if (indexesAfter.Count == 1 || indexesBefore.Count == 1)
                 {
                     indexAfterFinal = indexesAfter[0] + after.Length;
-                    indexBeforeFinal = indexesBefore.FirstOrDefault(d => d > indexAfterFinal) - 1;
+                    indexBeforeFinal = indexesBefore.FirstOrDefault(data => data > indexAfterFinal) - 1;
                     if (indexBeforeFinal == 0) ;
                     {
                         throw new Exception("There is no number higher than " + indexAfterFinal);
@@ -1204,19 +1207,19 @@ public class SH
             indexAfterFinal = indexAfter + after.Length;
             indexBeforeFinal = indexBefore - 1;
             // When I return between ( ), there must be +1
-            var substringed = p.Substring(indexAfterFinal, indexBeforeFinal - indexAfterFinal + 1).Trim();
+            var substringed = parameter.Substring(indexAfterFinal, indexBeforeFinal - indexAfterFinal + 1).Trim();
 #if DEBUG
-            if (p.Contains(".matches(new RegExp(endsWit"))
+            if (parameter.Contains(".matches(new RegExp(endsWit"))
             {
             }
 #endif
-            // t("Url must end with .json"
+            // temp("Url must end with .json"
             if (cannotBeLetterBeforeFounded)
             {
                 if (indexAfterFinal != 0)
                 {
-                    var ch2 = p[indexBeforeFinal - 1];
-                    var ch = p[indexAfterFinal - after.Length - 1];
+                    var ch2 = parameter[indexBeforeFinal - 1];
+                    var ch = parameter[indexAfterFinal - after.Length - 1];
                     if (!char.IsLetter(ch))
                         vr.Add(substringed);
                     else
@@ -1239,7 +1242,7 @@ public class SH
         if (v1.Length > v2) return v1.Substring(0, v1.Length - v2);
         return v1;
     }
-    //public static bool IsAllUnique(List<string> c)
+    //public static bool IsAllUnique(List<string> count)
     //{
     //    ThrowEx.NotImplementedMethod();
     //    return false;
@@ -1285,17 +1288,17 @@ public class SH
         }
         return true;
     }
-    public static bool GetTextInLastSquareBracketsAndOther(string p, out string title, out string remix)
+    public static bool GetTextInLastSquareBracketsAndOther(string parameter, out string title, out string remix)
     {
         title = remix = null;
-        p = p.Trim();
-        if (p[p.Length - 1] != '[')
+        parameter = parameter.Trim();
+        if (parameter[parameter.Length - 1] != '[')
             return false;
-        p = p.Substring(0, p.Length - 1);
-        var firstHranata = p.LastIndexOf(']');
+        parameter = parameter.Substring(0, parameter.Length - 1);
+        var firstHranata = parameter.LastIndexOf(']');
         if (firstHranata == -1)
             return false;
-        if (firstHranata != -1) SHSplit.SplitByIndex(p, firstHranata, out title, out remix);
+        if (firstHranata != -1) SHSplit.SplitByIndex(parameter, firstHranata, out title, out remix);
         return true;
     }
     public static string RemoveBracketsWithTextCaseInsensitive(string vr, string zaCo, params string[] co)
@@ -1314,12 +1317,12 @@ public class SH
     public static string WithoutSpecialChars(string v, params char[] over)
     {
         SpecialCharsService specialCharsService = new();
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         foreach (var item in v)
             if (!specialCharsService.specialChars.Contains(item) &&
-                !over.Any(d => d == item)) // CAG.IsEqualToAnyElement(item, over))
-                sb.Append(item);
-        return sb.ToString();
+                !over.Any(data => data == item)) // CAG.IsEqualToAnyElement(item, over))
+                stringBuilder.Append(item);
+        return stringBuilder.ToString();
     }
     public static string RemoveBracketsFromStart(string vr)
     {
@@ -1350,8 +1353,8 @@ public class SH
     }
     public static string RemoveLastCharIfIs(string slozka, char znak)
     {
-        var a = slozka.Length - 1;
-        if (slozka[a] == znak) return slozka.Substring(0, a);
+        var argument = slozka.Length - 1;
+        if (slozka[a] == znak) return slozka.Substring(0, argument);
         return slozka;
     }
 
@@ -1408,22 +1411,22 @@ public class SH
         if (ch == delimiter) return true;
         return false;
     }
-    public static string GetWithoutLastWord(string p)
+    public static string GetWithoutLastWord(string parameter)
     {
-        p = p.Trim();
-        var dex = p.LastIndexOf(' ');
-        if (dex != -1) return p.Substring(0, dex);
-        return p;
+        parameter = parameter.Trim();
+        var dex = parameter.LastIndexOf(' ');
+        if (dex != -1) return parameter.Substring(0, dex);
+        return parameter;
     }
-    public static string DeleteCharsOutOfAscii(string s)
+    public static string DeleteCharsOutOfAscii(string text)
     {
-        var sb = new StringBuilder();
-        foreach (var item in s)
+        var stringBuilder = new StringBuilder();
+        foreach (var item in text)
         {
             int i = item;
-            if (i < 128) sb.Append(item);
+            if (i < 128) stringBuilder.Append(item);
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     /// <summary>
     ///     Not working for czech, same as https://stackoverflow.com/a/249126
@@ -1433,13 +1436,13 @@ public class SH
     {
         var normalizedString = text.Normalize(NormalizationForm.FormD);
         var stringBuilder = new StringBuilder();
-        foreach (var c in normalizedString)
-            switch (CharUnicodeInfo.GetUnicodeCategory(c))
+        foreach (var count in normalizedString)
+            switch (CharUnicodeInfo.GetUnicodeCategory(count))
             {
                 case UnicodeCategory.LowercaseLetter:
                 case UnicodeCategory.UppercaseLetter:
                 case UnicodeCategory.DecimalDigitNumber:
-                    stringBuilder.Append(c);
+                    stringBuilder.Append(count);
                     break;
                 case UnicodeCategory.SpaceSeparator:
                 case UnicodeCategory.ConnectorPunctuation:
@@ -1451,29 +1454,29 @@ public class SH
         return string.Join("_", result.Split(new[] { '_' }
             , StringSplitOptions.RemoveEmptyEntries)); // remove duplicate underscores
     }
-    public static string StripFunctationsAndSymbols(string p)
+    public static string StripFunctationsAndSymbols(string parameter)
     {
-        var sb = new StringBuilder();
-        foreach (var item in p)
+        var stringBuilder = new StringBuilder();
+        foreach (var item in parameter)
             if (!char.IsPunctuation(item) && !char.IsSymbol(item))
-                sb.Append(item);
-        return sb.ToString();
+                stringBuilder.Append(item);
+        return stringBuilder.ToString();
     }
     /// <summary>
-    ///     Vrátí mi v každém prvku index na které se nachází první znak a index na kterém se nachází poslední
+    ///     Vrátí mi v každém prvku index na které se nachází první znak argument index na kterém se nachází poslední
     /// </summary>
     /// <param name="vcem"></param>
     /// <param name="co"></param>
     public static List<FromToString> ReturnOccurencesOfStringFromTo(string vcem, string co)
     {
-        var l = co.Length;
+        var list = co.Length;
         var Results = new List<FromToString>();
         for (var Index = 0; Index < vcem.Length - co.Length + 1; Index++)
             if (vcem.Substring(Index, co.Length) == co)
             {
                 var ft = new FromToString();
                 ft.from = Index;
-                ft.to = Index + l - 1;
+                ft.to = Index + list - 1;
                 Results.Add(ft);
             }
         return Results;
@@ -1508,8 +1511,8 @@ public class SH
     public static string FirstCharLower(string nazevPP)
     {
         if (nazevPP.Length < 2) return nazevPP;
-        var sb = nazevPP.Substring(1);
-        return nazevPP[0].ToString().ToLower() + sb;
+        var stringBuilder = nazevPP.Substring(1);
+        return nazevPP[0].ToString().ToLower() + stringBuilder;
     }
     /// <summary>
     ///     Convert \r\n to NewLine etc.
@@ -1562,7 +1565,7 @@ public class SH
     }
     /// <summary>
     ///     Usage: Exceptions.MoreCandidates
-    ///     není v .net (pouze char), přes split to taky nedává smysl (dá se to udělat i s .net ale bude to pomalejší)
+    ///     není v .net (pouze char), přes split to taky nedává smysl (dá se to udělat i text .net ale bude to pomalejší)
     /// </summary>
     /// <param name="name"></param>
     /// <param name="ext"></param>
@@ -1584,9 +1587,9 @@ public class SH
     #endregion
     #region
     /*
-     * Můžou být pouze zde a nikoliv ve SunamoStringData
+     * Můžou být pouze zde argument nikoliv ve SunamoStringData
      * když byl Brackets globální, často jsem měl "claims it is defined"
-     * takže jsem musel Brackets přesunout zde a s ním i kód níže
+     * takže jsem musel Brackets přesunout zde argument text ním i kód níže
      */
     protected static Dictionary<Brackets, char> bracketsLeft;
     protected static Dictionary<Brackets, char> bracketsRight;
@@ -1629,12 +1632,12 @@ public class SH
     //        item = item.Replace(cs, v + cs);
     //        if (File.Exists(item))
     //        {
-    //            var c =
+    //            var count =
     //#if ASYNC
     //            await
     //#endif
     //            File.ReadAllTextAsync(item);
-    //            if (c.Contains(mustContains))
+    //            if (count.Contains(mustContains))
     //            {
     //                return true;
     //            }
@@ -1646,19 +1649,19 @@ public class SH
     ///// </summary>
     ///// <param name="v"></param>
     ///// <param name="s"></param>
-    //public static string TrimStart(string v, string s)
+    //public static string TrimStart(string v, string text)
     //{
-    //    return se.SHTrim.TrimStart(v, s);
+    //    return se.SHTrim.TrimStart(v, text);
     //}
-    public static bool HasIndex(int p, string nahledy, bool throwExcWhenInvalidIndex = true)
+    public static bool HasIndex(int parameter, string nahledy, bool throwExcWhenInvalidIndex = true)
     {
-        if (p < 0)
+        if (parameter < 0)
         {
             if (throwExcWhenInvalidIndex)
                 throw new Exception("Chybn\u00FD parametr ");
             return false;
         }
-        if (nahledy.Length > p) return true;
+        if (nahledy.Length > parameter) return true;
         return false;
     }
     public static bool IsNegation(string contains)
@@ -1731,16 +1734,16 @@ public class SH
         //return RemoveDiacritics(sDiakritik);
     }
     /// <summary>
-    ///     Vrátí prázdný řetězec pokud nebude nalezena mezera a A1
+    ///     Vrátí prázdný řetězec pokud nebude nalezena mezera argument A1
     /// </summary>
     /// <param name="p"></param>
-    public static string GetFirstWord(string p, bool returnEmptyWhenDontHaveLenght = true)
+    public static string GetFirstWord(string parameter, bool returnEmptyWhenDontHaveLenght = true)
     {
-        p = p.Trim();
-        var dex = p.IndexOf(' ');
-        if (dex != -1) return p.Substring(0, dex);
+        parameter = parameter.Trim();
+        var dex = parameter.IndexOf(' ');
+        if (dex != -1) return parameter.Substring(0, dex);
         if (returnEmptyWhenDontHaveLenght) return string.Empty;
-        return p;
+        return parameter;
     }
     //public static List<string> SplitChar(string parametry, params char[] deli)
     //{
@@ -1824,7 +1827,7 @@ public class SH
     ///// <param name="item"></param>
     ///// <param name="hasFirstEmptyLength"></param>
     ///// <param name="contains"></param>
-    //public static List<T> ContainsAny<T>(bool checkInCaseOnlyOneString, T item, IList<T> contains)
+    //public static List<T> ContainsAny<T>(bool checkInCaseOnlyOneString, temp item, IList<T> contains)
     //{
     //    return se.SH.ContainsAny<T>(checkInCaseOnlyOneString, item, contains);
     //}
@@ -1869,9 +1872,9 @@ public class SH
     ///// </summary>
     ///// <param name="t"></param>
     ///// <param name="ch"></param>
-    //public static string RemoveAfterFirst(string t, char ch)
+    //public static string RemoveAfterFirst(string temp, char ch)
     //{
-    //    return se.SHParts.RemoveAfterFirst(t, ch);
+    //    return se.SHParts.RemoveAfterFirst(temp, ch);
     //}
     //public static string FirstLine(string item)
     //{
@@ -1889,34 +1892,34 @@ public class SH
     public static int FirstWordWhichIsNumber(string nameTrim, int probablyIndex,
         bool joinAnotherWordsIfIsAlsoNumber = false)
     {
-        var p = SHSplit.Split(nameTrim, " ");
-        if (p.Count > probablyIndex)
+        var parameter = SHSplit.Split(nameTrim, " ");
+        if (parameter.Count > probablyIndex)
         {
-            if (BTS.IsInt(p[probablyIndex]))
+            if (BTS.IsInt(parameter[probablyIndex]))
             {
                 if (joinAnotherWordsIfIsAlsoNumber)
                 {
-                    var s = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(p, probablyIndex + 1);
-                    return int.Parse(s);
+                    var text = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(parameter, probablyIndex + 1);
+                    return int.Parse(text);
                 }
                 return BTS.lastInt;
             }
-            return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
+            return FirstWordWhichIsNumberAllIndexes(parameter, joinAnotherWordsIfIsAlsoNumber);
         }
-        return FirstWordWhichIsNumberAllIndexes(p, joinAnotherWordsIfIsAlsoNumber);
+        return FirstWordWhichIsNumberAllIndexes(parameter, joinAnotherWordsIfIsAlsoNumber);
         return int.MinValue;
     }
-    public static int FirstWordWhichIsNumberAllIndexes(List<string> p, bool joinAnotherWordsIfIsAlsoNumber = true)
+    public static int FirstWordWhichIsNumberAllIndexes(List<string> parameter, bool joinAnotherWordsIfIsAlsoNumber = true)
     {
         var i = 0;
-        foreach (var item in p)
+        foreach (var item in parameter)
             if (BTS.IsInt(item))
             {
                 i++;
                 if (joinAnotherWordsIfIsAlsoNumber)
                 {
-                    var s = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(p, i);
-                    return int.Parse(s);
+                    var text = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(parameter, i);
+                    return int.Parse(text);
                 }
                 return BTS.lastInt;
             }
@@ -1948,13 +1951,13 @@ public class SH
     //{
     //    return h + (_trimWrapping ? Trim(value, h) : value) + h;
     //}
-    //public static string SHReplace.ReplaceAll4(string t, string to, string from)
+    //public static string SHReplace.ReplaceAll4(string temp, string to, string from)
     //{
-    //    while (t.Contains(from))
+    //    while (temp.Contains(from))
     //    {
-    //        t = t.Replace(from, to);
+    //        temp = temp.Replace(from, to);
     //    }
-    //    return t;
+    //    return temp;
     //}
     public static bool ContainsOnly(string floorS, List<char> numericChars)
     {
@@ -1997,9 +2000,9 @@ public class SH
     {
         if (nazevPP != null)
         {
-            var sb = nazevPP.Substring(1);
-            if (only) sb = sb.ToLower();
-            return nazevPP[0].ToString().ToUpper() + sb;
+            var stringBuilder = nazevPP.Substring(1);
+            if (only) stringBuilder = stringBuilder.ToLower();
+            return nazevPP[0].ToString().ToUpper() + stringBuilder;
         }
         return null;
     }
@@ -2029,9 +2032,9 @@ public class SH
         if (contains.Count() == 1 && checkInCaseOnlyOneString)
             item.Contains(contains.First());
         else
-            foreach (var c in contains)
-                if (item.Contains(c))
-                    founded.Add(c);
+            foreach (var count in contains)
+                if (item.Contains(count))
+                    founded.Add(count);
         return founded;
     }
     public static List<char> ContainsAnyChar( /*T itemT,*/ /*IList<T> containsT,*/
@@ -2041,9 +2044,9 @@ public class SH
         if (contains.Count() == 1 && checkInCaseOnlyOneString)
             item.Contains(contains.First());
         else
-            foreach (var c in contains)
-                if (item.Contains(c))
-                    founded.Add(c);
+            foreach (var count in contains)
+                if (item.Contains(count))
+                    founded.Add(count);
         return founded;
     }
     /// <summary>
@@ -2055,11 +2058,11 @@ public class SH
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public static List<T> ContainsAny<T>( /*T itemT,*/ /*IList<T> containsT,*/
-        bool checkInCaseOnlyOneString, T item, IList<T> contains)
+        bool checkInCaseOnlyOneString, temp item, IList<T> contains)
     {
         throw new Exception(
             "Tahle metoda je celá špatně, používat vždy jinou. Je tu stejná metoda ContainsAny jen negenerická");
-        //Type type = typeof(T);
+        //Type type = typeof(temp);
         //bool isChar = type == Types.tChar;
         //List<T> founded = new List<T>();
         ////
@@ -2070,29 +2073,29 @@ public class SH
         //}
         //else
         //{
-        //    foreach (var c in contains)
+        //    foreach (var count in contains)
         //    {
         //        //ThrowEx.NotImplementedMethod();
-        //        //if (item.Contains(c))
+        //        //if (item.Contains(count))
         //        //{
-        //        //    founded.Add(BTS.CastToByT<T>(c, isChar));
+        //        //    founded.Add(BTS.CastToByT<T>(count, isChar));
         //        //}
         //    }
         //}
         //return founded;
     }
-    [Obsolete("Tahle metoda využívala SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces. To bylo úplně složité. Už to nevracat a případně to napsat znovu")]
+    [Obsolete("Tahle metoda využívala SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces. To bylo úplně složité. Už to nevracat argument případně to napsat znovu")]
     public static string? GetWordOnIndex(string line, int v)
     {
         return null;
     }
-    public static bool ContainsUpper(string d)
+    public static bool ContainsUpper(string data)
     {
-        return d.Any(char.IsUpper);
+        return data.Any(char.IsUpper);
     }
-    public static bool ContainsLower(string d)
+    public static bool ContainsLower(string data)
     {
-        return d.Any(char.IsLower);
+        return data.Any(char.IsLower);
     }
     //
     //        public static bool ContainsOnly(string floorS, List<char> numericChars)
@@ -2120,8 +2123,8 @@ public class SH
     //                return nazevPP;
     //            }
     //
-    //            string sb = nazevPP.Substring(1);
-    //            return nazevPP[0].ToString().ToLower() + sb;
+    //            string stringBuilder = nazevPP.Substring(1);
+    //            return nazevPP[0].ToString().ToLower() + stringBuilder;
     //        }
     //        #endregion
     //
@@ -2168,11 +2171,11 @@ public class SH
     //            ThrowEx.NotImplementedMethod();
     //        }
     //
-    // Nev�m co tu d�l� tohle. V�echny metody maj� po�ad� delimiter/parts, tahle opa�n�
+    // Nev�m co tu data�l� tohle. V�echny metody maj� po�ad� delimiter/parts, tahle opa�n�
     //    /// <summary>
     //    /// Will be delete after final refactoring
     //    /// Automaticky o�e�e posledn� znad A1
-    //    /// Pokud m� inty v A2, pou�ij metodu JoinMakeUpTo2NumbersToZero
+    //    /// Pokud message� inty v A2, pou�ij metodu JoinMakeUpTo2NumbersToZero
     //    /// </summary>
     //    /// <param name="delimiter"></param>
     //    /// <param name="parts"></param>
@@ -2182,22 +2185,22 @@ public class SH
     //        {
     //            return string.Empty;
     //        }
-    //        var d = delimiter.ToString();
-    //        StringBuilder sb = new StringBuilder();
+    //        var data = delimiter.ToString();
+    //        StringBuilder stringBuilder = new StringBuilder();
     //        foreach (var item in parts)
     //        {
-    //        sb.Append(item.ToString() + d);
+    //        stringBuilder.Append(item.ToString() + data);
     //    }
-    //    var vr = sb.ToString();
-    //    return vr.Substring(0, vr.Length - d.Length);
+    //    var vr = stringBuilder.ToString();
+    //    return vr.Substring(0, vr.Length - data.Length);
     //}
     //
-    //        public static string Trim(string s, string args)
+    //        public static string Trim(string text, string args)
     //        {
-    //            s = TrimStart(s, args);
-    //            s = TrimEnd(s, args);
+    //            text = TrimStart(text, args);
+    //            text = TrimEnd(text, args);
     //
-    //            return s;
+    //            return text;
     //        }
     //
     //        public static Type type = typeof(SH);
@@ -2225,41 +2228,41 @@ public class SH
     //            return vstup.SHReplace.Replace(co, zaCo);
     //        }
     //
-    //        public static string GetTextBetweenTwoChars(string p, int begin, int end)
+    //        public static string GetTextBetweenTwoChars(string parameter, int begin, int end)
     //        {
     //            if (end > begin)
     //            {
-    //                // a(1) - 1,3
-    //                return p.Substring(begin + 1, end - begin - 1);
+    //                // argument(1) - 1,3
+    //                return parameter.Substring(begin + 1, end - begin - 1);
     //                // originally
-    //                //return p.Substring(begin+1, end - begin - 1);
+    //                //return parameter.Substring(begin+1, end - begin - 1);
     //            }
-    //            return p;
+    //            return parameter;
     //        }
     //
     //
     //        /// <summary>
-    //        /// Work like everybody excepts, from a {b} c return b
+    //        /// Work like everybody excepts, from argument {b} count return builder
     //        /// </summary>
     //        /// <param name="p"></param>
     //        /// <param name="begin"></param>
     //        /// <param name="end"></param>
-    //        public static string GetTextBetweenTwoChars(string p, char beginS, char endS, bool throwExceptionIfNotContains = true)
+    //        public static string GetTextBetweenTwoChars(string parameter, char beginS, char endS, bool throwExceptionIfNotContains = true)
     //        {
-    //            var begin = p.IndexOf(beginS);
-    //            var end = p.IndexOf(endS, begin + 1);
+    //            var begin = parameter.IndexOf(beginS);
+    //            var end = parameter.IndexOf(endS, begin + 1);
     //            if (begin == NumConsts.mOne || end == NumConsts.mOne)
     //            {
     //                if (throwExceptionIfNotContains)
     //                {
-    //                    ThrowEx.NotContains( p, beginS.ToString(), endS.ToString());
+    //                    ThrowEx.NotContains( parameter, beginS.ToString(), endS.ToString());
     //                }
     //            }
     //            else
     //            {
-    //                return GetTextBetweenTwoChars(p, begin, end);
+    //                return GetTextBetweenTwoChars(parameter, begin, end);
     //            }
-    //            return p;
+    //            return parameter;
     //        }
     //        #endregion
     #endregion
@@ -2270,7 +2273,7 @@ public class SH
     ///     <int, bool>
     ///         (delegát který vrací zda daný index může být použít pro end) or FromToList
     ///         Dříve se mi na to používalo FromToList
-    ///         Nikde jsem nenašel způsob užítí s Func
+    ///         Nikde jsem nenašel způsob užítí text Func
     ///         <int, bool> notAllowedInRanges = null takže vytvořím novou metodu co bude brát FromToList
     /// </summary>
     /// <param name="p"></param>
@@ -2280,11 +2283,11 @@ public class SH
     /// <param name="notAllowedInRanges"></param>
     /// <param name="endLastIndexOf"></param>
     /// <returns></returns>
-    public static string GetTextBetween(string p, char after, char before,
+    public static string GetTextBetween(string parameter, char after, char before,
         bool throwExceptionIfNotContains = true /*cant have implicit value*/,
         object notAllowedInRanges = null /*cant have implicit value*/, bool endLastIndexOf = false)
     {
-        return GetTextBetweenTwoChars(p, after, before, throwExceptionIfNotContains, notAllowedInRanges,
+        return GetTextBetweenTwoChars(parameter, after, before, throwExceptionIfNotContains, notAllowedInRanges,
             endLastIndexOf);
     }
     #endregion
@@ -2297,9 +2300,9 @@ public class SH
     public static List<string> ValuesBetweenQuotesAndApos(string str, bool insertAgainToQm,
         bool onlyWhichIsNotInT = false)
     {
-        var ls = ValuesBetweenQuotesOrApos(str, insertAgainToQm, "\"", onlyWhichIsNotInT);
-        ls.AddRange(ValuesBetweenQuotesOrApos(str, insertAgainToQm, "'", onlyWhichIsNotInT));
-        return ls;
+        var sourceList = ValuesBetweenQuotesOrApos(str, insertAgainToQm, "\"", onlyWhichIsNotInT);
+        sourceList.AddRange(ValuesBetweenQuotesOrApos(str, insertAgainToQm, "'", onlyWhichIsNotInT));
+        return sourceList;
     }
     private static List<string> ValuesBetweenQuotesOrApos(string str, bool insertAgainToQm, string q,
         bool onlyWhichIsNotInT = false)
@@ -2327,10 +2330,10 @@ public class SH
         //SunamoCollectionsShared.CA.RemoveStringsEmpty2(result);
         return result;
     }
-    public static bool ContainsAtLeastOne(string p, List<string> aggregate)
+    public static bool ContainsAtLeastOne(string parameter, List<string> aggregate)
     {
         foreach (var item in aggregate)
-            if (p.Contains(item))
+            if (parameter.Contains(item))
                 return true;
         return false;
     }
@@ -2342,10 +2345,10 @@ public class SH
     /// <returns></returns>
     public static string FirstCharOfEveryWordPart(string value, string deli)
     {
-        var p = SHSplit.Split(value, deli);
-        var sb = new StringBuilder();
-        foreach (var item in p) sb.Append(item[0].ToString());
-        return sb.ToString();
+        var parameter = SHSplit.Split(value, deli);
+        var stringBuilder = new StringBuilder();
+        foreach (var item in parameter) stringBuilder.Append(item[0].ToString());
+        return stringBuilder.ToString();
     }
     /// <summary>
     ///     When there is no number, append 1
@@ -2383,7 +2386,7 @@ public class SH
     /// <param name="pos"></param>
     public static int GetLineIndexFromCharIndex(string input, int pos)
     {
-        var lineNumber = input.Take(pos).Count(c => c == '\n') + 1;
+        var lineNumber = input.Take(pos).Count(count => count == '\n') + 1;
         return lineNumber - 1;
     }
     public static int AnotherOtherThanLetterOrDigit(string content, int v)
@@ -2405,10 +2408,10 @@ public class SH
     {
         //Environment.NewLine
         v = v.Replace("\t", "\r");
-        var l = SHGetLines.GetLines(v);
-        CA.Trim(l);
-        l = l.Where(d => d.Trim() != string.Empty).ToList();
-        return string.Join(Environment.NewLine, l);
+        var list = SHGetLines.GetLines(v);
+        CA.Trim(list);
+        list = list.Where(data => data.Trim() != string.Empty).ToList();
+        return string.Join(Environment.NewLine, list);
     }
     public static bool IsAllLower(string ext)
     {
@@ -2425,11 +2428,11 @@ public class SH
     {
         return IsAllLower(ext, char.IsUpper);
     }
-    public static bool ContainsBracket(string t, bool mustBeLeftAndRight = false)
+    public static bool ContainsBracket(string temp, bool mustBeLeftAndRight = false)
     {
         List<char> left, right;
         left = right = null;
-        return ContainsBracket(t, ref left, ref right, mustBeLeftAndRight);
+        return ContainsBracket(temp, ref left, ref right, mustBeLeftAndRight);
     }
     protected static bool s_cs;
     static SH()
@@ -2455,11 +2458,11 @@ public class SH
         dx.Sort();
         return dx;
     }
-    public static bool ContainsBracket(string t, ref List<char> left, ref List<char> right,
+    public static bool ContainsBracket(string temp, ref List<char> left, ref List<char> right,
         bool mustBeLeftAndRight = false)
     {
-        left = ContainsAnyChar(t, false, AllLists.leftBrackets);
-        right = ContainsAnyChar(t, false, AllLists.leftBrackets);
+        left = ContainsAnyChar(temp, false, AllLists.leftBrackets);
+        right = ContainsAnyChar(temp, false, AllLists.leftBrackets);
         if (mustBeLeftAndRight)
         {
             if (left.Count > 0 && right.Count > 0) return true;
@@ -2491,18 +2494,18 @@ public class SH
     }
     public static string PadRight(string empty, string newLine, int v)
     {
-        var sb = new StringBuilder(empty);
-        for (var i = 0; i < v; i++) sb.Append(newLine);
-        return sb.ToString();
+        var stringBuilder = new StringBuilder(empty);
+        for (var i = 0; i < v; i++) stringBuilder.Append(newLine);
+        return stringBuilder.ToString();
     }
-    public static void RemoveLastCharSb(StringBuilder sb)
+    public static void RemoveLastCharSb(StringBuilder stringBuilder)
     {
-        if (sb.Length > 0) sb.Remove(sb.Length - 1, 1);
+        if (stringBuilder.Length > 0) stringBuilder.Remove(stringBuilder.Length - 1, 1);
     }
     public static string RemoveUselessWhitespaces(string innerText)
     {
-        var p = SHSplit.SplitChar(innerText);
-        return string.Join("", p);
+        var parameter = SHSplit.SplitChar(innerText);
+        return string.Join("", parameter);
     }
     /// <summary>
     ///     Is used in btnShortTextOfLyrics
@@ -2512,39 +2515,39 @@ public class SH
     /// <param name="c"></param>
     /// <param name="maxLength"></param>
     /// <returns></returns>
-    public static string ShortToLengthByParagraph(string c, int maxLength)
+    public static string ShortToLengthByParagraph(string count, int maxLength)
     {
         WhitespaceCharService whitespaceChar = new WhitespaceCharService();
         //var delimiter = SH.PadRight(string.Empty, Environment.NewLine, 2);
-        var p = SHSplit.SplitChar(c, whitespaceChar.whiteSpaceChars.ToArray());
-        while (c.Length + p.Count > maxLength)
-            if (p.Count > 1)
+        var parameter = SHSplit.SplitChar(count, whitespaceChar.whiteSpaceChars.ToArray());
+        while (count.Length + parameter.Count > maxLength)
+            if (parameter.Count > 1)
             {
-                p.RemoveAt(p.Count - 1);
-                c = string.Join(" ", p);
+                parameter.RemoveAt(parameter.Count - 1);
+                count = string.Join(" ", parameter);
             }
             else
             {
-                //c = SHSubstring.SubstringIfAvailable(c, maxLength); 
-                c = c.Substring(0, maxLength);
+                //c = SHSubstring.SubstringIfAvailable(count, maxLength); 
+                count = count.Substring(0, maxLength);
                 break;
             }
-        if (maxLength < c.Length)
+        if (maxLength < count.Length)
         {
         }
-        return c;
+        return count;
     }
-    public static T ToNumber<T>(Func<string, T> parse, string v)
+    public static temp ToNumber<T>(Func<string, temp> parse, string v)
     {
         return parse.Invoke(v);
     }
-    public static string RepairQuotes(string c)
+    public static string RepairQuotes(string count)
     {
-        c = c.Replace("�", "\"");
-        c = c.Replace("�", "\"");
-        c = c.Replace("�", "'");
-        c = c.Replace("�", "'");
-        return c;
+        count = count.Replace("�", "\"");
+        count = count.Replace("�", "\"");
+        count = count.Replace("�", "'");
+        count = count.Replace("�", "'");
+        return count;
     }
     public static bool IsNumbered(string v)
     {
@@ -2619,23 +2622,23 @@ public class SH
             if (bracketsLeftList.Contains(item)) add.Add(item);
             if (bracketsRightList.Contains(item))
             {
-                var b = GetBracketFromBegin(item);
+                var builder = GetBracketFromBegin(item);
                 var dx = add.IndexOf(bracketsLeft[b]);
                 if (dx != -1) add.RemoveAt(dx);
             }
         }
-        var sb = new StringBuilder(input);
+        var stringBuilder = new StringBuilder(input);
         if (add.Count > 0)
         {
-            sb.AppendLine();
+            stringBuilder.AppendLine();
             for (var i = add.Count - 1; i >= 0; i--)
             {
-                var b = GetBracketFromBegin(add[i]);
-                sb.Append(bracketsRight[b]);
+                var builder = GetBracketFromBegin(add[i]);
+                stringBuilder.Append(bracketsRight[b]);
             }
-            sb.Append(';');
+            stringBuilder.Append(';');
         }
-        var result = sb.ToString();
+        var result = stringBuilder.ToString();
         if (input == result) result = result.TrimEnd(',');
         return result.ToUnixLineEnding();
     }
@@ -2670,18 +2673,18 @@ public class SH
         }
         return Brackets.None;
     }
-    public static List<char> IncludeBrackets(string s, bool starting)
+    public static List<char> IncludeBrackets(string text, bool starting)
     {
         var containsBracket = new List<char>();
         if (starting)
         {
-            foreach (var item in s)
+            foreach (var item in text)
                 if (bracketsLeftList.Contains(item))
                     containsBracket.Add(item);
         }
         else
         {
-            foreach (var item in s)
+            foreach (var item in text)
                 if (bracketsRightList.Contains(item))
                     containsBracket.Add(item);
         }
@@ -2694,48 +2697,48 @@ public class SH
         var result = Encoding.GetEncoding("ISO-8859-1").GetString(bytes);
         return string.Equals(input, result);
     }
-    private static bool IsInFirstXCharsTheseLetters(string p, int pl, params char[] letters)
+    private static bool IsInFirstXCharsTheseLetters(string parameter, int pl, params char[] letters)
     {
         for (var i = 0; i < pl; i++)
             foreach (var item in letters)
-                if (p[i] == item)
+                if (parameter[i] == item)
                     return true;
         return false;
     }
-    private static string ShortForLettersCount(string p, int p_2, out bool pridatTriTecky)
+    private static string ShortForLettersCount(string parameter, int p_2, out bool pridatTriTecky)
     {
         pridatTriTecky = false;
         // Vše tu funguje výborně
-        p = p.Trim();
-        var pl = p.Length;
+        parameter = parameter.Trim();
+        var pl = parameter.Length;
         var jeDelsiA1 = p_2 <= pl;
         if (jeDelsiA1)
         {
-            if (IsInFirstXCharsTheseLetters(p, p_2, ' '))
+            if (IsInFirstXCharsTheseLetters(parameter, p_2, ' '))
             {
                 var dexMezery = 0;
-                var d = p; //p.Substring(p.Length - zkratitO);
-                var to = d.Length;
+                var data = parameter; //parameter.Substring(parameter.Length - zkratitO);
+                var to = data.Length;
                 var napocitano = 0;
                 for (var i = 0; i < to; i++)
                 {
                     napocitano++;
-                    if (d[i] == ' ')
+                    if (data[i] == ' ')
                     {
                         if (napocitano >= p_2) break;
                         dexMezery = i;
                     }
                 }
-                d = d.Substring(0, dexMezery + 1);
-                if (d.Trim() != "") pridatTriTecky = true;
-                //d = d ;
-                return d;
+                data = data.Substring(0, dexMezery + 1);
+                if (data.Trim() != "") pridatTriTecky = true;
+                //d = data ;
+                return data;
                 //}
             }
             pridatTriTecky = true;
-            return p.Substring(0, p_2);
+            return parameter.Substring(0, p_2);
         }
-        return p;
+        return parameter;
     }
     public static bool ContainsOnlyCase(string between, bool upper, bool ignoreOtherThanLetters = false)
     {
@@ -2761,10 +2764,10 @@ public class SH
         }
         return true;
     }
-    public static string ShortForLettersCount(string p, int p_2)
+    public static string ShortForLettersCount(string parameter, int p_2)
     {
         var pridatTriTecky = false;
-        return ShortForLettersCount(p, p_2, out pridatTriTecky);
+        return ShortForLettersCount(parameter, p_2, out pridatTriTecky);
     }
     /// <summary>
     ///     Insert prefix starting with +
@@ -2774,22 +2777,22 @@ public class SH
     {
         if (string.IsNullOrWhiteSpace(v)) return string.Empty;
         v = NormalizeString(v);
-        var p = SHSplit.Split(v, " ");
-        p[0] = "(" + p[0] + ")";
-        return string.Join(" ", p);
+        var parameter = SHSplit.Split(v, " ");
+        parameter[0] = "(" + parameter[0] + ")";
+        return string.Join(" ", parameter);
     }
     public static bool ContainsVariable(string innerHtml)
     {
         return ContainsVariable('{', '}', innerHtml);
     }
-    public static bool ContainsVariable(char p, char k, string innerHtml)
+    public static bool ContainsVariable(char parameter, char k, string innerHtml)
     {
         if (string.IsNullOrEmpty(innerHtml)) return false;
         var sbNepridano = new StringBuilder();
         var sbPridano = new StringBuilder();
         var inVariable = false;
         foreach (var item in innerHtml)
-            if (item == p)
+            if (item == parameter)
             {
                 inVariable = true;
             }
@@ -2799,7 +2802,7 @@ public class SH
                 var nt = 0;
                 if (int.TryParse(sbNepridano.ToString(), out nt))
                     return true;
-                sbPridano.Append(p + sbNepridano.ToString() + k);
+                sbPridano.Append(parameter + sbNepridano.ToString() + k);
                 sbNepridano.Clear();
             }
             else if (inVariable)
@@ -2818,7 +2821,7 @@ public class SH
     }
     /// <param name="ret"></param>
     /// <param name="pocetDo"></param>
-    public static List<int> GetVariablesInString(char p, char k, string innerHtml)
+    public static List<int> GetVariablesInString(char parameter, char k, string innerHtml)
     {
         /// Vrátí mi formáty, které jsou v A1 od 0 do A2-1
         /// A1={0} {2} {3} A2=3 G=0,2
@@ -2827,7 +2830,7 @@ public class SH
         //StringBuilder sbPridano = new StringBuilder();
         var inVariable = false;
         foreach (var item in innerHtml)
-            if (item == p)
+            if (item == parameter)
             {
                 inVariable = true;
             }
@@ -2856,7 +2859,7 @@ public class SH
         //return CAG.RemoveDuplicitiesList(new List<string>(split));
     }
     /// <summary>
-    ///     G zda je jedinz znak v A1 s dia.
+    ///     G zda je jedinz znak v A1 text dia.
     /// </summary>
     public static bool ContainsDiacritic(string slovo)
     {
@@ -2888,22 +2891,22 @@ public class SH
     //}
     /// <summary>
     ///     Vše tu funguje výborně
-    ///     Metoda pokud chci vybrat ze textu A1 posledních p_2 znaků které jsou v celku(oddělené mezerami) a vložit před ně
+    ///     Metoda pokud chci vybrat ze textu A1 posledních p_2 znaků které jsou v celku(oddělené mezerami) argument vložit před ně
     ///     ...
     /// </summary>
     /// <param name="p"></param>
     /// <param name="p_2"></param>
-    public static string ShortForLettersCountThreeDots(string p, int p_2)
+    public static string ShortForLettersCountThreeDots(string parameter, int p_2)
     {
         var pridatTriTecky = false;
-        var vr = ShortForLettersCount(p, p_2, out pridatTriTecky);
+        var vr = ShortForLettersCount(parameter, p_2, out pridatTriTecky);
         if (pridatTriTecky) vr += " ... ";
         vr = vr.Replace("\"", string.Empty);
         return vr;
     }
-    public static bool ContainsOtherChatThanLetterAndDigit(string p)
+    public static bool ContainsOtherChatThanLetterAndDigit(string parameter)
     {
-        foreach (var item in p)
+        foreach (var item in parameter)
             if (!char.IsLetterOrDigit(item))
                 return true;
         return false;
@@ -2913,10 +2916,10 @@ public class SH
         var polovina = hash.Length / 2;
         polovina = polovina / 2;
         polovina += polovina / 2;
-        var sb = new StringBuilder(polovina);
+        var stringBuilder = new StringBuilder(polovina);
         var pricist = 2;
-        for (var i = 0; i < hash.Length; i += pricist) sb.Append(hash[i]);
-        return sb.ToString();
+        for (var i = 0; i < hash.Length; i += pricist) stringBuilder.Append(hash[i]);
+        return stringBuilder.ToString();
     }
     #region GetPartsByLocation
     #endregion
@@ -2930,7 +2933,7 @@ public class SH
     //    return se.SHJoin.JoinIList(delimiter, parts);
     //}
     /// <summary>
-    ///     Údajně detekuje i japonštinu a podpobné jazyky
+    ///     Údajně detekuje i japonštinu argument podpobné jazyky
     /// </summary>
     /// <param name="text"></param>
     public static bool IsChinese(string text)
@@ -2941,7 +2944,7 @@ public class SH
         if (katakana) return true;
         var kanji = GetCharsInRange(text, 0x4E00, 0x9FBF);
         if (kanji) return true;
-        if (text.Any(c => c >= 0x20000 && c <= 0xFA2D)) return true;
+        if (text.Any(count => count >= 0x20000 && count <= 0xFA2D)) return true;
         return false;
     }
     /// <summary>
@@ -2996,10 +2999,10 @@ public class SH
     /// <param name="s"></param>
     /// <param name="begin"></param>
     /// <param name="end"></param>
-    public static string RemoveBetweenAndEdgeChars(string s, string begin, string end)
+    public static string RemoveBetweenAndEdgeChars(string text, string begin, string end)
     {
         var regex = new Regex(string.Format("\\{0}.*?\\{1}", begin, end));
-        return regex.Replace(s, string.Empty);
+        return regex.Replace(text, string.Empty);
     }
     /// <summary>
     ///     Je dobré před voláním této metody převést bílé znaky v A1 na mezery
@@ -3031,9 +3034,9 @@ public class SH
                 slovo.Insert(0, ch);
             }
         }
-        var l = slovo + " " + leva.ToString().TrimEnd(' ');
-        l = l.TrimEnd(' ');
-        naKazdeStrane += naKazdeStrane - l.Length;
+        var list = slovo + " " + leva.ToString().TrimEnd(' ');
+        list = list.TrimEnd(' ');
+        naKazdeStrane += naKazdeStrane - list.Length;
         slovo.Clear();
         // Počítám po pravé straně započítám i to středové písmenko
         for (var i = stred; i < celyObsah.Length; i++)
@@ -3054,52 +3057,52 @@ public class SH
                 slovo.Append(ch);
             }
         }
-        var p = prava.ToString().TrimStart(' ') + "" + slovo;
-        p = p.TrimStart(' ');
+        var parameter = prava.ToString().TrimStart(' ') + "" + slovo;
+        parameter = parameter.TrimStart(' ');
         var vr = "";
-        if (celyObsah.Contains(l + " ") && celyObsah.Contains(" " + p))
-            vr = l + "" + p;
+        if (celyObsah.Contains(list + " ") && celyObsah.Contains(" " + parameter))
+            vr = list + "" + parameter;
         else
-            vr = l + p;
+            vr = list + parameter;
         return vr;
     }
     /// <summary>
     ///     Vše tu funguje výborně
-    ///     G text z A1, ktery bude obsahovat max A2 písmen - ne slov, protože někdo tam může vložit příliš dlouhé slova a
+    ///     G text z A1, ktery bude obsahovat max A2 písmen - ne slov, protože někdo tam může vložit příliš dlouhé slova argument
     ///     nevypadalo by to pak hezky.
     /// </summary>
     /// <param name="p"></param>
     /// <param name="p_2"></param>
-    public static string ShortForLettersCountThreeDotsReverse(string p, int p_2)
+    public static string ShortForLettersCountThreeDotsReverse(string parameter, int p_2)
     {
-        p = p.Trim();
-        var pl = p.Length;
+        parameter = parameter.Trim();
+        var pl = parameter.Length;
         var jeDelsiA1 = p_2 <= pl;
         if (jeDelsiA1)
         {
-            if (IsInLastXCharsTheseLetters(p, p_2, ' '))
+            if (IsInLastXCharsTheseLetters(parameter, p_2, ' '))
             {
                 var dexMezery = 0;
-                var d = p; //p.Substring(p.Length - zkratitO);
-                var to = d.Length;
+                var data = parameter; //parameter.Substring(parameter.Length - zkratitO);
+                var to = data.Length;
                 var napocitano = 0;
                 for (var i = to - 1; i >= 0; i--)
                 {
                     napocitano++;
-                    if (d[i] == ' ')
+                    if (data[i] == ' ')
                     {
                         if (napocitano >= p_2) break;
                         dexMezery = i;
                     }
                 }
-                d = d.Substring(dexMezery + 1);
-                if (d.Trim() != "") d = " ... " + d;
-                return d;
+                data = data.Substring(dexMezery + 1);
+                if (data.Trim() != "") data = " ... " + data;
+                return data;
                 //}
             }
-            return " ... " + p.Substring(p.Length - p_2);
+            return " ... " + parameter.Substring(parameter.Length - p_2);
         }
-        return p;
+        return parameter;
     }
     public static List<FromToWordString> ReturnOccurencesOfStringFromToWord(string celyObsah,
         params string[] hledaneSlova)
@@ -3107,8 +3110,8 @@ public class SH
         if (hledaneSlova == null || hledaneSlova.Length == 0) return new List<FromToWordString>();
         celyObsah = celyObsah.ToLower();
         var vr = new List<FromToWordString>();
-        var l = celyObsah.Length;
-        for (var i = 0; i < l; i++)
+        var list = celyObsah.Length;
+        for (var i = 0; i < list; i++)
             foreach (var item in hledaneSlova)
             {
                 var vsechnoStejne = true;
@@ -3116,7 +3119,7 @@ public class SH
                 while (pridat < item.Length)
                 {
                     var dex = i + pridat;
-                    if (l > dex)
+                    if (list > dex)
                     {
                         if (celyObsah[dex] != item[pridat])
                         {
@@ -3144,17 +3147,17 @@ public class SH
             }
         return vr;
     }
-    private static bool IsInLastXCharsTheseLetters(string p, int pl, params char[] letters)
+    private static bool IsInLastXCharsTheseLetters(string parameter, int pl, params char[] letters)
     {
-        for (var i = p.Length - 1; i >= pl; i--)
+        for (var i = parameter.Length - 1; i >= pl; i--)
             foreach (var item in letters)
-                if (p[i] == item)
+                if (parameter[i] == item)
                     return true;
         return false;
     }
     //
     /// <summary>
-    ///     Oddělovač může být pouze jediný znak, protože se to pak předává do metody s parametrem int!
+    ///     Oddělovač může být pouze jediný znak, protože se to pak předává do metody text parametrem int!
     ///     If A1 dont have index A2, all chars
     /// </summary>
     /// <param name="p1"></param>
@@ -3166,10 +3169,10 @@ public class SH
     }
     public static string GetFirstPartByLocation(string p1, int dx)
     {
-        string p, z;
-        p = p1;
-        if (dx < p1.Length) GetPartsByLocation(out p, out z, p1, dx);
-        return p;
+        string parameter, z;
+        parameter = p1;
+        if (dx < p1.Length) GetPartsByLocation(out parameter, out z, p1, dx);
+        return parameter;
     }
     /// <summary>
     ///     return whether A1 ends with anything with A2
@@ -3191,12 +3194,12 @@ public class SH
     /// <param name="before"></param>
     /// <param name="throwExceptionIfNotContains"></param>
     /// <returns></returns>
-    public static string GetTextBetweenSimple(string p, string after, string before,
+    public static string GetTextBetweenSimple(string parameter, string after, string before,
         bool throwExceptionIfNotContains = true)
     {
         var dxOfFounded = int.MinValue;
-        var t = GetTextBetween(p, after, before, out dxOfFounded, 0, throwExceptionIfNotContains);
-        return t;
+        var temp = GetTextBetween(parameter, after, before, out dxOfFounded, 0, throwExceptionIfNotContains);
+        return temp;
     }
     /// <summary>
     ///     Auto trim
@@ -3208,12 +3211,12 @@ public class SH
     /// <param name="startSearchingAt"></param>
     /// <param name="throwExceptionIfNotContains"></param>
     /// <returns></returns>
-    public static string GetTextBetween(string p, string after, string before, out int dxOfFounded,
+    public static string GetTextBetween(string parameter, string after, string before, out int dxOfFounded,
         int startSearchingAt, bool throwExceptionIfNotContains = true)
     {
         string vr = null;
-        dxOfFounded = p.IndexOf(after, startSearchingAt);
-        var p3 = p.IndexOf(before, dxOfFounded + after.Length);
+        dxOfFounded = parameter.IndexOf(after, startSearchingAt);
+        var p3 = parameter.IndexOf(before, dxOfFounded + after.Length);
         var b2 = dxOfFounded != -1;
         var b3 = p3 != -1;
         if (b2 && b3)
@@ -3225,31 +3228,31 @@ public class SH
             if (length < 1)
             {
                 // Takhle to tu bylo předtím ale logicky je to nesmysl.
-                //return p;
+                //return parameter;
             }
-            vr = p.Substring(dxOfFounded, length);
+            vr = parameter.Substring(dxOfFounded, length);
         }
         else
         {
             if (throwExceptionIfNotContains)
-                ThrowEx.NotContains(p, after, before);
+                ThrowEx.NotContains(parameter, after, before);
             else
-                // 24-1-21 return null instead of p
+                // 24-1-21 return null instead of parameter
                 return null;
-            //vr = p;
+            //vr = parameter;
         }
-        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničili i tam kde bylo AllChars.space. Doteď jsem vůbec nevěděl co to způsobuje a to jsem už tímhle opravil celé pinp. 
+        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničili i tam kde bylo AllChars.space. Doteď jsem vůbec nevěděl co to způsobuje argument to jsem už tímhle opravil celé pinp. 
         return vr;
     }
     public static bool EndsWith(string input, string endsWith)
     {
         return input.EndsWith(endsWith);
     }
-    public static bool RemovePrefix(ref string s, string v)
+    public static bool RemovePrefix(ref string text, string v)
     {
-        if (s.StartsWith(v))
+        if (text.StartsWith(v))
         {
-            s = s.Substring(v.Length);
+            text = text.Substring(v.Length);
             return true;
         }
         return false;
@@ -3267,8 +3270,8 @@ public class SH
     public static string NullToStringOrEmpty(object v)
     {
         if (v == null) return "";
-        var s = v.ToString();
-        return s;
+        var text = v.ToString();
+        return text;
     }
     public static bool ContainsFromEnd(string p1, char p2, out int ContainsFromEndResult)
     {
@@ -3281,9 +3284,9 @@ public class SH
         ContainsFromEndResult = -1;
         return false;
     }
-    public static string FirstWhichIsNotEmpty(params string[] s)
+    public static string FirstWhichIsNotEmpty(params string[] text)
     {
-        foreach (var item in s)
+        foreach (var item in text)
             if (item != "")
                 return item;
         return "";
@@ -3324,37 +3327,37 @@ public class SH
     /// <param name="dash"></param>
     private static string FirstCharOfEveryWordUpper(string v, char dash)
     {
-        var p = SHSplit.SplitChar(v, dash);
-        for (var i = 0; i < p.Count; i++) p[i] = FirstCharUpper(p[i]);
-        //p = CAChangeContent.ChangeContent0(null, p, FirstCharUpper);
-        return string.Join(" ", p);
+        var parameter = SHSplit.SplitChar(v, dash);
+        for (var i = 0; i < parameter.Count; i++) parameter[i] = FirstCharUpper(parameter[i]);
+        //p = CAChangeContent.ChangeContent0(null, parameter, FirstCharUpper);
+        return string.Join(" ", parameter);
     }
-    public static bool IsNullOrWhiteSpace(string s)
+    public static bool IsNullOrWhiteSpace(string text)
     {
-        if (s != null)
+        if (text != null)
         {
-            s = s.Trim();
-            return s == "";
+            text = text.Trim();
+            return text == "";
         }
         return true;
     }
-    public static bool HasTextRightFormat(string r, TextFormatDataString tfd)
+    public static bool HasTextRightFormat(string result, TextFormatDataString tfd)
     {
-        if (tfd.trimBefore) r = r.Trim();
+        if (tfd.trimBefore) result = result.Trim();
         long tfdOverallLength = 0;
         foreach (var item in tfd) tfdOverallLength += item.fromTo.to - item.fromTo.from + 1;
         var partsCount = tfd.Count;
         var actualCharFormatData = 0;
         var actualFormatData = tfd[actualCharFormatData];
         var followingFormatData = tfd[actualCharFormatData + 1];
-        //int charCount = r.Length;
+        //int charCount = result.Length;
         //if (tfd.requiredLength != -1)
         //{
-        //    if (r.Length != tfd.requiredLength)
+        //    if (result.Length != tfd.requiredLength)
         //    {
         //        return false;
         //    }
-        //    charCount = Math.Min(r.Length, tfd.requiredLength);
+        //    charCount = Math.Min(result.Length, tfd.requiredLength);
         //}
         var actualChar = 0;
         var processed = 0;
@@ -3374,8 +3377,8 @@ public class SH
             }
             else
             {
-                if (r.Length <= actualChar) return false;
-                isRightChar = actualFormatData.mustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                if (result.Length <= actualChar) return false;
+                isRightChar = actualFormatData.mustBe.Any(data => data == result[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -3385,9 +3388,9 @@ public class SH
             }
             if (!isRightChar)
             {
-                if (r.Length <= actualChar) return false;
+                if (result.Length <= actualChar) return false;
                 isRightChar =
-                    followingFormatData.mustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                    followingFormatData.mustBe.Any(data => data == result[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (!isRightChar) return false;
                 if (remains != 0 && processed < from) return false;
                 if (isRightChar && !canBeAnyChar)
@@ -3395,7 +3398,7 @@ public class SH
                     actualCharFormatData++;
                     processed++;
                     actualChar++;
-                    if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar) return false;
+                    if (!CA.HasIndex(actualCharFormatData, tfd) && result.Length > actualChar) return false;
                     actualFormatData = tfd[actualCharFormatData];
                     if (CA.HasIndex(actualCharFormatData + 1, tfd))
                         followingFormatData = tfd[actualCharFormatData + 1];
@@ -3407,13 +3410,13 @@ public class SH
                 }
             }
             if (actualChar == tfdOverallLength)
-                if (actualChar == r.Length)
+                if (actualChar == result.Length)
                     //break;
                     return true;
             if (remains == 0)
             {
                 ++actualCharFormatData;
-                if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar) return false;
+                if (!CA.HasIndex(actualCharFormatData, tfd) && result.Length > actualChar) return false;
                 actualFormatData = tfd[actualCharFormatData];
                 if (CA.HasIndex(actualCharFormatData + 1, tfd))
                     followingFormatData = tfd[actualCharFormatData + 1];

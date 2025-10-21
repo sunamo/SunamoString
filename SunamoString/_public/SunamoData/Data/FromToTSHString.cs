@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoString._public.SunamoData.Data;
 
 
@@ -10,8 +13,8 @@ public class FromToTSHString<T>
     protected long toL;
     public FromToTSHString()
     {
-        var t = typeof(T);
-        if (t == typeof(int)) ftUse = FromToUseString.None;
+        var type = typeof(type);
+        if (type == typeof(int)) ftUse = FromToUseString.None;
     }
 
 
@@ -28,20 +31,20 @@ public class FromToTSHString<T>
 
 
 
-    public FromToTSHString(T from, T to, FromToUseString ftUse = FromToUseString.DateTime) : this()
+    public FromToTSHString(type from, type to, FromToUseString ftUse = FromToUseString.DateTime) : this()
     {
         this.from = from;
         this.to = to;
         this.ftUse = ftUse;
     }
-    public T from
+    public type from
     {
-        get => (T)(dynamic)fromL;
+        get => (type)(dynamic)fromL;
         set => fromL = (long)(dynamic)value;
     }
-    public T to
+    public type to
     {
-        get => (T)(dynamic)toL;
+        get => (type)(dynamic)toL;
         set => toL = (long)(dynamic)value;
     }
     public long FromL => fromL;

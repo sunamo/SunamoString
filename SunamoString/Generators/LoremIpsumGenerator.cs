@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoString.Generators;
 
 public static class LoremIpsumGenerator
@@ -51,20 +54,20 @@ public static class LoremIpsumGenerator
 
     public static string Generate(int maxChars)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         int delkaTecky = 1;
         int delkaMezery = 1;
         Random rnd = new Random();
         while (true)
         {
             string word = s_words[rnd.Next(s_words.Count)];
-            if (sb.Length + delkaMezery + word.Length + delkaTecky >= maxChars)
+            if (stringBuilder.Length + delkaMezery + word.Length + delkaTecky >= maxChars)
             {
-                sb.Append(".");
+                stringBuilder.Append(".");
                 break;
             }
-            sb.Append(" " + word);
+            stringBuilder.Append(" " + word);
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
 }

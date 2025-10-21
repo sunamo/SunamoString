@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoString._public.SunamoData.Data;
 
 public class ABCString : List<ABString>
@@ -8,12 +11,12 @@ public class ABCString : List<ABString>
     }
     public override string ToString()
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         foreach (var item in this)
         {
-            sb.Append(item.ToString() + ",");
+            stringBuilder.Append(item.ToString() + ",");
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public int Length
     {
@@ -36,12 +39,12 @@ public class ABCString : List<ABString>
             return;
         }
         var o = setsNameValue[0];
-        var t = o.GetType();
-        Type t2 = t;
+        var temp = o.GetType();
+        Type t2 = temp;
         if (o is IList)
         {
-            var s = o as IList;
-            var o2 = s.Count != 0 ? s[0] : null;
+            var text = o as IList;
+            var o2 = text.Count != 0 ? text[0] : null;
             t2 = o2.GetType();
         }
         
@@ -70,7 +73,7 @@ public class ABCString : List<ABString>
                 }
             }
         }
-        else if (t == typeof(ABCString))
+        else if (temp == typeof(ABCString))
         {
             var abc = (ABCString)o;
             this.AddRange(abc);

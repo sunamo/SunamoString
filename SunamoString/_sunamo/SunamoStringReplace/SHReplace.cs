@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoString._sunamo.SunamoStringReplace;
 
 //namespace SunamoString;
@@ -31,24 +34,24 @@ internal class SHReplace
     internal static string ReplaceManyFromString(string input, string v, string delimiter)
     {
         string methodName = "ReplaceManyFromString";
-        var l = SHGetLines.GetLines(v);
-        foreach (var item in l)
+        var list = SHGetLines.GetLines(v);
+        foreach (var item in list)
         {
-            var p = SHSplit.Split(item, delimiter);
-            p = p.ConvertAll(d => d.Trim());
+            var parameter = SHSplit.Split(item, delimiter);
+            parameter = parameter.ConvertAll(d => d.Trim());
             string from, to;
             from = to = null;
-            if (p.Count > 0)
+            if (parameter.Count > 0)
             {
-                from = p[0];
+                from = parameter[0];
             }
             else
             {
                 throw new Exception(item + " hasn't from");
             }
-            if (p.Count > 1)
+            if (parameter.Count > 1)
             {
-                to = p[1];
+                to = parameter[1];
             }
             else
             {
@@ -59,12 +62,12 @@ internal class SHReplace
                 Wildcard wc = new Wildcard(from);
                 ThrowEx.NotImplementedMethod();
                 //var occurences = wc.Matches(input);
-                //foreach (Match m in occurences)
+                //foreach (Match match in occurences)
                 //{
-                //    var result = m.Result();
-                //    var groups = m.Groups;
-                //    var captues = m.Captures;
-                //    var value = m.Value;
+                //    var result = match.Result();
+                //    var groups = match.Groups;
+                //    var captues = match.Captures;
+                //    var value = match.Value;
                 //}
             }
             else
