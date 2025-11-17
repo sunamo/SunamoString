@@ -19,7 +19,7 @@ public class FromToString : FromToTSHString<long>
     
     private FromToString(bool empty)
     {
-        this.empty = empty;
+        base.Empty = empty;
     }
     
     
@@ -32,6 +32,6 @@ public class FromToString : FromToTSHString<long>
     {
         this.from = from;
         this.to = to;
-        this.ftUse = fromToUse;
+        this.FtUse = fromToUse;
     }
 }

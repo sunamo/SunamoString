@@ -18,7 +18,7 @@ public class TT
     public static string NameValue(ABCString items, string delimiter)
     {
         var builder = new StringBuilder();
-        foreach (var item in items) builder.Append(NameValue(item.A, item.B.ToString()) + delimiter);
+        foreach (var abString in items) builder.Append(NameValue(abString.A, abString.B.ToString()) + delimiter);
         return builder.ToString();
     }
 }

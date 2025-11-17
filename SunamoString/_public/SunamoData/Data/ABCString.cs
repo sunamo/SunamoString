@@ -12,9 +12,9 @@ public class ABCString : List<ABString>
     public override string ToString()
     {
         StringBuilder stringBuilder = new StringBuilder();
-        foreach (var item in this)
+        foreach (var abString in this)
         {
-            stringBuilder.Append(item.ToString() + ",");
+            stringBuilder.Append(abString.ToString() + ",");
         }
         return stringBuilder.ToString();
     }
@@ -65,9 +65,9 @@ public class ABCString : List<ABString>
                 else
                 {
                     var itemList = (IList)currentItem;
-                    foreach (var item in itemList)
+                    foreach (var abStringElement in itemList)
                     {
-                        var abStringItem = (ABString)item;
+                        var abStringItem = (ABString)abStringElement;
                         Add(abStringItem);
                     }
                 }
@@ -121,6 +121,6 @@ public class ABCString : List<ABString>
     }
     public static List<object> OnlyBs(List<ABString> abStringList)
     {
-        return abStringList.Select(item => item.B).ToList();
+        return abStringList.Select(abString => abString.B).ToList();
     }
 }

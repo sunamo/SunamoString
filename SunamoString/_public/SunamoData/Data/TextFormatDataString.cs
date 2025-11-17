@@ -14,8 +14,8 @@ public class TextFormatDataString : List<CharFormatDataString>
     
     
     
-    public int requiredLength = -1;
-    public bool trimBefore = false;
+    public int RequiredLength { get; set; } = -1;
+    public bool TrimBefore { get; set; } = false;
     public static class Templates
     {
     }
@@ -27,8 +27,8 @@ public class TextFormatDataString : List<CharFormatDataString>
     
     public TextFormatDataString(bool trimBefore, int requiredLength, params CharFormatDataString[] charFormatDataItems)
     {
-        this.trimBefore = trimBefore;
-        this.requiredLength = requiredLength;
+        this.TrimBefore = trimBefore;
+        this.RequiredLength = requiredLength;
         AddRange(charFormatDataItems);
     }
 }

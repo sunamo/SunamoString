@@ -7,14 +7,14 @@ namespace SunamoString._public.SunamoData.Data;
 public class FromToTSHString<T>
 {
 
-    public bool empty;
+    public bool Empty { get; set; }
     protected long fromL;
-    public FromToUseString ftUse = FromToUseString.DateTime;
+    public FromToUseString FtUse { get; set; } = FromToUseString.DateTime;
     protected long toL;
     public FromToTSHString()
     {
         var typeT = typeof(T);
-        if (typeT == typeof(int)) ftUse = FromToUseString.None;
+        if (typeT == typeof(int)) FtUse = FromToUseString.None;
     }
 
 
@@ -22,7 +22,7 @@ public class FromToTSHString<T>
 
     private FromToTSHString(bool empty) : this()
     {
-        this.empty = empty;
+        this.Empty = empty;
     }
 
 
@@ -35,7 +35,7 @@ public class FromToTSHString<T>
     {
         this.from = from;
         this.to = to;
-        this.ftUse = fromToUse;
+        this.FtUse = fromToUse;
     }
     public T from
     {
