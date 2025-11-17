@@ -18,7 +18,7 @@ internal class NumConsts
     /// <summary>
     /// one thousand
     /// </summary>
-    internal static int to = 1000;
+    internal static int Thousand { get; set; } = 1000;
     internal const long kB = 1024;
     internal const double zeroDouble = 0;
     internal const float zeroFloat = 0;

@@ -5,14 +5,14 @@ namespace SunamoString._public.SunamoData.Data;
 
 public class SquareMap
 {
-    public List<int> cub = new List<int>();
-    public List<int> sqb = new List<int>();
-    public List<int> b = new List<int>();
-    public List<int> ecub = new List<int>();
-    public List<int> esqb = new List<int>();
-    public List<int> eb = new List<int>();
+    public List<int> CurlyBrackets { get; set; } = new List<int>();
+    public List<int> SquareBrackets { get; set; } = new List<int>();
+    public List<int> Brackets { get; set; } = new List<int>();
+    public List<int> EndingCurlyBrackets { get; set; } = new List<int>();
+    public List<int> EndingSquareBrackets { get; set; } = new List<int>();
+    public List<int> EndingBrackets { get; set; } = new List<int>();
 #pragma warning disable
-    public void Add(Object b2, bool end, int i)
+    public void Add(Object bracketType, bool end, int i)
     {
     }
 #pragma warning restore

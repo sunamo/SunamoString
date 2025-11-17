@@ -4,11 +4,11 @@ namespace SunamoString._sunamo.SunamoDictionary;
 
 internal class DictionaryHelper
 {
-    internal static void AddOrPlus<T>(Dictionary<T, int> sl, T key, int p)
+    internal static void AddOrPlus<T>(Dictionary<T, int> dictionary, T key, int increment)
     {
-        if (sl.ContainsKey(key))
-            sl[key] += p;
+        if (dictionary.ContainsKey(key))
+            dictionary[key] += increment;
         else
-            sl.Add(key, p);
+            dictionary.Add(key, increment);
     }
 }

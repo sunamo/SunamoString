@@ -6,23 +6,35 @@ namespace SunamoString._public.SunamoData.Data;
 public class ABString
 {
     public static Type type = typeof(ABString);
-    public string A = null;
-    public object B = null;
+
+    /// <summary>
+    /// EN: First component of the pair (A).
+    /// CZ: První komponenta páru (A).
+    /// </summary>
+    public string A { get; set; } = null;
+
+    /// <summary>
+    /// EN: Second component of the pair (B).
+    /// CZ: Druhá komponenta páru (B).
+    /// </summary>
+    public object B { get; set; } = null;
+
     public ABString(string a, object b)
     {
         A = a;
         B = b;
     }
+
     public static ABString Get(Type a, object b)
     {
         return new ABString(a.FullName, b);
     }
-    
-    
+
     public static ABString Get(string a, object b)
     {
         return new ABString(a, b);
     }
+
     public override string ToString()
     {
         return A + ":" + B;

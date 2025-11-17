@@ -15,10 +15,10 @@ public class TT
         return name.TrimEnd(':') + ": " + value;
     }
 
-    public static string NameValue(ABCString winrar, string delimiter)
+    public static string NameValue(ABCString items, string delimiter)
     {
         var builder = new StringBuilder();
-        foreach (var item in winrar) builder.Append(NameValue(item.A, item.B.ToString()) + delimiter);
+        foreach (var item in items) builder.Append(NameValue(item.A, item.B.ToString()) + delimiter);
         return builder.ToString();
     }
 }

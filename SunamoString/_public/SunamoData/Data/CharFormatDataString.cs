@@ -5,37 +5,44 @@ namespace SunamoString._public.SunamoData.Data;
 
 public class CharFormatDataString
 {
+    /// <summary>
+    /// EN: Indicates if characters should be uppercase.
+    /// CZ: Indikuje, zda by znaky měly být velkými písmeny.
+    /// </summary>
+    public bool? Upper { get; set; } = false;
 
-
-
-
-    public bool? upper = false;
-
-
-
-    public char[] mustBe = null;
+    /// <summary>
+    /// EN: Array of characters that must be present.
+    /// CZ: Pole znaků, které musí být přítomny.
+    /// </summary>
+    public char[] MustBe { get; set; } = null;
     public static class Templates
     {
         static char notNumberChar = (char)9;
-        public static CharFormatDataString dash = Get(null, new FromToString(1, 1), '-');
-        public static CharFormatDataString notNumber = Get(null, new FromToString(1, 1), notNumberChar);
+        public static CharFormatDataString Dash { get; set; } = Get(null, new FromToString(1, 1), '-');
+        public static CharFormatDataString NotNumber { get; set; } = Get(null, new FromToString(1, 1), notNumberChar);
 
 
 
-        public static CharFormatDataString twoLetterNumber;
+        public static CharFormatDataString TwoLetterNumber { get; set; }
         static Templates()
         {
             FromToString requiredLength = new FromToString(1, 2);
-            twoLetterNumber = GetOnlyNumbers(requiredLength);
+            TwoLetterNumber = GetOnlyNumbers(requiredLength);
             Any = Get(null, new FromToString(0, int.MaxValue));
         }
         public static CharFormatDataString Any;
     }
-    public FromToString fromTo = null;
+
+    /// <summary>
+    /// EN: Range specification for character formatting.
+    /// CZ: Specifikace rozsahu pro formátování znaků.
+    /// </summary>
+    public FromToString FromTo { get; set; } = null;
     public CharFormatDataString(bool? upper, char[] mustBe)
     {
-        this.upper = upper;
-        this.mustBe = mustBe;
+        this.Upper = upper;
+        this.MustBe = mustBe;
     }
     public CharFormatDataString()
     {
@@ -45,8 +52,8 @@ public class CharFormatDataString
         LetterAndDigitCharService letterAndDigitChar = new();
 
         CharFormatDataString data = new CharFormatDataString();
-        data.fromTo = requiredLength;
-        data.mustBe = letterAndDigitChar.numericChars.ToArray();
+        data.FromTo = requiredLength;
+        data.MustBe = letterAndDigitChar.numericChars.ToArray();
         return data;
     }
 
@@ -59,7 +66,7 @@ public class CharFormatDataString
     public static CharFormatDataString Get(bool? upper, FromToString fromTo, params char[] mustBe)
     {
         CharFormatDataString data = new CharFormatDataString(upper, mustBe);
-        data.fromTo = fromTo;
+        data.FromTo = fromTo;
         return data;
     }
 }

@@ -22,25 +22,25 @@ internal class BTS
     //    return isChar ? (T)(dynamic)c.First() : (T)(dynamic)c;
     //}
 
-    internal static string Replace(ref string id, bool replaceCommaForDot)
+    internal static string Replace(ref string input, bool replaceCommaForDot)
     {
         if (replaceCommaForDot)
         {
-            id = id.Replace(",", ".");
+            input = input.Replace(",", ".");
         }
 
-        return id;
+        return input;
     }
 
-    internal static bool IsFloat(string id, bool replace = false)
+    internal static bool IsFloat(string input, bool replace = false)
     {
-        if (id == null)
+        if (input == null)
         {
             return false;
         }
 
-        Replace(ref id, replace);
-        return float.TryParse(id.Replace(",", "."), out lastFloat);
+        Replace(ref input, replace);
+        return float.TryParse(input.Replace(",", "."), out lastFloat);
     }
 
 
@@ -52,30 +52,30 @@ internal class BTS
     /// <param name="excIfIsFloat"></param>
     /// <param name="replaceCommaForDot"></param>
     /// <returns></returns>
-    internal static bool IsInt(string id, bool excIfIsFloat = false, bool replaceCommaForDot = false)
+    internal static bool IsInt(string input, bool excIfIsFloat = false, bool replaceCommaForDot = false)
     {
-        if (id == null)
+        if (input == null)
         {
             return false;
         }
 
-        id = id.Replace(" ", "");
-        Replace(ref id, replaceCommaForDot);
+        input = input.Replace(" ", "");
+        Replace(ref input, replaceCommaForDot);
 
 
-        bool vr = int.TryParse(id, out lastInt);
-        if (!vr)
+        bool isValid = int.TryParse(input, out lastInt);
+        if (!isValid)
         {
-            if (IsFloat(id))
+            if (IsFloat(input))
             {
                 if (excIfIsFloat)
                 {
-                    throw new Exception(id + " is float but is calling IsInt");
+                    throw new Exception(input + " is float but is calling IsInt");
                 }
             }
         }
 
-        return vr;
+        return isValid;
     }
 
     //        #endregion

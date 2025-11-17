@@ -42,8 +42,8 @@ bool fillAlsoFirstTwo = true)
     }
     internal static void TypeAndMethodName(string lines, out string type, out string methodName)
     {
-        var s2 = lines.Split("at ")[1].Trim();
-        var text = s2.Split("(")[0];
+        var methodCallInfo = lines.Split("at ")[1].Trim();
+        var text = methodCallInfo.Split("(")[0];
         var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
         methodName = parameter[^1];
         parameter.RemoveAt(parameter.Count - 1);
@@ -88,16 +88,16 @@ bool fillAlsoFirstTwo = true)
     }
     internal static string? NotImplementedCase(string before, object notImplementedName)
     {
-        var fr = string.Empty;
+        var forClause = string.Empty;
         if (notImplementedName != null)
         {
-            fr = " for ";
+            forClause = " for ";
             if (notImplementedName.GetType() == typeof(Type))
-                fr += ((Type)notImplementedName).FullName;
+                forClause += ((Type)notImplementedName).FullName;
             else
-                fr += notImplementedName.ToString();
+                forClause += notImplementedName.ToString();
         }
-        return CheckBefore(before) + "Not implemented case" + fr + " . internal program error. Please contact developer" +
+        return CheckBefore(before) + "Not implemented case" + forClause + " . internal program error. Please contact developer" +
         ".";
     }
     internal static string? NotContains(string before, string originalText, params string[] shouldContains)

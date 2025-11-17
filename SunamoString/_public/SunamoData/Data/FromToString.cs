@@ -28,10 +28,10 @@ public class FromToString : FromToTSHString<long>
     
     
     
-    public FromToString(long from, long to, FromToUseString ftUse = FromToUseString.DateTime)
+    public FromToString(long from, long to, FromToUseString fromToUse = FromToUseString.DateTime)
     {
         this.from = from;
         this.to = to;
-        this.ftUse = ftUse;
+        this.ftUse = fromToUse;
     }
 }

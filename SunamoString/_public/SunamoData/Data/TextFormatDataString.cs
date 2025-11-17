@@ -25,10 +25,10 @@ public class TextFormatDataString : List<CharFormatDataString>
     
     
     
-    public TextFormatDataString(bool trimBefore, int requiredLength, params CharFormatDataString[] a)
+    public TextFormatDataString(bool trimBefore, int requiredLength, params CharFormatDataString[] charFormatDataItems)
     {
         this.trimBefore = trimBefore;
         this.requiredLength = requiredLength;
-        AddRange(a);
+        AddRange(charFormatDataItems);
     }
 }

@@ -55,13 +55,13 @@ public static class LoremIpsumGenerator
     public static string Generate(int maxChars)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        int delkaTecky = 1;
-        int delkaMezery = 1;
-        Random rnd = new Random();
+        int periodLength = 1;
+        int spaceLength = 1;
+        Random random = new Random();
         while (true)
         {
-            string word = s_words[rnd.Next(s_words.Count)];
-            if (stringBuilder.Length + delkaMezery + word.Length + delkaTecky >= maxChars)
+            string word = s_words[random.Next(s_words.Count)];
+            if (stringBuilder.Length + spaceLength + word.Length + periodLength >= maxChars)
             {
                 stringBuilder.Append(".");
                 break;

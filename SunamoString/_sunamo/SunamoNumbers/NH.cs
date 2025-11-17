@@ -5,15 +5,15 @@ namespace SunamoString._sunamo.SunamoNumbers;
 
 internal class NH
 {
-    internal static string JoinAnotherTokensIfIsNumber(List<string> p, int i)
+    internal static string JoinAnotherTokensIfIsNumber(List<string> tokens, int i)
     {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (; i < p.Count; i++)
+        for (; i < tokens.Count; i++)
         {
-            if (int.TryParse(p[i], out var _))
+            if (int.TryParse(tokens[i], out var _))
             {
-                stringBuilder.Append(p[i]);
+                stringBuilder.Append(tokens[i]);
             }
             else
             {

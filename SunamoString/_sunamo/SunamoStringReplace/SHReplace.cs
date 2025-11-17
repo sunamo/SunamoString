@@ -7,34 +7,34 @@ namespace SunamoString._sunamo.SunamoStringReplace;
 internal class SHReplace
 {
     //internal static Func<string, string, string, string> ReplaceAll;
-    internal static string ReplaceAll(string vstup, string zaCo, params string[] co)
+    internal static string ReplaceAll(string input, string replacement, params string[] values)
     {
-        //Stupid, zaCo can be null
+        //Stupid, replacement can be null
 
-        //if (string.IsNullOrEmpty(zaCo))
+        //if (string.IsNullOrEmpty(replacement))
         //{
-        //    return vstup;
+        //    return input;
         //}
 
-        foreach (var item in co)
+        foreach (var item in values)
         {
             if (string.IsNullOrEmpty(item))
             {
-                return vstup;
+                return input;
             }
         }
 
-        foreach (var item in co)
+        foreach (var item in values)
         {
-            vstup = vstup.Replace(item, zaCo);
+            input = input.Replace(item, replacement);
         }
-        return vstup;
+        return input;
     }
 
-    internal static string ReplaceManyFromString(string input, string v, string delimiter)
+    internal static string ReplaceManyFromString(string input, string mappingDefinition, string delimiter)
     {
         string methodName = "ReplaceManyFromString";
-        var list = SHGetLines.GetLines(v);
+        var list = SHGetLines.GetLines(mappingDefinition);
         foreach (var item in list)
         {
             var parameter = SHSplit.Split(item, delimiter);
@@ -59,9 +59,9 @@ internal class SHReplace
             }
             if (WildcardHelper.IsWildcard(item))
             {
-                Wildcard wc = new Wildcard(from);
+                Wildcard wildcardPattern = new Wildcard(from);
                 ThrowEx.NotImplementedMethod();
-                //var occurences = wc.Matches(input);
+                //var occurences = wildcardPattern.Matches(input);
                 //foreach (Match match in occurences)
                 //{
                 //    var result = match.Result();

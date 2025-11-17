@@ -5,59 +5,59 @@ namespace SunamoString._sunamo;
 internal class SpecialCharsService
 {
     internal readonly List<char> specialChars = new(new[]
-        { excl, commat, num, dollar, percnt, Hat, amp, ast, quest, lowbar, tilda });
+        { exclamation, atSign, numberSign, dollar, percent, caret, ampersand, asteriskChar, questionMark, underscore, tilde });
     internal readonly List<char> specialChars2 = new(new[]
     {
-        lq, rq, dash, la, ra,
-        comma, period, colon, apos, rpar, sol, lt, gt, lcub, rcub, lsqb, verbar, semi, plus, rsqb,
-        ndash, slash
+        leftQuote, rightQuote, dash, leftApostrophe, rightApostrophe,
+        comma, period, colon, apostrophe, rightParenthesis, solidus, lessThan, greaterThan, leftCurlyBracket, rightCurlyBracket, leftSquareBracket, verticalBar, semicolon, plus, rightSquareBracket,
+        enDash, slash
     });
     /// <summary>
     ///     Used in enigma
     /// </summary>
     internal readonly List<char> specialCharsAll;
     internal readonly List<char> specialCharsWhite = new(new[] { space });
-    internal readonly List<char> specialCharsNotEnigma = new(new[] { space160, copy });
-    private const char la = '‘';
-    private const char ra = '’';
+    internal readonly List<char> specialCharsNotEnigma = new(new[] { nonBreakingSpace, copyright });
+    private const char leftApostrophe = '\u2018';
+    private const char rightApostrophe = '\u2019';
     private const char comma = ',';
     private const char space = ' ';
-    private static char space160 = (char)160;
+    private static char nonBreakingSpace = (char)160;
     private const char dollar = '$';
-    private const char Hat = '^';
-    private const char ast = '*';
-    private const char quest = '?';
-    private const char tilda = '~';
+    private const char caret = '^';
+    private const char asteriskChar = '*';
+    private const char questionMark = '?';
+    private const char tilde = '~';
     private const char period = '.';
     private const char colon = ':';
-    private const char excl = '!';
-    private const char apos = '\'';
-    private const char rpar = ')';
-    private const char lpar = '(';
-    private const char sol = '/';
-    private const char lowbar = '_';
-    private const char lt = '<';
+    private const char exclamation = '!';
+    private const char apostrophe = '\'';
+    private const char rightParenthesis = ')';
+    private const char leftParenthesis = '(';
+    private const char solidus = '/';
+    private const char underscore = '_';
+    private const char lessThan = '<';
     /// <summary>
     ///     skip in specialChars2 - already as equal
     /// </summary>
     private const char equals = '=';
-    private const char gt = '>';
-    private const char amp = '&';
-    private const char lcub = '{';
-    private const char rcub = '}';
-    private const char lsqb = '[';
-    private const char verbar = '|';
-    private const char semi = ';';
-    private const char commat = '@';
+    private const char greaterThan = '>';
+    private const char ampersand = '&';
+    private const char leftCurlyBracket = '{';
+    private const char rightCurlyBracket = '}';
+    private const char leftSquareBracket = '[';
+    private const char verticalBar = '|';
+    private const char semicolon = ';';
+    private const char atSign = '@';
     private const char plus = '+';
-    private const char rsqb = ']';
-    private const char num = '#';
-    private const char percnt = '%';
-    private const char ndash = '–';
-    private const char copy = '©';
+    private const char rightSquareBracket = ']';
+    private const char numberSign = '#';
+    private const char percent = '%';
+    private const char enDash = '–';
+    private const char copyright = '©';
     #region MyRegion
-    private const char lq = '“';
-    private const char rq = '”';
+    private const char leftQuote = '"';
+    private const char rightQuote = '"';
     #region Generic chars
     private const char zero = '0';
     #endregion
@@ -65,29 +65,29 @@ internal class SpecialCharsService
     private const char modulo = '%';
     private const char dash = '-';
     #endregion
-    private const char tab = '\t';
-    private const char nl = '\n';
-    private const char cr = '\r';
+    private const char tabChar = '\t';
+    private const char newlineChar = '\n';
+    private const char carriageReturnChar = '\r';
     private const char asterisk = '*';
-    private const char apostrophe = '\'';
-    private const char sc = ';';
+    private const char apostropheChar = '\'';
+    private const char semicolonChar = ';';
     /// <summary>
     ///     quotation marks
     /// </summary>
-    private const char qm = '"';
+    private const char quotationMark = '"';
     /// <summary>
-    ///     Question
+    ///     Question mark
     /// </summary>
-    private const char q = '?';
+    private const char questionChar = '?';
     /// <summary>
     ///     Left bracket
     /// </summary>
-    private const char lb = '(';
-    private const char rb = ')';
+    private const char leftBracket = '(';
+    private const char rightBracket = ')';
     private const char slash = '/';
     /// <summary>
     ///     backspace
     /// </summary>
-    private const char bs2 = '\b';
+    private const char backspace = '\b';
     #endregion
 }

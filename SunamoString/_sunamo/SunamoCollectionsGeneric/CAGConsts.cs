@@ -10,10 +10,10 @@ internal class CAGConsts
     /// Těch pár řádků mě snad nezabije.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="t"></param>
+    /// <param name="items"></param>
     /// <returns></returns>
-    internal static List<T> ToList<T>(params T[] t)
+    internal static List<T> ToList<T>(params T[] items)
     {
-        return t.ToList();
+        return items.ToList();
     }
 }

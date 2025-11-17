@@ -5,24 +5,24 @@ namespace SunamoString._public.SunamoData.Data;
 
 public class SquareMapLines
 {
-    public Dictionary<int, List<int>> cub;
-    public Dictionary<int, List<int>> sqb;
-    public Dictionary<int, List<int>> b;
-    public Dictionary<int, List<int>> ecub;
-    public Dictionary<int, List<int>> esqb;
-    public Dictionary<int, List<int>> eb;
-    void Init(int ccub, int csqb, int cb)
+    public Dictionary<int, List<int>> CurlyBrackets { get; set; }
+    public Dictionary<int, List<int>> SquareBrackets { get; set; }
+    public Dictionary<int, List<int>> Brackets { get; set; }
+    public Dictionary<int, List<int>> EndingCurlyBrackets { get; set; }
+    public Dictionary<int, List<int>> EndingSquareBrackets { get; set; }
+    public Dictionary<int, List<int>> EndingBrackets { get; set; }
+    void Init(int curlyBracketCapacity, int squareBracketCapacity, int bracketCapacity)
     {
-        cub = new Dictionary<int, List<int>>(ccub);
-        sqb = new Dictionary<int, List<int>>(csqb);
-        b = new Dictionary<int, List<int>>(cb);
-        ecub = new Dictionary<int, List<int>>(ccub);
-        esqb = new Dictionary<int, List<int>>(csqb);
-        eb = new Dictionary<int, List<int>>(cb);
+        CurlyBrackets = new Dictionary<int, List<int>>(curlyBracketCapacity);
+        SquareBrackets = new Dictionary<int, List<int>>(squareBracketCapacity);
+        Brackets = new Dictionary<int, List<int>>(bracketCapacity);
+        EndingCurlyBrackets = new Dictionary<int, List<int>>(curlyBracketCapacity);
+        EndingSquareBrackets = new Dictionary<int, List<int>>(squareBracketCapacity);
+        EndingBrackets = new Dictionary<int, List<int>>(bracketCapacity);
     }
-    public SquareMapLines(SquareMap m)
+    public SquareMapLines(SquareMap squareMap)
     {
-        Init(m.cub.Count, m.sqb.Count, m.b.Count);
+        Init(squareMap.CurlyBrackets.Count, squareMap.SquareBrackets.Count, squareMap.Brackets.Count);
     }
     public SquareMapLines()
     {
@@ -35,7 +35,7 @@ public class SquareMapLines
 
 
 #pragma warning disable
-    public void Add(Object b2, bool end, int i, int line)
+    public void Add(Object bracketType, bool end, int i, int line)
     {
     }
 #pragma warning restore

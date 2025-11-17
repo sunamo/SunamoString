@@ -7,22 +7,22 @@ internal class CA
         /// <summary>
     ///     Direct edit input collection
     /// </summary>
-    /// <param name="l"></param>
-    internal static List<string> Trim(List<string> l)
+    /// <param name="list"></param>
+    internal static List<string> Trim(List<string> list)
     {
-        for (var i = 0; i < l.Count; i++) l[i] = l[i].Trim();
-        return l;
+        for (var i = 0; i < list.Count; i++) list[i] = list[i].Trim();
+        return list;
     }
 
 
 
-    internal static bool HasIndex(int p, IList nahledy)
+    internal static bool HasIndex(int index, IList collection)
     {
-        if (p < 0)
+        if (index < 0)
         {
-            throw new Exception("Chybn\u00FD parametr p");
+            throw new Exception("Invalid parameter index");
         }
-        if (nahledy.Count > p)
+        if (collection.Count > index)
         {
             return true;
         }

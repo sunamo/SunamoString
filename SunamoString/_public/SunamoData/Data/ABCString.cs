@@ -32,66 +32,66 @@ public class ABCString : List<ABString>
             this.Add(null);
         }
     }
-    public ABCString(params Object[] setsNameValue)
+    public ABCString(params Object[] nameValuePairs)
     {
-        if (setsNameValue.Length == 0)
+        if (nameValuePairs.Length == 0)
         {
             return;
         }
-        var o = setsNameValue[0];
-        var temp = o.GetType();
-        Type t2 = temp;
-        if (o is IList)
+        var firstElement = nameValuePairs[0];
+        var elementType = firstElement.GetType();
+        Type actualType = elementType;
+        if (firstElement is IList)
         {
-            var text = o as IList;
-            var o2 = text.Count != 0 ? text[0] : null;
-            t2 = o2.GetType();
+            var listItems = firstElement as IList;
+            var firstListElement = listItems.Count != 0 ? listItems[0] : null;
+            actualType = firstListElement.GetType();
         }
-        
-        if (t2 == typeof(ABString))
+
+        if (actualType == typeof(ABString))
         {
-            
-            
-            
-            
-            for (int i = 0; i < setsNameValue.Length; i++)
+
+
+
+
+            for (int i = 0; i < nameValuePairs.Length; i++)
             {
-                var snv = setsNameValue[i];
-                t2 = snv.GetType();
-                if (t2 == ABString.type)
+                var currentItem = nameValuePairs[i];
+                actualType = currentItem.GetType();
+                if (actualType == ABString.type)
                 {
-                    this.Add((ABString)snv);
+                    this.Add((ABString)currentItem);
                 }
                 else
                 {
-                    var ie = (IList)snv;
-                    foreach (var item in ie)
+                    var itemList = (IList)currentItem;
+                    foreach (var item in itemList)
                     {
-                        var ab = (ABString)item;
-                        Add(ab);
+                        var abStringItem = (ABString)item;
+                        Add(abStringItem);
                     }
                 }
             }
         }
-        else if (temp == typeof(ABCString))
+        else if (elementType == typeof(ABCString))
         {
-            var abc = (ABCString)o;
-            this.AddRange(abc);
+            var abcStringCollection = (ABCString)firstElement;
+            this.AddRange(abcStringCollection);
         }
         else
         {
-            
-            
-            for (int i = 0; i < setsNameValue.Length; i++)
+
+
+            for (int i = 0; i < nameValuePairs.Length; i++)
             {
-                this.Add(ABString.Get(setsNameValue[i].ToString(), setsNameValue[++i]));
+                this.Add(ABString.Get(nameValuePairs[i].ToString(), nameValuePairs[++i]));
             }
         }
     }
-    public ABCString(params ABString[] abc)
+    public ABCString(params ABString[] abStringItems)
     {
-        
-        this.AddRange(abc);
+
+        this.AddRange(abStringItems);
     }
     
     
@@ -102,25 +102,25 @@ public class ABCString : List<ABString>
     }
     public List<object> OnlyBsList()
     {
-        List<object> o = new List<object>(this.Count);
+        List<object> values = new List<object>(this.Count);
         for (int i = 0; i < this.Count; i++)
         {
-            o.Add(this[i].B);
+            values.Add(this[i].B);
         }
-        return o;
+        return values;
     }
     public List<string> OnlyAs()
     {
-        List<string> o = new List<string>(this.Count);
-        //CA.InitFillWith(o, this.Count);
+        List<string> keys = new List<string>(this.Count);
+        //CA.InitFillWith(keys, this.Count);
         for (int i = 0; i < this.Count; i++)
         {
-            o[i] = this[i].A;
+            keys[i] = this[i].A;
         }
-        return o;
+        return keys;
     }
-    public static List<object> OnlyBs(List<ABString> arr)
+    public static List<object> OnlyBs(List<ABString> abStringList)
     {
-        return arr.Select(d => d.B).ToList();
+        return abStringList.Select(item => item.B).ToList();
     }
 }

@@ -25,23 +25,23 @@ public static class StringExtensions
         return Regex.Replace(text, @"\p{Z}", " ");
     }
 
-    public static IEnumerable<string> SplitAndKeep(this string s, char[] delims)
+    public static IEnumerable<string> SplitAndKeep(this string input, char[] delims)
     {
         //delims allow only char[], not List<string>
         int start = 0, index;
-        string selectedSeperator = null;
-        while ((index = s.IndexOfAny(delims, start)) != -1)
+        string selectedSeparator = null;
+        while ((index = input.IndexOfAny(delims, start)) != -1)
         {
-            if (selectedSeperator == null)
+            if (selectedSeparator == null)
                 continue;
             if (index - start > 0)
-                yield return s.Substring(start, index - start);
-            yield return s.Substring(index, selectedSeperator.Length);
-            start = index + selectedSeperator.Length;
+                yield return input.Substring(start, index - start);
+            yield return input.Substring(index, selectedSeparator.Length);
+            start = index + selectedSeparator.Length;
         }
-        if (start < s.Length)
+        if (start < input.Length)
         {
-            yield return s.Substring(start);
+            yield return input.Substring(start);
         }
     }
 }

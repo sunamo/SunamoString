@@ -29,8 +29,8 @@ internal partial class ThrowEx
     internal static string FullNameOfExecutedCode()
     {
         Tuple<string, string, string> placeOfExc = Exceptions.PlaceOfException();
-        string f = FullNameOfExecutedCode(placeOfExc.Item1, placeOfExc.Item2, true);
-        return f;
+        string fullMethodName = FullNameOfExecutedCode(placeOfExc.Item1, placeOfExc.Item2, true);
+        return fullMethodName;
     }
 
     static string FullNameOfExecutedCode(object type, string methodName, bool fromThrowEx = false)
@@ -61,8 +61,8 @@ internal partial class ThrowEx
         }
         else
         {
-            Type t = type.GetType();
-            typeFullName = t.FullName ?? "Type cannot be get via type.GetType()";
+            Type actualType = type.GetType();
+            typeFullName = actualType.FullName ?? "Type cannot be get via type.GetType()";
         }
         return string.Concat(typeFullName, ".", methodName);
     }
@@ -84,16 +84,16 @@ internal partial class ThrowEx
     #region For avoid FullNameOfExecutedCode
 
 
-    internal static bool ThrowIsNotNull<A>(Func<string, A, string?> f, A ex)
+    internal static bool ThrowIsNotNull<A>(Func<string, A, string?> exceptionFunc, A exceptionParameter)
     {
-        string? exc = f(FullNameOfExecutedCode(), ex);
-        return ThrowIsNotNull(exc);
+        string? exceptionMessage = exceptionFunc(FullNameOfExecutedCode(), exceptionParameter);
+        return ThrowIsNotNull(exceptionMessage);
     }
 
-    internal static bool ThrowIsNotNull(Func<string, string?> f)
+    internal static bool ThrowIsNotNull(Func<string, string?> exceptionFunc)
     {
-        string? exc = f(FullNameOfExecutedCode());
-        return ThrowIsNotNull(exc);
+        string? exceptionMessage = exceptionFunc(FullNameOfExecutedCode());
+        return ThrowIsNotNull(exceptionMessage);
     }
     #endregion
     #endregion

@@ -4,36 +4,36 @@ namespace SunamoString._sunamo;
 
 internal class Types
 {
-    internal static readonly Type tObject = typeof(object);
-    internal static readonly Type tStringBuilder = typeof(StringBuilder);
-    internal static readonly Type tIEnumerable = typeof(IEnumerable);
-    internal static readonly Type tString = typeof(string);
-    internal static readonly Type tFloat = typeof(float);
-    internal static readonly Type tDouble = typeof(double);
-    internal static readonly Type tInt = typeof(int);
-    internal static readonly Type tLong = typeof(long);
-    internal static readonly Type tShort = typeof(short);
-    internal static readonly Type tDecimal = typeof(decimal);
-    internal static readonly Type tSbyte = typeof(sbyte);
-    internal static readonly Type tByte = typeof(byte);
-    internal static readonly Type tUshort = typeof(ushort);
-    internal static readonly Type tUint = typeof(uint);
-    internal static readonly Type tUlong = typeof(ulong);
-    internal static readonly Type tDateTime = typeof(DateTime);
-    internal static readonly Type tBinary = typeof(byte[]);
-    internal static readonly Type tChar = typeof(char);
+    internal static Type ObjectType => typeof(object);
+    internal static Type StringBuilderType => typeof(StringBuilder);
+    internal static Type IEnumerableType => typeof(IEnumerable);
+    internal static Type StringType => typeof(string);
+    internal static Type FloatType => typeof(float);
+    internal static Type DoubleType => typeof(double);
+    internal static Type IntType => typeof(int);
+    internal static Type LongType => typeof(long);
+    internal static Type ShortType => typeof(short);
+    internal static Type DecimalType => typeof(decimal);
+    internal static Type SbyteType => typeof(sbyte);
+    internal static Type ByteType => typeof(byte);
+    internal static Type UshortType => typeof(ushort);
+    internal static Type UintType => typeof(uint);
+    internal static Type UlongType => typeof(ulong);
+    internal static Type DateTimeType => typeof(DateTime);
+    internal static Type BinaryType => typeof(byte[]);
+    internal static Type CharType => typeof(char);
     internal static readonly List<Type> allBasicTypes = new()
 {
-tObject, tString, tStringBuilder, tInt, tDateTime,
-tDouble, tFloat, tChar, tBinary, tByte, tShort, tBinary, tLong, tDecimal, tSbyte, tUshort, tUint, tUlong
+ObjectType, StringType, StringBuilderType, IntType, DateTimeType,
+DoubleType, FloatType, CharType, BinaryType, ByteType, ShortType, BinaryType, LongType, DecimalType, SbyteType, UshortType, UintType, UlongType
 };
-    internal static readonly Type list = typeof(IList);
+    internal static Type ListType => typeof(IList);
     #region Same seria as in DefaultValueForTypeT
-    internal static readonly Type tBool = typeof(bool);
+    internal static Type BoolType => typeof(bool);
     #region Signed numbers
     #endregion
     #region Unsigned numbers
     #endregion
-    internal static readonly Type tGuid = typeof(Guid);
+    internal static Type GuidType => typeof(Guid);
     #endregion
 }

@@ -13,8 +13,8 @@ public class FromToTSHString<T>
     protected long toL;
     public FromToTSHString()
     {
-        var type = typeof(type);
-        if (type == typeof(int)) ftUse = FromToUseString.None;
+        var typeT = typeof(T);
+        if (typeT == typeof(int)) ftUse = FromToUseString.None;
     }
 
 
@@ -31,20 +31,20 @@ public class FromToTSHString<T>
 
 
 
-    public FromToTSHString(type from, type to, FromToUseString ftUse = FromToUseString.DateTime) : this()
+    public FromToTSHString(T from, T to, FromToUseString fromToUse = FromToUseString.DateTime) : this()
     {
         this.from = from;
         this.to = to;
-        this.ftUse = ftUse;
+        this.ftUse = fromToUse;
     }
-    public type from
+    public T from
     {
-        get => (type)(dynamic)fromL;
+        get => (T)(dynamic)fromL;
         set => fromL = (long)(dynamic)value;
     }
-    public type to
+    public T to
     {
-        get => (type)(dynamic)toL;
+        get => (T)(dynamic)toL;
         set => toL = (long)(dynamic)value;
     }
     public long FromL => fromL;
