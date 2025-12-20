@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 global using System.Collections.Generic;
@@ -35,8 +36,9 @@ global using SunamoString;
 global using SunamoString.Delegates;
 global using SunamoString.Generators;
 global using SunamoString._public;
-global using SunamoString._sunamo.SunamoParsing;
-global using SunamoString._sunamo.SunamoStringData;
+// CZ: Tyto složky neexistují v solution - zakomentováno
+// global using SunamoString._sunamo.SunamoParsing;
+// global using SunamoString._sunamo.SunamoStringData;
 global using SunamoString.Extensions;
 global using ILogger = Microsoft.Extensions.Logging.ILogger;
 global using Microsoft.Extensions.Logging;

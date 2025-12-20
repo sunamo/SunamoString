@@ -1,6 +1,6 @@
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-
+// variables names: ok
 namespace SunamoString;
 
 public class SH
@@ -8,8 +8,9 @@ public class SH
     protected static List<char> BracketsLeftList { get; set; }
     protected static List<char> BracketsRightList { get; set; }
     private static StringBuilder StringBuilder { get; set; } = new();
-    public static string xMismatchCountInInputArraysOfSHAllHaveRightFormat =
+    public static string XMismatchCountInInputArraysOfSHAllHaveRightFormat =
         "MismatchCountInInputArraysOfSHAllHaveRightFormat";
+
     public static bool ContainsCl(string input, StringOrStringList searchTerm, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
     {
         string term = null;
@@ -129,15 +130,15 @@ public class SH
     /// <summary>
     ///     Auto remove potentially first !
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="contains"></param>
-    public static bool IsContained(string text, ref string contains)
+    public static bool IsContained(string input, ref string contains)
     {
         var (negation, trimmedContains) = IsNegationTuple(contains);
         contains = trimmedContains;
-        if (negation && text.Contains(contains))
+        if (negation && input.Contains(contains))
             return false;
-        if (!negation && !text.Contains(contains)) return false;
+        if (!negation && !input.Contains(contains)) return false;
         return true;
     }
     /// <summary>
@@ -194,37 +195,37 @@ public class SH
         if (!item.StartsWith(prefix)) return whitespaces + prefix + item;
         return whitespaces + item;
     }
-    public static string RemoveLastChar(string artist)
+    public static string RemoveLastChar(string input)
     {
-        return artist.Substring(0, artist.Length - 1);
+        return input.Substring(0, input.Length - 1);
     }
     /// <summary>
     ///     Add postfix if text not ends with
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="postfix"></param>
     /// <returns></returns>
-    public static string PostfixIfNotEmpty(string text, string postfix)
+    public static string PostfixIfNotEmpty(string input, string postfix)
     {
-        if (text.Length != 0)
-            if (!text.EndsWith(postfix))
-                return text + postfix;
-        return text;
+        if (input.Length != 0)
+            if (!input.EndsWith(postfix))
+                return input + postfix;
+        return input;
     }
-    public static string AddBeforeUpperChars(string text, char add, bool preserveAcronyms)
+    public static string AddBeforeUpperChars(string input, char add, bool preserveAcronyms)
     {
-        if (string.IsNullOrWhiteSpace(text))
+        if (string.IsNullOrWhiteSpace(input))
             return string.Empty;
-        var newText = new StringBuilder(text.Length * 2);
-        newText.Append(text[0]);
-        for (var i = 1; i < text.Length; i++)
+        var newText = new StringBuilder(input.Length * 2);
+        newText.Append(input[0]);
+        for (var i = 1; i < input.Length; i++)
         {
-            if (char.IsUpper(text[i]))
-                if ((text[i - 1] != add && !char.IsUpper(text[i - 1])) ||
-                    (preserveAcronyms && char.IsUpper(text[i - 1]) &&
-                     i < text.Length - 1 && !char.IsUpper(text[i + 1])))
+            if (char.IsUpper(input[i]))
+                if ((input[i - 1] != add && !char.IsUpper(input[i - 1])) ||
+                    (preserveAcronyms && char.IsUpper(input[i - 1]) &&
+                     i < input.Length - 1 && !char.IsUpper(input[i + 1])))
                     newText.Append(add);
-            newText.Append(text[i]);
+            newText.Append(input[i]);
         }
         return newText.ToString();
     }
@@ -287,9 +288,9 @@ public class SH
         addToAnotherCollection = addToAnotherCollection.Distinct().ToList();
         foreach (var index in addToAnotherCollection)
         {
-            var count = alreadyProcessedItem1.Where(data => data == index).Count();
+            var input = alreadyProcessedItem1.Where(data => data == index).Count();
             //!alreadyProcessedItem1.Contains(item)
-            if (count > 2)
+            if (input > 2)
             {
                 var sele = additionalPairs.Where(data => data.Item1 == index).ToList();
                 //for (int i = sele.Count() - 1; i >= 1; i--)
@@ -336,51 +337,51 @@ public class SH
         result.Reverse();
         return result;
     }
-    public static string RemoveAndInsertReplace(string text, int startIndex, string what, string to)
+    public static string RemoveAndInsertReplace(string input, int startIndex, string oldValue, string newValue)
     {
-        text = text.Remove(startIndex, what.Length);
-        text = text.Insert(startIndex, to);
-        return text;
+        input = input.Remove(startIndex, oldValue.Length);
+        input = input.Insert(startIndex, newValue);
+        return input;
     }
     //public static string JoinMakeUpTo2NumbersToZero(string data, int[] d2)
     //{
     //    return data;
     //}
-    public static string ReplaceOnce(string input, string what, string replacement)
+    public static string ReplaceOnce(string input, string oldValue, string replacement)
     {
-        if (what == "") return input;
-        var position = input.IndexOf(what);
+        if (oldValue == "") return input;
+        var position = input.IndexOf(oldValue);
         if (position == -1) return input;
-        return input.Substring(0, position) + replacement + input.Substring(position + what.Length);
+        return input.Substring(0, position) + replacement + input.Substring(position + oldValue.Length);
     }
-    public static string ReplaceOnceIfStartedWith(string what, string replaceWhat, string replacement)
+    public static string ReplaceOnceIfStartedWith(string input, string searchPrefix, string replacement)
     {
         bool replaced;
-        return ReplaceOnceIfStartedWith(what, replaceWhat, replacement, out replaced);
+        return ReplaceOnceIfStartedWith(input, searchPrefix, replacement, out replaced);
     }
-    public static string ReplaceOnceIfStartedWith(string what, string replaceWhat, string replacement, out bool replaced)
+    public static string ReplaceOnceIfStartedWith(string input, string searchPrefix, string replacement, out bool replaced)
     {
         replaced = false;
-        if (what.StartsWith(replaceWhat))
+        if (input.StartsWith(searchPrefix))
         {
             replaced = true;
-            return ReplaceOnce(what, replaceWhat, replacement);
+            return ReplaceOnce(input, searchPrefix, replacement);
         }
-        return what;
+        return input;
     }
-    public static string NormalizeString(string text)
+    public static string NormalizeString(string input)
     {
-        if (text.Contains((char)160))
+        if (input.Contains((char)160))
         {
             var stringBuilder = new StringBuilder();
-            foreach (var character in text)
+            foreach (var character in input)
                 if (character == (char)160)
                     stringBuilder.Append(' ');
                 else
                     stringBuilder.Append(character);
             return stringBuilder.ToString();
         }
-        return text;
+        return input;
     }
     /// <summary>
     ///     IndexesOfChars - char
@@ -431,9 +432,9 @@ public class SH
     {
         return WrapWithChar(input, '\\');
     }
-    public static string WrapWithSpace(string originalLogin)
+    public static string WrapWithSpace(string input)
     {
-        return WrapWithChar(originalLogin, ' ');
+        return WrapWithChar(input, ' ');
     }
     public static string WrapWithQm(string input)
     {
@@ -455,45 +456,45 @@ public class SH
     /// <summary>
     ///     Into A1,2 never put null
     /// </summary>
-    /// <param name="pred"></param>
+    /// <param name="before"></param>
     /// <param name="after"></param>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="position"></param>
-    public static void GetPartsByLocation(out string pred, out string after, string text, int position)
+    public static void GetPartsByLocation(out string before, out string after, string input, int position)
     {
         if (position == -1)
         {
-            pred = text;
+            before = input;
             after = "";
         }
         else
         {
-            pred = text.Substring(0, position);
-            if (text.Length > position + 1)
-                after = text.Substring(position + 1);
+            before = input.Substring(0, position);
+            if (input.Length > position + 1)
+                after = input.Substring(position + 1);
             else
                 after = string.Empty;
         }
     }
-    public static (string, string) GetPartsByLocationNoOutInt(string text, int position)
+    public static (string, string) GetPartsByLocationNoOutInt(string input, int position)
     {
-        string pred, after;
-        GetPartsByLocation(out pred, out after, text, position);
+        string before, after;
+        GetPartsByLocation(out before, out after, input, position);
+        return (before, after);
+    }
+    public static (string, string) GetPartsByLocationNoOut(string input, char delimiter)
+    {
+        GetPartsByLocation(out var pred, out var after, input, delimiter);
         return (pred, after);
     }
-    public static (string, string) GetPartsByLocationNoOut(string text, char delimiter)
-    {
-        GetPartsByLocation(out var pred, out var after, text, delimiter);
-        return (pred, after);
-    }
-    /// <param name="pred"></param>
+    /// <param name="before"></param>
     /// <param name="after"></param>
-    /// <param name="text"></param>
+    /// <param name="input"></param>
     /// <param name="delimiter"></param>
-    public static void GetPartsByLocation(out string pred, out string after, string text, char delimiter)
+    public static void GetPartsByLocation(out string before, out string after, string input, char delimiter)
     {
-        var delimiterIndex = text.IndexOf(delimiter);
-        GetPartsByLocation(out pred, out after, text, delimiterIndex);
+        var delimiterIndex = input.IndexOf(delimiter);
+        GetPartsByLocation(out before, out after, input, delimiterIndex);
     }
     /// <summary>
     ///     Func<int, bool> / FromToList
@@ -541,10 +542,10 @@ public class SH
         {
             end = parameter.IndexOf(endS, begin + 1);
             if (notAllowedInRanges != null)
-                while (end != NumConsts.mOne && NotAllowedInRanges(notAllowedInRanges, end))
+                while (end != NumConsts.MOne && NotAllowedInRanges(notAllowedInRanges, end))
                     end = parameter.IndexOf(endS, end + 1);
         }
-        if (begin == NumConsts.mOne || end == NumConsts.mOne)
+        if (begin == NumConsts.MOne || end == NumConsts.MOne)
         {
             if (throwExceptionIfNotContains)
             {
@@ -552,7 +553,7 @@ public class SH
             }
             else
             {
-                if (end == NumConsts.mOne) return null;
+                if (end == NumConsts.MOne) return null;
             }
         }
         else
@@ -601,10 +602,10 @@ public class SH
         }
         return result.ToString();
     }
-    public static string FromSpace160To32(string text)
+    public static string FromSpace160To32(string input)
     {
-        text = Regex.Replace(text, @"\p{Z}", " ");
-        return text;
+        input = Regex.Replace(input, @"\p{Z}", " ");
+        return input;
     }
     public static bool IsNumber(string str, params char[] nextAllowedChars)
     {
@@ -640,15 +641,15 @@ public class SH
         // Spojení slov do Pascal konvence
         return string.Join("", words);
     }
-    public static bool StartWithWhitespace(string text)
+    public static bool StartWithWhitespace(string input)
     {
         // toto nefungovalo
         //return new List<char>(['\n', '\r', '\t', ' ']).Any(data => text.StartsWith(data));
-        return text.TrimStart() != text;
+        return input.TrimStart() != input;
     }
-    public static string DetectNewline(string text)
+    public static string DetectNewline(string input)
     {
-        if (text.Contains("\r\n")) return "\r\n";
+        if (input.Contains("\r\n")) return "\r\n";
         return "\n";
     }
     public static string RemoveLastWord(string temp)
@@ -657,7 +658,7 @@ public class SH
     }
     public static List<int> GetIndexesOfLinesStartingWith(List<string> list, Func<string, bool> predicate)
     {
-        var allIndices = list.Select((text, i) => new { Str = text, Index = i })
+        var allIndices = list.Select((strategy, i) => new { Str = strategy, Index = i })
             .Where(x => predicate(x.Str))
             .Select(x => x.Index).ToList();
         return allIndices;
@@ -669,14 +670,14 @@ public class SH
         var result = string.Join(Environment.NewLine, list);
         return result;
     }
-    public static string AddIfNotContains(string input, string text, string lowerCaseVersion = null)
+    public static string AddIfNotContains(string input, string textToAdd, string lowerCaseVersion = null)
     {
         if (lowerCaseVersion != null)
         {
-            text = lowerCaseVersion;
+            textToAdd = lowerCaseVersion;
             input = input.ToLower();
         }
-        if (!input.Contains(text)) return input + " " + text;
+        if (!input.Contains(textToAdd)) return input + " " + textToAdd;
         return input;
     }
     public static string SwitchSwap(string input, string delimiter)
@@ -691,45 +692,45 @@ public class SH
         if (bracketIndex != -1) return postfixSpaceCommaNewline.Insert(bracketIndex, textToInsert);
         return postfixSpaceCommaNewline;
     }
-    public static Dictionary<char, int> StatisticLetterChars(string between, StatisticLetterCharsStrategy text,
+    public static Dictionary<char, int> StatisticLetterChars(string between, StatisticLetterCharsStrategy strategy,
         params char[] charsToStrategy)
     {
         List<char> ignoreCompletely = null;
-        if (text == StatisticLetterCharsStrategy.IgnoreCompletely) ignoreCompletely = new List<char>(charsToStrategy);
+        if (strategy == StatisticLetterCharsStrategy.IgnoreCompletely) ignoreCompletely = new List<char>(charsToStrategy);
         var list = new Dictionary<char, int>();
-        if (text == StatisticLetterCharsStrategy.AddAsFirst)
+        if (strategy == StatisticLetterCharsStrategy.AddAsFirst)
             foreach (var character in charsToStrategy)
                 list.Add(character, 0);
         foreach (var character in between)
         {
-            if (text == StatisticLetterCharsStrategy.IgnoreCompletely)
+            if (strategy == StatisticLetterCharsStrategy.IgnoreCompletely)
                 if (ignoreCompletely.Contains(character))
                     continue;
             DictionaryHelper.AddOrPlus(list, character, 1);
         }
         return list;
     }
-    public static List<char> AllBrackets(string text)
+    public static List<char> AllBrackets(string strategy)
     {
         var bracketChars = new List<char>();
         var end = false;
-        for (var i = 0; i < text.Length; i++)
+        for (var i = 0; i < strategy.Length; i++)
         {
-            var bracket = GetBracketFromBegin(text[i], ref end, false);
-            if (bracket != Brackets.None) bracketChars.Add(text[i]);
+            var bracket = GetBracketFromBegin(strategy[i], ref end, false);
+            if (bracket != Brackets.None) bracketChars.Add(strategy[i]);
         }
         return bracketChars;
     }
-    public static Tuple<SquareMap, SquareMapLines> IndexesOfBrackets(string text)
+    public static Tuple<SquareMap, SquareMapLines> IndexesOfBrackets(string strategy)
     {
         var message = new SquareMap();
         var lineBasedMap = new SquareMapLines(message);
         var end = false;
         var line = 0;
         var result = false;
-        for (var i = 0; i < text.Length; i++)
+        for (var i = 0; i < strategy.Length; i++)
         {
-            var currentChar = text[i];
+            var currentChar = strategy[i];
             if (result)
             {
                 result = false;
@@ -755,39 +756,39 @@ public class SH
         }
         return new Tuple<SquareMap, SquareMapLines>(message, lineBasedMap);
     }
-    public static string ReplaceBrackets(string text, Brackets from, Brackets to)
+    public static string ReplaceBrackets(string strategy, Brackets from, Brackets to)
     {
-        text = text.Replace(bracketsLeft[from], bracketsLeft[to]);
-        text = text.Replace(bracketsRight[from], bracketsRight[to]);
-        return text;
+        strategy = strategy.Replace(BracketsLeft[from], BracketsLeft[to]);
+        strategy = strategy.Replace(BracketsRight[from], BracketsRight[to]);
+        return strategy;
     }
-    public static List<int> ContainsAnyFromElement(StringBuilder text, IList<string> list)
+    public static List<int> ContainsAnyFromElement(StringBuilder strategy, IList<string> list)
     {
         var result = new List<int>();
         var matchIndex = 0;
         foreach (var searchValue in list)
         {
-            if (text.ToString().Contains(searchValue)) result.Add(matchIndex);
+            if (strategy.ToString().Contains(searchValue)) result.Add(matchIndex);
             matchIndex++;
         }
         return result;
     }
-    public static int FindClosingBracketIndexChar(StringBuilder text, bool removeBetween, string openedBracket = "{")
+    public static int FindClosingBracketIndexChar(StringBuilder strategy, bool removeBetween, string openedBracket = "{")
     {
-        var index = text.ToString().IndexOf(openedBracket);
-        return FindClosingBracketIndex(text, removeBetween, text[index]);
+        var index = strategy.ToString().IndexOf(openedBracket);
+        return FindClosingBracketIndex(strategy, removeBetween, strategy[index]);
     }
-    public static int FindClosingBracketIndex(StringBuilder text, bool removeBetween, int dxOfStart)
+    public static int FindClosingBracketIndex(StringBuilder strategy, bool removeBetween, int dxOfStart)
     {
-        var openedBracket = text[dxOfStart];
+        var openedBracket = strategy[dxOfStart];
         var closedBracket = ClosingBracketFor(openedBracket);
         var start = dxOfStart;
         var bracketCount = 1;
         //var textArray = text.ToString().ToCharArray();
         var currentChar = 'a';
-        for (var i = dxOfStart + 1; i < text.Length; i++)
+        for (var i = dxOfStart + 1; i < strategy.Length; i++)
         {
-            currentChar = text[i];
+            currentChar = strategy[i];
             if (currentChar == openedBracket)
                 bracketCount++;
             else if (currentChar == closedBracket) bracketCount--;
@@ -797,18 +798,18 @@ public class SH
                 break;
             }
         }
-        if (removeBetween) RemoveBetweenIndexes(text, start, dxOfStart);
+        if (removeBetween) RemoveBetweenIndexes(strategy, start, dxOfStart);
         return dxOfStart;
     }
-    private static void RemoveBetweenIndexes(StringBuilder text, int start, int end)
+    private static void RemoveBetweenIndexes(StringBuilder strategy, int start, int end)
     {
         ThrowEx.StartIsHigherThanEnd(start, end);
         start++;
-        for (; start < end; start++) text[start] = ' ';
+        for (; start < end; start++) strategy[start] = ' ';
     }
     public static bool CheckWhetherNoBrackedIsBeforeOther2(string braces)
     {
-        return BalancedBrackets.areBracketsBalanced(AllBrackets(braces));
+        return BalancedBrackets.AreBracketsBalanced(AllBrackets(braces));
     }
     public static bool CheckWhetherNoBrackedIsBeforeOther1(string braces)
     {
@@ -823,10 +824,10 @@ public class SH
     }
     public static string ConvertWhitespaceToVisible(string temp)
     {
-        temp = temp.Replace('\t', UnicodeWhiteToVisible.tab);
-        temp = temp.Replace('\n', UnicodeWhiteToVisible.newLine);
-        temp = temp.Replace('\r', UnicodeWhiteToVisible.carriageReturn);
-        temp = temp.Replace(' ', UnicodeWhiteToVisible.space);
+        temp = temp.Replace('\t', UnicodeWhiteToVisible.Tab);
+        temp = temp.Replace('\n', UnicodeWhiteToVisible.NewLine);
+        temp = temp.Replace('\r', UnicodeWhiteToVisible.CarriageReturn);
+        temp = temp.Replace(' ', UnicodeWhiteToVisible.Space);
         return temp;
     }
     public static string ConcatSpace(IList result)
@@ -842,9 +843,9 @@ public class SH
                 return true;
         return false;
     }
-    public static bool IsSingleLine(string text)
+    public static bool IsSingleLine(string strategy)
     {
-        return !text.Trim().Contains(Environment.NewLine);
+        return !strategy.Trim().Contains(Environment.NewLine);
     }
     public static string GetWhitespaceFromBeginning(StringBuilder stringBuilder, string line)
     {
@@ -867,25 +868,25 @@ public class SH
     /// <summary>
     ///     A2 is use to calculate length of center
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="centerString"></param>
     /// <param name="centerIndex"></param>
     /// <param name="before"></param>
     /// <param name="after"></param>
-    public static string CharsBeforeAndAfter(string text, string centerString, int centerIndex, int before, int after)
+    public static string CharsBeforeAndAfter(string strategy, string centerString, int centerIndex, int before, int after)
     {
         var builder = centerIndex - before;
         var argument = centerIndex + centerString.Length + after;
         var stringBuilder = new StringBuilder();
-        if (HasIndex(builder, text, false))
+        if (HasIndex(builder, strategy, false))
         {
-            stringBuilder.Append(text.Substring(builder, before));
+            stringBuilder.Append(strategy.Substring(builder, before));
             stringBuilder.Append(" ");
         }
         stringBuilder.Append(centerString);
-        if (HasIndex(argument, text, false))
+        if (HasIndex(argument, strategy, false))
         {
-            stringBuilder.Append(text.Substring(argument, after));
+            stringBuilder.Append(strategy.Substring(argument, after));
             stringBuilder.Append(" ");
         }
         return stringBuilder.ToString();
@@ -894,9 +895,9 @@ public class SH
     {
         return between.Contains('\n') || between.Contains('\r');
     }
-    public static bool ChangeEncodingProcessWrongCharacters(ref string count)
+    public static bool ChangeEncodingProcessWrongCharacters(ref string input)
     {
-        return ChangeEncodingProcessWrongCharacters(ref count, Encoding.GetEncoding("latin1"));
+        return ChangeEncodingProcessWrongCharacters(ref input, Encoding.GetEncoding("latin1"));
     }
     /// <summary>
     ///     když je v souboru rozsypaný čaj, přečíst přes File.ReadAllText, převést přes SH.ChangeEncodingProcessWrongCharacters.
@@ -905,16 +906,16 @@ public class SH
     /// </summary>
     /// <param name="c"></param>
     /// <param name="oldEncoding"></param>
-    public static bool ChangeEncodingProcessWrongCharacters(ref string count, Encoding oldEncoding)
+    public static bool ChangeEncodingProcessWrongCharacters(ref string input, Encoding oldEncoding)
     {
-        if (IsValidISO(count))
+        if (IsValidISO(input))
         {
-            var builder = oldEncoding.GetBytes(count);
-            count = Encoding.UTF8.GetString(builder);
+            var builder = oldEncoding.GetBytes(input);
+            input = Encoding.UTF8.GetString(builder);
             return true;
         }
         // ý musí být před í, ě před č
-        count = SHReplace.ReplaceManyFromString(count, @"Ã©,ý
+        input = SHReplace.ReplaceManyFromString(input, @"Ã©,ý
 Ã½,ý
 Ă˝,é
 Å¥,š
@@ -947,21 +948,21 @@ public class SH
         if (returnEmptyWhenDontHaveLenght) return string.Empty;
         return parameter;
     }
-    public static string AddSpaceAndDontDuplicate(bool after, string text, string colon)
+    public static string AddSpaceAndDontDuplicate(bool after, string strategy, string colon)
     {
         List<int> dxsColons = null;
         var stringBuilder = new StringBuilder();
-        stringBuilder.Append(text);
+        stringBuilder.Append(strategy);
         if (after)
         {
-            dxsColons = ReturnOccurencesOfString(text, colon);
+            dxsColons = ReturnOccurencesOfString(strategy, colon);
             for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Insert(dxsColons[i] + 1, " ");
             dxsColons = ReturnOccurencesOfString(stringBuilder.ToString(), colon + "  ");
             for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Remove(dxsColons[i] + 1, 1);
         }
         else
         {
-            dxsColons = ReturnOccurencesOfString(text, colon);
+            dxsColons = ReturnOccurencesOfString(strategy, colon);
             for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Insert(dxsColons[i], " ");
             dxsColons = ReturnOccurencesOfString(stringBuilder.ToString(), "  " + colon);
             for (var i = dxsColons.Count - 1; i >= 0; i--) stringBuilder.Remove(dxsColons[i], 1);
@@ -1036,27 +1037,27 @@ public class SH
             }
         }
     }
-    public static bool ContainsLine(string text, bool checkInCaseOnlyOneString, params string[] contains)
+    public static bool ContainsLine(string strategy, bool checkInCaseOnlyOneString, params string[] contains)
     {
-        return ContainsLine2(text, checkInCaseOnlyOneString, contains);
+        return ContainsLine2(strategy, checkInCaseOnlyOneString, contains);
     }
     /// <summary>
     ///     Whether A1 contains any from a3. a2 only logical chcek
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="hasFirstEmptyLength"></param>
     /// <param name="contains"></param>
-    public static bool ContainsLine2(string text, bool checkInCaseOnlyOneString, IList<string> contains)
+    public static bool ContainsLine2(string strategy, bool checkInCaseOnlyOneString, IList<string> contains)
     {
         var hasLine = false;
         if (contains.Count() == 1)
         {
-            if (checkInCaseOnlyOneString) hasLine = text.Contains(contains.First());
+            if (checkInCaseOnlyOneString) hasLine = strategy.Contains(contains.First());
         }
         else
         {
             foreach (var count in contains)
-                if (text.Contains(count)) {
+                if (strategy.Contains(count)) {
                     hasLine = true;
                     break;
                 }
@@ -1098,13 +1099,13 @@ public class SH
         if (input.Length > index) return isWhiteSpace.Invoke(input[index]);
         return false;
     }
-    public static int CountLines(string text)
+    public static int CountLines(string strategy)
     {
-        return Regex.Matches(text, Environment.NewLine).Count;
+        return Regex.Matches(strategy, Environment.NewLine).Count;
     }
-    public static bool HasLetter(string text)
+    public static bool HasLetter(string strategy)
     {
-        foreach (var item in text)
+        foreach (var item in strategy)
             if (char.IsLetter(item))
                 return true;
         return false;
@@ -1205,7 +1206,7 @@ public class SH
     {
         if (!canBeDifferentCount)
             if (typeDynamics.Count != tfd.Count)
-                throw new Exception(xMismatchCountInInputArraysOfSHAllHaveRightFormat);
+                throw new Exception(XMismatchCountInInputArraysOfSHAllHaveRightFormat);
         var lowerCount = Math.Min(typeDynamics.Count, tfd.Count);
         for (var i = 0; i < lowerCount; i++)
             if (!HasTextRightFormat(typeDynamics[i], tfd[i]))
@@ -1234,9 +1235,9 @@ public class SH
         }
         return true;
     }
-    public static bool GetTextInLastSquareBracketsAndOther(string parameter, out string title, out string remix)
+    public static bool GetTextInLastSquareBracketsAndOther(string parameter, out string mainText, out string bracketedText)
     {
-        title = remix = null;
+        mainText = bracketedText = null;
         parameter = parameter.Trim();
         if (parameter[parameter.Length - 1] != ']')
             return false;
@@ -1244,7 +1245,7 @@ public class SH
         var firstHranata = parameter.LastIndexOf(']');
         if (firstHranata == -1)
             return false;
-        if (firstHranata != -1) SHSplit.SplitByIndex(parameter, firstHranata, out title, out remix);
+        if (firstHranata != -1) SHSplit.SplitByIndex(parameter, firstHranata, out mainText, out bracketedText);
         return true;
     }
     public static string RemoveBracketsWithTextCaseInsensitive(string input, string replacement, params string[] patterns)
@@ -1265,7 +1266,7 @@ public class SH
         SpecialCharsService specialCharsService = new();
         var stringBuilder = new StringBuilder();
         foreach (var character in input)
-            if (!specialCharsService.specialChars.Contains(character) &&
+            if (!specialCharsService.SpecialChars.Contains(character) &&
                 !over.Any(data => data == character)) // CAG.IsEqualToAnyElement(character, over))
                 stringBuilder.Append(character);
         return stringBuilder.ToString();
@@ -1297,11 +1298,11 @@ public class SH
         }
         return input;
     }
-    public static string RemoveLastCharIfIs(string path, char znak)
+    public static string RemoveLastCharIfIs(string input, char znak)
     {
-        var argument = path.Length - 1;
-        if (path[argument] == znak) return path.Substring(0, argument);
-        return path;
+        var argument = input.Length - 1;
+        if (input[argument] == znak) return input.Substring(0, argument);
+        return input;
     }
 
     /// <summary>
@@ -1333,10 +1334,10 @@ public class SH
         }
         return input;
     }
-    public static bool EndsWithNumber(string nameSolution)
+    public static bool EndsWithNumber(string input)
     {
         for (var i = 0; i < 10; i++)
-            if (nameSolution.EndsWith(i.ToString()))
+            if (input.EndsWith(i.ToString()))
                 return true;
         return false;
     }
@@ -1364,10 +1365,10 @@ public class SH
         if (dex != -1) return parameter.Substring(0, dex);
         return parameter;
     }
-    public static string DeleteCharsOutOfAscii(string text)
+    public static string DeleteCharsOutOfAscii(string strategy)
     {
         var stringBuilder = new StringBuilder();
-        foreach (var character in text)
+        foreach (var character in strategy)
         {
             int i = character;
             if (i < 128) stringBuilder.Append(character);
@@ -1377,10 +1378,10 @@ public class SH
     /// <summary>
     ///     Not working for czech, same as https://stackoverflow.com/a/249126
     /// </summary>
-    /// <param name="text"></param>
-    public static string RemoveDiacritics(string text)
+    /// <param name="strategy"></param>
+    public static string RemoveDiacritics(string strategy)
     {
-        var normalizedString = text.Normalize(NormalizationForm.FormD);
+        var normalizedString = strategy.Normalize(NormalizationForm.FormD);
         var stringBuilder = new StringBuilder();
         foreach (var count in normalizedString)
             switch (CharUnicodeInfo.GetUnicodeCategory(count))
@@ -1421,8 +1422,8 @@ public class SH
             if (searchText.Substring(Index, searchTerm.Length) == searchTerm)
             {
                 var range = new FromToString();
-                range.from = Index;
-                range.to = Index + searchLength - 1;
+                range.From = Index;
+                range.To = Index + searchLength - 1;
                 Results.Add(range);
             }
         return Results;
@@ -1486,7 +1487,7 @@ public class SH
     ///     If null, return "(null)"
     ///     nemůžu odstranit z sunamo, i tam se používá.
     /// </summary>
-    /// <param name="n"></param>
+    /// <param name="nullableObject"></param>
     /// <param name="value"></param>
     /// <returns></returns>
     //public static string NullToStringOrDefault(object n, string v)
@@ -1504,10 +1505,10 @@ public class SH
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static string NullToStringOrDefault(object n)
+    public static string NullToStringOrDefault(object nullableObject)
     {
         //return NullToStringOrDefault(n, null);
-        return n == null ? " " + "(null)" : " " + n;
+        return nullableObject == null ? " " + "(null)" : " " + nullableObject;
     }
     /// <summary>
     ///     Usage: Exceptions.MoreCandidates
@@ -1537,22 +1538,22 @@ public class SH
      * když byl Brackets globální, často jsem měl "claims it is defined"
      * takže jsem musel Brackets přesunout zde argument text ním i kód níže
      */
-    protected static Dictionary<Brackets, char> bracketsLeft;
-    protected static Dictionary<Brackets, char> bracketsRight;
+    protected static Dictionary<Brackets, char> BracketsLeft;
+    protected static Dictionary<Brackets, char> BracketsRight;
     protected static void Init()
     {
-        if (bracketsLeft == null)
+        if (BracketsLeft == null)
         {
-            bracketsLeft = new Dictionary<Brackets, char>();
-            bracketsLeft.Add(Brackets.Curly, '{');
-            bracketsLeft.Add(Brackets.Square, '[');
-            bracketsLeft.Add(Brackets.Normal, '(');
-            BracketsLeftList = bracketsLeft.Values.ToList();
-            bracketsRight = new Dictionary<Brackets, char>();
-            bracketsRight.Add(Brackets.Curly, '}');
-            bracketsRight.Add(Brackets.Square, ']');
-            bracketsRight.Add(Brackets.Normal, ')');
-            BracketsRightList = bracketsRight.Values.ToList();
+            BracketsLeft = new Dictionary<Brackets, char>();
+            BracketsLeft.Add(Brackets.Curly, '{');
+            BracketsLeft.Add(Brackets.Square, '[');
+            BracketsLeft.Add(Brackets.Normal, '(');
+            BracketsLeftList = BracketsLeft.Values.ToList();
+            BracketsRight = new Dictionary<Brackets, char>();
+            BracketsRight.Add(Brackets.Curly, '}');
+            BracketsRight.Add(Brackets.Square, ']');
+            BracketsRight.Add(Brackets.Normal, ')');
+            BracketsRightList = BracketsRight.Values.ToList();
         }
     }
     #endregion
@@ -1599,7 +1600,7 @@ public class SH
     //{
     //    return se.SHTrim.TrimStart(v, text);
     //}
-    public static bool HasIndex(int parameter, string text, bool throwExcWhenInvalidIndex = true)
+    public static bool HasIndex(int parameter, string strategy, bool throwExcWhenInvalidIndex = true)
     {
         if (parameter < 0)
         {
@@ -1607,7 +1608,7 @@ public class SH
                 throw new Exception("Chybn\u00FD parametr ");
             return false;
         }
-        if (text.Length > parameter) return true;
+        if (strategy.Length > parameter) return true;
         return false;
     }
     public static bool IsNegation(string contains)
@@ -1627,16 +1628,16 @@ public class SH
     /// <summary>
     ///     Version wo ref - dont auto remove first!
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="contains"></param>
     /// <returns></returns>
-    public static bool IsContained(string text, string contains)
+    public static bool IsContained(string strategy, string contains)
     {
         var (negation, contains2) = IsNegationTuple(contains);
         contains = contains2;
-        if (negation && text.Contains(contains))
+        if (negation && strategy.Contains(contains))
             return false;
-        if (!negation && !text.Contains(contains)) return false;
+        if (!negation && !strategy.Contains(contains)) return false;
         return true;
     }
     public static bool EqualsOneOfThis(string p1, params string[] p2)
@@ -1661,11 +1662,11 @@ public class SH
     ///     Another method is RemoveDiacritics
     ///     G text bez dia A1.
     /// </summary>
-    /// <param name="textWithDiacritics"></param>
-    public static string TextWithoutDiacritic(string textWithDiacritics)
+    /// <param name="input"></param>
+    public static string TextWithoutDiacritic(string input)
     {
-        return textWithDiacritics.RemoveDiacritics();
-        // but also with this don't throw exception but no working Encoding.UTF8.GetString(Encoding.GetEncoding("ISO-8859-8").GetBytes(textWithDiacritics));
+        return input.RemoveDiacritics();
+        // but also with this don't throw exception but no working Encoding.UTF8.GetString(Encoding.GetEncoding("ISO-8859-8").GetBytes(input));
         //if (!initDiactitic)
         //{
         //    System.Text.EncodingProvider provider = System.Text.CodePagesEncodingProvider.Instance;
@@ -1755,9 +1756,9 @@ public class SH
     //}
     #endregion
     #region For easy copy
-    public static bool ContainsAnyBool(string text, bool checkInCaseOnlyOneString, IList<string> contains)
+    public static bool ContainsAnyBool(string strategy, bool checkInCaseOnlyOneString, IList<string> contains)
     {
-        return ContainsAny(text, checkInCaseOnlyOneString, contains).Count > 0;
+        return ContainsAny(strategy, checkInCaseOnlyOneString, contains).Count > 0;
     }
     //public static List<string> ContainsAny(string item, bool checkInCaseOnlyOneString, IList<string> contains)
     //{
@@ -1831,24 +1832,24 @@ public class SH
     /// <summary>
     ///     keep joinAnotherWordsIfIsAlsoNumber = false
     /// </summary>
-    /// <param name="nameTrim"></param>
+    /// <param name="input"></param>
     /// <param name="probablyIndex"></param>
     /// <param name="joinAnotherWordsIfIsAlsoNumber"></param>
     /// <returns></returns>
-    public static int FirstWordWhichIsNumber(string nameTrim, int probablyIndex,
+    public static int FirstWordWhichIsNumber(string input, int probablyIndex,
         bool joinAnotherWordsIfIsAlsoNumber = false)
     {
-        var parameter = SHSplit.Split(nameTrim, " ");
+        var parameter = SHSplit.Split(input, " ");
         if (parameter.Count > probablyIndex)
         {
             if (BTS.IsInt(parameter[probablyIndex]))
             {
                 if (joinAnotherWordsIfIsAlsoNumber)
                 {
-                    var text = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(parameter, probablyIndex + 1);
-                    return int.Parse(text);
+                    var strategy = BTS.LastInt + NH.JoinAnotherTokensIfIsNumber(parameter, probablyIndex + 1);
+                    return int.Parse(strategy);
                 }
-                return BTS.lastInt;
+                return BTS.LastInt;
             }
             return FirstWordWhichIsNumberAllIndexes(parameter, joinAnotherWordsIfIsAlsoNumber);
         }
@@ -1864,10 +1865,10 @@ public class SH
                 i++;
                 if (joinAnotherWordsIfIsAlsoNumber)
                 {
-                    var text = BTS.lastInt + NH.JoinAnotherTokensIfIsNumber(parameter, i);
-                    return int.Parse(text);
+                    var strategy = BTS.LastInt + NH.JoinAnotherTokensIfIsNumber(parameter, i);
+                    return int.Parse(strategy);
                 }
-                return BTS.lastInt;
+                return BTS.LastInt;
             }
         return int.MinValue;
     }
@@ -1905,10 +1906,10 @@ public class SH
     //    }
     //    return temp;
     //}
-    public static bool ContainsOnly(string floorS, List<char> numericChars)
+    public static bool ContainsOnly(string input, List<char> numericChars)
     {
-        if (floorS.Length == 0) return false;
-        foreach (var item in floorS)
+        if (input.Length == 0) return false;
+        foreach (var item in input)
             if (!numericChars.Contains(item))
                 return false;
         return true;
@@ -1930,31 +1931,31 @@ public class SH
     /// <summary>
     ///     Usage: Exc.MethodOfOccuredFromStackTrace
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <returns></returns>
-    public static string FirstLine(string text)
+    public static string FirstLine(string strategy)
     {
-        var lines = SHGetLines.GetLines(text);
+        var lines = SHGetLines.GetLines(strategy);
         return lines.Count == 0 ? string.Empty : lines[0];
     }
     /// <summary>
     ///     Usage: Exceptions.FileWasntFoundInDirectory
     /// </summary>
-    /// <param name="nazevPP"></param>
+    /// <param name="strategy"></param>
     /// <param name="only"></param>
-    public static string FirstCharUpper(string nazevPP, bool only = false)
+    public static string FirstCharUpper(string strategy, bool only = false)
     {
-        if (nazevPP != null)
+        if (strategy != null)
         {
-            var stringBuilder = nazevPP.Substring(1);
+            var stringBuilder = strategy.Substring(1);
             if (only) stringBuilder = stringBuilder.ToLower();
-            return nazevPP[0].ToString().ToUpper() + stringBuilder;
+            return strategy[0].ToString().ToUpper() + stringBuilder;
         }
         return null;
     }
-    public static string InBrackets(string podlazi)
+    public static string InBrackets(string input)
     {
-        return GetTextBetweenTwoCharsInts(podlazi, podlazi.IndexOf('('), podlazi.IndexOf(')'));
+        return GetTextBetweenTwoCharsInts(input, input.IndexOf('('), input.IndexOf(')'));
     }
     //public static string JoinNL(params string[] parts)
     //{
@@ -1968,28 +1969,28 @@ public class SH
     ///     Return elements from A3 which is contained
     ///     If don't contains, return zero element collection
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="hasFirstEmptyLength"></param>
     /// <param name="contains"></param>
-    public static List<string> ContainsAny( /*T itemT,*/ /*IList<T> containsT,*/ string text, bool checkInCaseOnlyOneString, IList<string> contains)
+    public static List<string> ContainsAny( /*T itemT,*/ /*IList<T> containsT,*/ string strategy, bool checkInCaseOnlyOneString, IList<string> contains)
     {
         var founded = new List<string>();
         if (contains.Count() == 1 && checkInCaseOnlyOneString)
-            text.Contains(contains.First());
+            strategy.Contains(contains.First());
         else
             foreach (var count in contains)
-                if (text.Contains(count))
+                if (strategy.Contains(count))
                     founded.Add(count);
         return founded;
     }
-    public static List<char> ContainsAnyChar( /*T itemT,*/ /*IList<T> containsT,*/ string text, bool checkInCaseOnlyOneString, IList<char> contains)
+    public static List<char> ContainsAnyChar( /*T itemT,*/ /*IList<T> containsT,*/ string strategy, bool checkInCaseOnlyOneString, IList<char> contains)
     {
         var founded = new List<char>();
         if (contains.Count() == 1 && checkInCaseOnlyOneString)
-            text.Contains(contains.First());
+            strategy.Contains(contains.First());
         else
             foreach (var count in contains)
-                if (text.Contains(count))
+                if (strategy.Contains(count))
                     founded.Add(count);
         return founded;
     }
@@ -2195,7 +2196,7 @@ public class SH
     //        {
     //            var begin = parameter.IndexOf(beginS);
     //            var end = parameter.IndexOf(endS, begin + 1);
-    //            if (begin == NumConsts.mOne || end == NumConsts.mOne)
+    //            if (begin == NumConsts.MOne || end == NumConsts.MOne)
     //            {
     //                if (throwExceptionIfNotContains)
     //                {
@@ -2298,18 +2299,18 @@ public class SH
     ///     When there is no number, append 1
     ///     Otherwise incr.
     /// </summary>
-    /// <param name="acronym"></param>
-    public static void IncrementLastNumber(ref string acronym)
+    /// <param name="input"></param>
+    public static void IncrementLastNumber(ref string input)
     {
-        var lastChar = acronym[acronym.Length - 1];
+        var lastChar = input[input.Length - 1];
         if (char.IsNumber(lastChar))
         {
             var i = int.Parse(lastChar.ToString());
             i++;
-            acronym = acronym.Substring(0, acronym.Length - 1) + i;
+            input = input.Substring(0, input.Length - 1) + i;
             return;
         }
-        acronym = acronym + "1";
+        input = input + "1";
     }
     /// <summary>
     ///     Nothing can be null
@@ -2330,7 +2331,7 @@ public class SH
     /// <param name="pos"></param>
     public static int GetLineIndexFromCharIndex(string input, int pos)
     {
-        var lineNumber = input.Take(pos).Count(count => count == '\n') + 1;
+        var lineNumber = input.Take(pos).Count(input => input == '\n') + 1;
         return lineNumber - 1;
     }
     public static int AnotherOtherThanLetterOrDigit(string content, int startIndex)
@@ -2343,9 +2344,9 @@ public class SH
         //currentIndex--;
         return currentIndex--;
     }
-    public static string LastChars(string text, int count)
+    public static string LastChars(string strategy, int input)
     {
-        return text.Substring(text.Length - count);
+        return strategy.Substring(strategy.Length - input);
         //mystring.Substring(Math.Max(0, mystring.Length - 4));
     }
     public static string TabToNewLine(string input)
@@ -2378,10 +2379,10 @@ public class SH
         left = right = null;
         return ContainsBracket(temp, ref left, ref right, mustBeLeftAndRight);
     }
-    protected static bool s_cs;
+    protected static bool S_Cs;
     static SH()
     {
-        s_cs = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "cs";
+        S_Cs = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "cs";
         Init();
     }
     public static List<int> IndexesOfChars(string input, char searchChar)
@@ -2419,27 +2420,27 @@ public class SH
     }
     public static char ClosingBracketFor(char openingBracket)
     {
-        foreach (var item in bracketsLeft)
+        foreach (var item in BracketsLeft)
             if (item.Value == openingBracket)
-                return bracketsRight[item.Key];
+                return BracketsRight[item.Key];
         ThrowEx.IsNotAllowed(openingBracket + " as bracket");
         return char.MaxValue;
     }
     /// <summary>
     ///     Get text after cz#cd => #cd
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="after"></param>
-    public static string TextAfter(string text, string after)
+    public static string TextAfter(string strategy, string after)
     {
-        var dex = text.IndexOf(after);
-        if (dex != -1) return text.Substring(dex + after.Length);
+        var dex = strategy.IndexOf(after);
+        if (dex != -1) return strategy.Substring(dex + after.Length);
         return string.Empty;
     }
-    public static string PadRight(string baseString, string newLine, int count)
+    public static string PadRight(string baseString, string newLine, int input)
     {
         var stringBuilder = new StringBuilder(baseString);
-        for (var i = 0; i < count; i++) stringBuilder.Append(newLine);
+        for (var i = 0; i < input; i++) stringBuilder.Append(newLine);
         return stringBuilder.ToString();
     }
     public static void RemoveLastCharSb(StringBuilder stringBuilder)
@@ -2459,39 +2460,39 @@ public class SH
     /// <param name="c"></param>
     /// <param name="maxLength"></param>
     /// <returns></returns>
-    public static string ShortToLengthByParagraph(string text, int maxLength)
+    public static string ShortToLengthByParagraph(string strategy, int maxLength)
     {
         WhitespaceCharService whitespaceChar = new WhitespaceCharService();
         //var delimiter = SH.PadRight(string.Empty, Environment.NewLine, 2);
-        var parameter = SHSplit.SplitChar(text, whitespaceChar.whiteSpaceChars.ToArray());
-        while (text.Length + parameter.Count > maxLength)
+        var parameter = SHSplit.SplitChar(strategy, whitespaceChar.WhiteSpaceChars.ToArray());
+        while (strategy.Length + parameter.Count > maxLength)
             if (parameter.Count > 1)
             {
                 parameter.RemoveAt(parameter.Count - 1);
-                text = string.Join(" ", parameter);
+                strategy = string.Join(" ", parameter);
             }
             else
             {
                 //c = SHSubstring.SubstringIfAvailable(text, maxLength);
-                text = text.Substring(0, maxLength);
+                strategy = strategy.Substring(0, maxLength);
                 break;
             }
-        if (maxLength < text.Length)
+        if (maxLength < strategy.Length)
         {
         }
-        return text;
+        return strategy;
     }
     public static T ToNumber<T>(Func<string, T> parse, string input)
     {
         return parse.Invoke(input);
     }
-    public static string RepairQuotes(string text)
+    public static string RepairQuotes(string strategy)
     {
-        text = text.Replace("�", "\"");
-        text = text.Replace("�", "\"");
-        text = text.Replace("�", "'");
-        text = text.Replace("�", "'");
-        return text;
+        strategy = strategy.Replace("�", "\"");
+        strategy = strategy.Replace("�", "\"");
+        strategy = strategy.Replace("�", "'");
+        strategy = strategy.Replace("�", "'");
+        return strategy;
     }
     public static bool IsNumbered(string input)
     {
@@ -2518,40 +2519,40 @@ public class SH
         var occE = ReturnOccurencesOfString(input, closingBracket.ToString());
         return InsertEndingBracket(input, occB, occE, startingBracket);
     }
-    private static string InsertEndingBracket(string songName, List<int> countStart, List<int> countEnd,
+    private static string InsertEndingBracket(string input, List<int> countStart, List<int> countEnd,
         char startingBracket)
     {
-        return InsertEndingBracketWorker(songName, countStart.Count, countEnd.Count, new List<char>(), startingBracket);
+        return InsertEndingBracketWorker(input, countStart.Count, countEnd.Count, new List<char>(), startingBracket);
     }
-    public static string InsertEndingBracket(string songName, List<char> countStart, List<char> countEnd)
+    public static string InsertEndingBracket(string input, List<char> countStart, List<char> countEnd)
     {
-        return InsertEndingBracketWorker(songName, countStart.Count, countEnd.Count, countStart, char.MaxValue);
+        return InsertEndingBracketWorker(input, countStart.Count, countEnd.Count, countStart, char.MaxValue);
     }
-    public static string InsertEndingBracketWorker(string songName, int countStartCount, int countEndCount,
+    public static string InsertEndingBracketWorker(string input, int countStartCount, int countEndCount,
         List<char> countStart, char startingBracket)
     {
         var min = Math.Min(countStartCount, countEndCount);
         var max = Math.Max(countStartCount, countEndCount);
-        if (countStartCount < countEndCount) return songName;
+        if (countStartCount < countEndCount) return input;
         if (startingBracket != char.MaxValue)
         {
             var to = max - min;
             countStart.Clear();
             for (var i = 0; i < to; i++) countStart.Add(startingBracket);
         }
-        songName = InsertEndingBrackets(songName, countStart, min, max);
-        return songName;
+        input = InsertEndingBrackets(input, countStart, min, max);
+        return input;
     }
-    private static string InsertEndingBrackets(string songName, List<char> countStart, int min, int max)
+    private static string InsertEndingBrackets(string input, List<char> countStart, int min, int max)
     {
         var to = max - 1;
-        var isMultiline = songName.Contains(Environment.NewLine);
+        var isMultiline = input.Contains(Environment.NewLine);
         for (var i = min; i < to; i++)
         {
-            if (isMultiline) songName += Environment.NewLine;
-            songName += bracketsRight[GetBracketFromBegin(countStart[i])];
+            if (isMultiline) input += Environment.NewLine;
+            input += BracketsRight[GetBracketFromBegin(countStart[i])];
         }
-        return songName;
+        return input;
     }
     public static string PairsBracketsToCompleteBlock(string input)
     {
@@ -2567,7 +2568,7 @@ public class SH
             if (BracketsRightList.Contains(character))
             {
                 var builder = GetBracketFromBegin(character);
-                var bracketIndex = add.IndexOf(bracketsLeft[builder]);
+                var bracketIndex = add.IndexOf(BracketsLeft[builder]);
                 if (bracketIndex != -1) add.RemoveAt(bracketIndex);
             }
         }
@@ -2578,7 +2579,7 @@ public class SH
             for (var i = add.Count - 1; i >= 0; i--)
             {
                 var builder = GetBracketFromBegin(add[i]);
-                stringBuilder.Append(bracketsRight[builder]);
+                stringBuilder.Append(BracketsRight[builder]);
             }
             stringBuilder.Append(';');
         }
@@ -2617,18 +2618,18 @@ public class SH
         }
         return Brackets.None;
     }
-    public static List<char> IncludeBrackets(string text, bool starting)
+    public static List<char> IncludeBrackets(string strategy, bool starting)
     {
         var containsBracket = new List<char>();
         if (starting)
         {
-            foreach (var character in text)
+            foreach (var character in strategy)
                 if (BracketsLeftList.Contains(character))
                     containsBracket.Add(character);
         }
         else
         {
-            foreach (var character in text)
+            foreach (var character in strategy)
                 if (BracketsRightList.Contains(character))
                     containsBracket.Add(character);
         }
@@ -2717,11 +2718,11 @@ public class SH
     ///     Insert prefix starting with +
     /// </summary>
     /// <param name="value"></param>
-    public static string TelephonePrefixToBrackets(string phoneNumber)
+    public static string TelephonePrefixToBrackets(string input)
     {
-        if (string.IsNullOrWhiteSpace(phoneNumber)) return string.Empty;
-        phoneNumber = NormalizeString(phoneNumber);
-        var parameter = SHSplit.Split(phoneNumber, " ");
+        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+        input = NormalizeString(input);
+        var parameter = SHSplit.Split(input, " ");
         parameter[0] = "(" + parameter[0] + ")";
         return string.Join(" ", parameter);
     }
@@ -2765,7 +2766,7 @@ public class SH
     }
     /// <param name="ret"></param>
     /// <param name="pocetDo"></param>
-    public static List<int> GetVariablesInString(char parameter, char k, string innerHtml)
+    public static List<int> GetVariablesInString(char parameter, char closingChar, string innerHtml)
     {
         /// Vrátí mi formáty, které jsou v A1 od 0 do A2-1
         /// A1={0} {2} {3} A2=3 G=0,2
@@ -2778,7 +2779,7 @@ public class SH
             {
                 inVariable = true;
             }
-            else if (character == k)
+            else if (character == closingChar)
             {
                 if (inVariable) inVariable = false;
                 var consecutiveCount = 0;
@@ -2813,18 +2814,18 @@ public class SH
     /// <summary>
     ///     Pokud je poslední znak v A1 A2, odstraním ho
     /// </summary>
-    /// <param name="tableName"></param>
+    /// <param name="pluralWord"></param>
     /// <param name="p"></param>
-    public static string ConvertPluralToSingleEn(string tableName)
+    public static string ConvertPluralToSingleEn(string pluralWord)
     {
-        if (tableName[tableName.Length - 1] == 's')
+        if (pluralWord[pluralWord.Length - 1] == 's')
         {
-            if (tableName[tableName.Length - 2] == 'e')
-                if (tableName[tableName.Length - 3] == 'i')
-                    return tableName.Substring(0, tableName.Length - 3) + "y";
-            return tableName.Substring(0, tableName.Length - 1);
+            if (pluralWord[pluralWord.Length - 2] == 'e')
+                if (pluralWord[pluralWord.Length - 3] == 'i')
+                    return pluralWord.Substring(0, pluralWord.Length - 3) + "y";
+            return pluralWord.Substring(0, pluralWord.Length - 1);
         }
-        return tableName;
+        return pluralWord;
     }
     // takhle to bylo předtím ale teď to tu mám 2x se stejnými parametry
     //[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2855,14 +2856,14 @@ public class SH
                 return true;
         return false;
     }
-    public static string GetOddIndexesOfWord(string hash)
+    public static string GetOddIndexesOfWord(string input)
     {
-        var polovina = hash.Length / 2;
-        polovina = polovina / 2;
-        polovina += polovina / 2;
-        var stringBuilder = new StringBuilder(polovina);
+        var half = input.Length / 2;
+        half = half / 2;
+        half += half / 2;
+        var stringBuilder = new StringBuilder(half);
         var stepSize = 2;
-        for (var i = 0; i < hash.Length; i += stepSize) stringBuilder.Append(hash[i]);
+        for (var i = 0; i < input.Length; i += stepSize) stringBuilder.Append(input[i]);
         return stringBuilder.ToString();
     }
     #region GetPartsByLocation
@@ -2879,27 +2880,27 @@ public class SH
     /// <summary>
     ///     Údajně detekuje i japonštinu argument podpobné jazyky
     /// </summary>
-    /// <param name="text"></param>
-    public static bool IsChinese(string text)
+    /// <param name="strategy"></param>
+    public static bool IsChinese(string strategy)
     {
-        var hiragana = GetCharsInRange(text, 0x3040, 0x309F);
+        var hiragana = GetCharsInRange(strategy, 0x3040, 0x309F);
         if (hiragana) return true;
-        var katakana = GetCharsInRange(text, 0x30A0, 0x30FF);
+        var katakana = GetCharsInRange(strategy, 0x30A0, 0x30FF);
         if (katakana) return true;
-        var kanji = GetCharsInRange(text, 0x4E00, 0x9FBF);
+        var kanji = GetCharsInRange(strategy, 0x4E00, 0x9FBF);
         if (kanji) return true;
-        if (text.Any(count => count >= 0x20000 && count <= 0xFA2D)) return true;
+        if (strategy.Any(input => input >= 0x20000 && input <= 0xFA2D)) return true;
         return false;
     }
     /// <summary>
     ///     Nevraci znaky na indexech ale zda nektere znaky maji rozsah char definovany v A2,3
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="min"></param>
     /// <param name="max"></param>
-    public static bool GetCharsInRange(string text, int min, int max)
+    public static bool GetCharsInRange(string strategy, int min, int max)
     {
-        return text.Where(e => e >= min && e <= max).Count() != 0;
+        return strategy.Where(e => e >= min && e <= max).Count() != 0;
     }
     ///// <param name="nazevPP"></param>
     ///// <param name="only"></param>
@@ -2921,21 +2922,21 @@ public class SH
     /// <param name="parentheses"></param>
     /// <param name="braces"></param>
     /// <param name="afterSds"></param>
-    public static string RemoveBracketsAndHisContent(string title, bool squareBrackets, bool parentheses, bool braces,
+    public static string RemoveBracketsAndHisContent(string input, bool squareBrackets, bool parentheses, bool braces,
         bool afterSdsFrom)
     {
-        if (squareBrackets) title = RemoveBetweenAndEdgeChars(title, "]", "[");
-        if (parentheses) title = RemoveBetweenAndEdgeChars(title, "(", ")");
-        if (braces) title = RemoveBetweenAndEdgeChars(title, "{", "}");
+        if (squareBrackets) input = RemoveBetweenAndEdgeChars(input, "]", "[");
+        if (parentheses) input = RemoveBetweenAndEdgeChars(input, "(", ")");
+        if (braces) input = RemoveBetweenAndEdgeChars(input, "{", "}");
         if (afterSdsFrom)
         {
-            var fromClauseIndex = title.IndexOf(" - from");
-            if (fromClauseIndex == -1) fromClauseIndex = title.IndexOf(SunamoNotTranslateAble.From);
-            if (fromClauseIndex != -1) title = title.Substring(0, fromClauseIndex + 1);
+            var fromClauseIndex = input.IndexOf(" - from");
+            if (fromClauseIndex == -1) fromClauseIndex = input.IndexOf(SunamoNotTranslateAble.From);
+            if (fromClauseIndex != -1) input = input.Substring(0, fromClauseIndex + 1);
         }
-        title = title.Replace(" ", string.Empty)
-            .Trim(); //SHReplace.ReplaceAll(title, "", "").Trim();
-        return title;
+        input = input.Replace(" ", string.Empty)
+            .Trim(); //SHReplace.ReplaceAll(input, "", "").Trim();
+        return input;
     }
     /// <summary>
     ///     A2,3 can be string or char
@@ -2943,10 +2944,10 @@ public class SH
     /// <param name="s"></param>
     /// <param name="begin"></param>
     /// <param name="end"></param>
-    public static string RemoveBetweenAndEdgeChars(string text, string begin, string end)
+    public static string RemoveBetweenAndEdgeChars(string strategy, string begin, string end)
     {
         var regex = new Regex(string.Format("\\{0}.*?\\{1}", begin, end));
-        return regex.Replace(text, string.Empty);
+        return regex.Replace(strategy, string.Empty);
     }
     /// <summary>
     ///     Je dobré před voláním této metody převést bílé znaky v A1 na mezery
@@ -3192,11 +3193,11 @@ public class SH
     {
         return input.EndsWith(endsWith);
     }
-    public static bool RemovePrefix(ref string text, string prefix)
+    public static bool RemovePrefix(ref string strategy, string prefix)
     {
-        if (text.StartsWith(prefix))
+        if (strategy.StartsWith(prefix))
         {
-            text = text.Substring(prefix.Length);
+            strategy = strategy.Substring(prefix.Length);
             return true;
         }
         return false;
@@ -3214,8 +3215,8 @@ public class SH
     public static string NullToStringOrEmpty(object value)
     {
         if (value == null) return "";
-        var text = value.ToString();
-        return text;
+        var strategy = value.ToString();
+        return strategy;
     }
     public static bool ContainsFromEnd(string input, char character, out int ContainsFromEndResult)
     {
@@ -3228,9 +3229,9 @@ public class SH
         ContainsFromEndResult = -1;
         return false;
     }
-    public static string FirstWhichIsNotEmpty(params string[] text)
+    public static string FirstWhichIsNotEmpty(params string[] strategy)
     {
-        foreach (var item in text)
+        foreach (var item in strategy)
             if (item != "")
                 return item;
         return "";
@@ -3276,12 +3277,12 @@ public class SH
         //p = CAChangeContent.ChangeContent0(null, parameter, FirstCharUpper);
         return string.Join(" ", parameter);
     }
-    public static bool IsNullOrWhiteSpace(string text)
+    public static bool IsNullOrWhiteSpace(string strategy)
     {
-        if (text != null)
+        if (strategy != null)
         {
-            text = text.Trim();
-            return text == "";
+            strategy = strategy.Trim();
+            return strategy == "";
         }
         return true;
     }
@@ -3289,7 +3290,7 @@ public class SH
     {
         if (tfd.TrimBefore) result = result.Trim();
         long tfdOverallLength = 0;
-        foreach (var item in tfd) tfdOverallLength += item.FromTo.to - item.FromTo.from + 1;
+        foreach (var item in tfd) tfdOverallLength += item.FromTo.To - item.FromTo.From + 1;
         var partsCount = tfd.Count;
         var actualCharFormatData = 0;
         var actualFormatData = tfd[actualCharFormatData];
@@ -3349,7 +3350,7 @@ public class SH
                     else
                         followingFormatData = CharFormatDataString.Templates.Any;
                     processed = 0;
-                    remains = actualFormatData.FromTo.to;
+                    remains = actualFormatData.FromTo.To;
                     remains--;
                 }
             }
@@ -3367,16 +3368,16 @@ public class SH
                 else
                     followingFormatData = CharFormatDataString.Templates.Any;
                 processed = 0;
-                remains = actualFormatData.FromTo.to;
+                remains = actualFormatData.FromTo.To;
             }
         }
     }
-    /// <param name="text"></param>
+    /// <param name="strategy"></param>
     /// <param name="append"></param>
-    public static string AppendIfDontEndingWith(string text, string append)
+    public static string AppendIfDontEndingWith(string strategy, string append)
     {
-        if (text.EndsWith(append)) return text;
-        return text + append;
+        if (strategy.EndsWith(append)) return strategy;
+        return strategy + append;
     }
     #endregion
 }

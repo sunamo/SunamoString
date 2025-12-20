@@ -1,4 +1,5 @@
 namespace sunamo.Tests.Helpers.Text;
+// variables names: ok
 public class SHWithoutMockTests
 {
     //[Fact]

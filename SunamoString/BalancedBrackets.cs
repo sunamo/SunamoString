@@ -1,5 +1,6 @@
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+// variables names: ok
 namespace SunamoString;
 
 // C# program for checking
@@ -9,7 +10,7 @@ public class BalancedBrackets
 {
     // Returns true if openingChar and closingChar
     // are matching left and right brackets */
-    private static bool isMatchingPair(char openingChar,
+    private static bool IsMatchingPair(char openingChar,
         char closingChar)
     {
         if (openingChar == '(' && closingChar == ')')
@@ -23,26 +24,26 @@ public class BalancedBrackets
 
     // Return true if expression has balanced
     // Brackets
-    public static bool areBracketsBalanced(List<char> expression)
+    public static bool AreBracketsBalanced(List<char> brackets)
     {
         // Declare an empty character stack */
         var stack = new Stack<char>();
 
         // Traverse the given expression to
         //   check matching brackets
-        for (var i = 0; i < expression.Count; i++)
+        for (var i = 0; i < brackets.Count; i++)
         {
             // If the expression[i] is a starting
             // bracket then push it
-            if (expression[i] == '{' || expression[i] == '('
-                              || expression[i] == '[')
-                stack.Push(expression[i]);
+            if (brackets[i] == '{' || brackets[i] == '('
+                              || brackets[i] == '[')
+                stack.Push(brackets[i]);
 
             //  If expression[i] is an ending bracket
             //  then pop from stack and check if the
             //   popped bracket is a matching pair
-            if (expression[i] == '}' || expression[i] == ')'
-                              || expression[i] == ']')
+            if (brackets[i] == '}' || brackets[i] == ')'
+                              || brackets[i] == ']')
             {
                 // If we see an ending bracket without
                 //   a pair then return false
@@ -53,8 +54,8 @@ public class BalancedBrackets
                 // it is not a pair brackets of
                 // character then there is a mismatch. This
                 // happens for expressions like {(})
-                if (!isMatchingPair(stack.Pop(),
-                        expression[i]))
+                if (!IsMatchingPair(stack.Pop(),
+                        brackets[i]))
                     return false;
             }
         }
@@ -68,53 +69,6 @@ public class BalancedBrackets
         // not balanced
         return false;
     }
-
-    public class Stack
-    {
-        public char[] Items { get; set; } = new char[100];
-        public int Top { get; set; } = -1;
-
-        public void Push(char value)
-        {
-            if (Top == 99)
-            {
-                //ThisApp.Info("Stack full");
-            }
-            else
-            {
-                Items[++Top] = value;
-            }
-        }
-
-        private char Pop()
-        {
-            if (Top == -1)
-                //ThisApp.Error("Underflow error");
-                return '�';
-
-            var element = Items[Top];
-            Top--;
-            return element;
-        }
-
-        private bool IsEmpty()
-        {
-            return Top == -1 ? true : false;
-        }
-    }
-
-
-    // Driver code
-    //public static void Main(String[] args)
-    //{
-    //    char[] exp = { '{', '(', ')', '}', '[', ']' };
-
-    //    // Function call
-    //    if (areBracketsBalanced(exp))
-    //        CL.WriteLine("Balanced ");
-    //    else
-    //        CL.WriteLine("Not Balanced ");
-    //}
 }
 
 // This code is contributed by 29AjayKumar

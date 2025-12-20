@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._sunamo.SunamoValues.Values;
@@ -12,6 +13,6 @@ internal class SunamoNotTranslateAble
     internal const string RLDataCs = "RLData.cs[";
     internal const string RLDataEn2 = "RLDataEn[";
     internal const string XlfKeysDot = "XlfKeys.";
-    internal const string on = "on";
+    internal const string On = "on";
     internal const string Orient = "Orient";
 }

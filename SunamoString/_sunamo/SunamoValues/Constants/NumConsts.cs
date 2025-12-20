@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._sunamo.SunamoValues.Constants;
@@ -6,25 +7,25 @@ namespace SunamoString._sunamo.SunamoValues.Constants;
 internal class NumConsts
 {
     #region For easy copy
-    internal const int mOne = -1;
+    internal const int MOne = -1;
     #endregion
-    internal const int defaultPortIfCannotBeParsed = 587;
+    internal const int DefaultPortIfCannotBeParsed = 587;
     /// <summary>
     /// Min age is 18 due to GDPR - below 18 is needed parent agreement of child
     /// </summary>
     internal const int MinAge = 18;
-    internal static short nDtMinVal = 10101;
-    internal static short nDtMaxVal = 32271;
+    internal static short NDtMinVal = 10101;
+    internal static short NDtMaxVal = 32271;
     /// <summary>
     /// one thousand
     /// </summary>
     internal static int Thousand { get; set; } = 1000;
-    internal const long kB = 1024;
-    internal const double zeroDouble = 0;
-    internal const float zeroFloat = 0;
+    internal const long KB = 1024;
+    internal const double ZeroDouble = 0;
+    internal const float ZeroFloat = 0;
     /// <summary>
     /// at int should be no postfix
     /// </summary>
-    internal const int one = 1;
-    internal const int zeroInt = 0;
+    internal const int One = 1;
+    internal const int ZeroInt = 0;
 }

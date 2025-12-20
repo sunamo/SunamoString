@@ -4,9 +4,9 @@ namespace SunamoString._sunamo;
 
 internal class SpecialCharsService
 {
-    internal readonly List<char> specialChars = new(new[]
+    internal readonly List<char> SpecialChars = new(new[]
         { exclamation, atSign, numberSign, dollar, percent, caret, ampersand, asteriskChar, questionMark, underscore, tilde });
-    internal readonly List<char> specialChars2 = new(new[]
+    internal readonly List<char> SpecialChars2 = new(new[]
     {
         leftQuote, rightQuote, dash, leftApostrophe, rightApostrophe,
         comma, period, colon, apostrophe, rightParenthesis, solidus, lessThan, greaterThan, leftCurlyBracket, rightCurlyBracket, leftSquareBracket, verticalBar, semicolon, plus, rightSquareBracket,
@@ -15,9 +15,9 @@ internal class SpecialCharsService
     /// <summary>
     ///     Used in enigma
     /// </summary>
-    internal readonly List<char> specialCharsAll;
-    internal readonly List<char> specialCharsWhite = new(new[] { space });
-    internal readonly List<char> specialCharsNotEnigma = new(new[] { nonBreakingSpace, copyright });
+    internal readonly List<char> SpecialCharsAll;
+    internal readonly List<char> SpecialCharsWhite = new(new[] { space });
+    internal readonly List<char> SpecialCharsNotEnigma = new(new[] { nonBreakingSpace, copyright });
     private const char leftApostrophe = '\u2018';
     private const char rightApostrophe = '\u2019';
     private const char comma = ',';
@@ -38,7 +38,7 @@ internal class SpecialCharsService
     private const char underscore = '_';
     private const char lessThan = '<';
     /// <summary>
-    ///     skip in specialChars2 - already as equal
+    ///     skip in SpecialChars2 - already as equal
     /// </summary>
     private const char equals = '=';
     private const char greaterThan = '>';

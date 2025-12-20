@@ -1,27 +1,28 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._sunamo.SunamoStringSplit;
 
 internal class SHSplit
 {
-    internal static void SplitByIndex(string p, int firstNormal, out string title, out string remix)
+    internal static void SplitByIndex(string input, int firstNormal, out string firstPart, out string secondPart)
     {
-        title = p.Substring(0, firstNormal);
-        remix = p.Substring(firstNormal + 1);
+        firstPart = input.Substring(0, firstNormal);
+        secondPart = input.Substring(firstNormal + 1);
     }
-    internal static List<string> Split(string p, params string[] newLine)
+    internal static List<string> Split(string input, params string[] delimiters)
     {
-        return p.Split(newLine, StringSplitOptions.RemoveEmptyEntries).ToList();
-    }
-
-    internal static List<string> SplitNone(string p, params string[] newLine)
-    {
-        return p.Split(newLine, StringSplitOptions.None).ToList();
+        return input.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 
-    internal static List<string> SplitChar(string p, params char[] newLine)
+    internal static List<string> SplitNone(string input, params string[] delimiters)
     {
-        return p.Split(newLine, StringSplitOptions.RemoveEmptyEntries).ToList();
+        return input.Split(delimiters, StringSplitOptions.None).ToList();
+    }
+
+    internal static List<string> SplitChar(string input, params char[] delimiters)
+    {
+        return input.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 
 }

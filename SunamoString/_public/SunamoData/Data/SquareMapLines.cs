@@ -1,5 +1,8 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+using SunamoString.Enums;
+
 namespace SunamoString._public.SunamoData.Data;
 
 
@@ -34,9 +37,32 @@ public class SquareMapLines
 
 
 
-#pragma warning disable
-    public void Add(Object bracketType, bool end, int i, int line)
+    // EN: Add bracket index to appropriate dictionary based on bracket type, line number, and whether it's an ending bracket
+    // CZ: Přidat index závorky do příslušného dictionary podle typu závorky, čísla řádku a zda je to uzavírací závorka
+    public void Add(Enums.Brackets bracketType, bool end, int index, int line)
     {
+        Dictionary<int, List<int>>? targetDict = null;
+
+        switch (bracketType)
+        {
+            case Enums.Brackets.Curly:
+                targetDict = end ? this.EndingCurlyBrackets : this.CurlyBrackets;
+                break;
+            case Enums.Brackets.Square:
+                targetDict = end ? this.EndingSquareBrackets : this.SquareBrackets;
+                break;
+            case Enums.Brackets.Normal:
+                targetDict = end ? this.EndingBrackets : this.Brackets;
+                break;
+        }
+
+        if (targetDict != null)
+        {
+            if (!targetDict.ContainsKey(line))
+            {
+                targetDict[line] = new List<int>();
+            }
+            targetDict[line].Add(index);
+        }
     }
-#pragma warning restore
 }

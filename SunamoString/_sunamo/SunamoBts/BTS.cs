@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._sunamo.SunamoBts;
@@ -5,10 +6,10 @@ namespace SunamoString._sunamo.SunamoBts;
 internal class BTS
 {
     //        #region  from BTSShared64.cs
-    internal static int lastInt = -1;
-    internal static long lastLong = -1;
-    internal static float lastFloat = -1;
-    internal static double lastDouble = -1;
+    internal static int LastInt = -1;
+    internal static long LastLong = -1;
+    internal static float LastFloat = -1;
+    internal static double LastDouble = -1;
 
     ///// <summary>
     /////     Usage: Usage: Exceptions.ArrayElementContainsUnallowedStrings->SH.ContainsAny
@@ -40,7 +41,7 @@ internal class BTS
         }
 
         Replace(ref input, replace);
-        return float.TryParse(input.Replace(",", "."), out lastFloat);
+        return float.TryParse(input.Replace(",", "."), out LastFloat);
     }
 
 
@@ -63,7 +64,7 @@ internal class BTS
         Replace(ref input, replaceCommaForDot);
 
 
-        bool isValid = int.TryParse(input, out lastInt);
+        bool isValid = int.TryParse(input, out LastInt);
         if (!isValid)
         {
             if (IsFloat(input))

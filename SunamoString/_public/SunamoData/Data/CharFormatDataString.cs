@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._public.SunamoData.Data;
@@ -53,7 +54,7 @@ public class CharFormatDataString
 
         CharFormatDataString data = new CharFormatDataString();
         data.FromTo = requiredLength;
-        data.MustBe = letterAndDigitChar.numericChars.ToArray();
+        data.MustBe = letterAndDigitChar.NumericChars.ToArray();
         return data;
     }
 

@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._sunamo.SunamoExtensions;
@@ -8,8 +9,8 @@ internal static class ToUnixLineEndingExtensions
 }
 internal static class StringExtensions
 {
-    internal static string ToUnixLineEnding(this string s)
+    internal static string ToUnixLineEnding(this string input)
     {
-        return s.ReplaceLineEndings("\n");
+        return input.ReplaceLineEndings("\n");
     }
 }

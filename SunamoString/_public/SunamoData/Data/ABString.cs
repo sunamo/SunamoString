@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._public.SunamoData.Data;
@@ -5,7 +6,7 @@ namespace SunamoString._public.SunamoData.Data;
 
 public class ABString
 {
-    public static Type type = typeof(ABString);
+    public static Type Type = typeof(ABString);
 
     /// <summary>
     /// EN: First component of the pair (A).
@@ -19,20 +20,20 @@ public class ABString
     /// </summary>
     public object B { get; set; } = null;
 
-    public ABString(string a, object b)
+    public ABString(string firstValue, object secondValue)
     {
-        A = a;
-        B = b;
+        A = firstValue;
+        B = secondValue;
     }
 
-    public static ABString Get(Type a, object b)
+    public static ABString Get(Type firstValue, object secondValue)
     {
-        return new ABString(a.FullName, b);
+        return new ABString(firstValue.FullName, secondValue);
     }
 
-    public static ABString Get(string a, object b)
+    public static ABString Get(string firstValue, object secondValue)
     {
-        return new ABString(a, b);
+        return new ABString(firstValue, secondValue);
     }
 
     public override string ToString()

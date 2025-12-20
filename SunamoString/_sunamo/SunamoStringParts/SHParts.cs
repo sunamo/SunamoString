@@ -1,17 +1,18 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._sunamo.SunamoStringParts;
 
 internal class SHParts
 {
-    internal static string RemoveAfterLast(string nameSolution, object delimiter)
+    internal static string RemoveAfterLast(string input, object delimiter)
     {
-        int dex = nameSolution.LastIndexOf(delimiter.ToString());
+        int dex = input.LastIndexOf(delimiter.ToString());
         if (dex != -1)
         {
-            string s = nameSolution.Substring(0, dex); //SHSubstring.Substring(, 0, dex, new SubstringArgs());
-            return s;
+            string beforeDelimiter = input.Substring(0, dex); //SHSubstring.Substring(, 0, dex, new SubstringArgs());
+            return beforeDelimiter;
         }
-        return nameSolution;
+        return input;
     }
 }

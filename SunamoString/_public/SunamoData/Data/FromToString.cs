@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoString._public.SunamoData.Data;
@@ -30,8 +31,8 @@ public class FromToString : FromToTSHString<long>
     
     public FromToString(long from, long to, FromToUseString fromToUse = FromToUseString.DateTime)
     {
-        this.from = from;
-        this.to = to;
+        this.From = from;
+        this.To = to;
         this.FtUse = fromToUse;
     }
 }
