@@ -1191,25 +1191,25 @@ public class SH
     //    ThrowEx.NotImplementedMethod();
     //    return false;
     //}
-    /// <summary>
-    ///     Pokud je A1 true, bere se z A2,3 menší počet prvků
-    ///     Simply call HasTextRightFormat for every in A2
-    /// </summary>
-    /// <param name="canBeDifferentCount"></param>
-    /// <param name="typeDynamics"></param>
-    /// <param name="tfd"></param>
-    public static bool AllHaveRightFormat(bool canBeDifferentCount, List<string> typeDynamics,
-        List<TextFormatDataString> tfd)
-    {
-        if (!canBeDifferentCount)
-            if (typeDynamics.Count != tfd.Count)
-                throw new Exception(XMismatchCountInInputArraysOfSHAllHaveRightFormat);
-        var lowerCount = Math.Min(typeDynamics.Count, tfd.Count);
-        for (var i = 0; i < lowerCount; i++)
-            if (!HasTextRightFormat(typeDynamics[i], tfd[i]))
-                return false;
-        return true;
-    }
+    ///// <summary>
+    /////     Pokud je A1 true, bere se z A2,3 menší počet prvků
+    /////     Simply call HasTextRightFormat for every in A2
+    ///// </summary>
+    ///// <param name="canBeDifferentCount"></param>
+    ///// <param name="typeDynamics"></param>
+    ///// <param name="tfd"></param>
+    //public static bool AllHaveRightFormat(bool canBeDifferentCount, List<string> typeDynamics,
+    //    List<TextFormatDataString> tfd)
+    //{
+    //    if (!canBeDifferentCount)
+    //        if (typeDynamics.Count != tfd.Count)
+    //            throw new Exception(XMismatchCountInInputArraysOfSHAllHaveRightFormat);
+    //    var lowerCount = Math.Min(typeDynamics.Count, tfd.Count);
+    //    for (var i = 0; i < lowerCount; i++)
+    //        if (!HasTextRightFormat(typeDynamics[i], tfd[i]))
+    //            return false;
+    //    return true;
+    //}
     public static bool HasCharRightFormat(char character, CharFormatDataString cfd)
     {
         if (cfd.Upper.HasValue)
@@ -2582,7 +2582,7 @@ public class SH
         }
         var result = stringBuilder.ToString();
         if (input == result) result = result.TrimEnd(',');
-        return result.ToUnixLineEnding();
+        return result.Replace("\r\n", "\n");
     }
     private static Brackets GetBracketFromBegin(char bracket)
     {
@@ -3283,92 +3283,92 @@ public class SH
         }
         return true;
     }
-    public static bool HasTextRightFormat(string result, TextFormatDataString tfd)
-    {
-        if (tfd.TrimBefore) result = result.Trim();
-        long tfdOverallLength = 0;
-        foreach (var item in tfd) tfdOverallLength += item.FromTo.To - item.FromTo.From + 1;
-        var partsCount = tfd.Count;
-        var actualCharFormatData = 0;
-        var actualFormatData = tfd[actualCharFormatData];
-        var followingFormatData = tfd[actualCharFormatData + 1];
-        //int charCount = result.Length;
-        //if (tfd.RequiredLength != -1)
-        //{
-        //    if (result.Length != tfd.RequiredLength)
-        //    {
-        //        return false;
-        //    }
-        //    charCount = Math.Min(result.Length, tfd.RequiredLength);
-        //}
-        var actualChar = 0;
-        var processed = 0;
-        var from = actualFormatData.FromTo.FromL;
-        var remains = actualFormatData.FromTo.ToL;
-        var tfdCountM1 = tfd.Count - 1;
-        while (true)
-        {
-            var canBeAnyChar =
-                actualFormatData.MustBe == null ||
-                actualFormatData.MustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
-            var isRightChar = false;
-            if (canBeAnyChar)
-            {
-                isRightChar = true;
-                remains--;
-            }
-            else
-            {
-                if (result.Length <= actualChar) return false;
-                isRightChar = actualFormatData.MustBe.Any(data => data == result[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
-                if (isRightChar && !canBeAnyChar)
-                {
-                    actualChar++;
-                    processed++;
-                    remains--;
-                }
-            }
-            if (!isRightChar)
-            {
-                if (result.Length <= actualChar) return false;
-                isRightChar =
-                    followingFormatData.MustBe.Any(data => data == result[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
-                if (!isRightChar) return false;
-                if (remains != 0 && processed < from) return false;
-                if (isRightChar && !canBeAnyChar)
-                {
-                    actualCharFormatData++;
-                    processed++;
-                    actualChar++;
-                    if (!CA.HasIndex(actualCharFormatData, tfd) && result.Length > actualChar) return false;
-                    actualFormatData = tfd[actualCharFormatData];
-                    if (CA.HasIndex(actualCharFormatData + 1, tfd))
-                        followingFormatData = tfd[actualCharFormatData + 1];
-                    else
-                        followingFormatData = CharFormatDataString.Templates.Any;
-                    processed = 0;
-                    remains = actualFormatData.FromTo.To;
-                    remains--;
-                }
-            }
-            if (actualChar == tfdOverallLength)
-                if (actualChar == result.Length)
-                    //break;
-                    return true;
-            if (remains == 0)
-            {
-                ++actualCharFormatData;
-                if (!CA.HasIndex(actualCharFormatData, tfd) && result.Length > actualChar) return false;
-                actualFormatData = tfd[actualCharFormatData];
-                if (CA.HasIndex(actualCharFormatData + 1, tfd))
-                    followingFormatData = tfd[actualCharFormatData + 1];
-                else
-                    followingFormatData = CharFormatDataString.Templates.Any;
-                processed = 0;
-                remains = actualFormatData.FromTo.To;
-            }
-        }
-    }
+    //public static bool HasTextRightFormat(string result, TextFormatDataString tfd)
+    //{
+    //    if (tfd.TrimBefore) result = result.Trim();
+    //    long tfdOverallLength = 0;
+    //    foreach (var item in tfd) tfdOverallLength += item.FromTo.To - item.FromTo.From + 1;
+    //    var partsCount = tfd.Count;
+    //    var actualCharFormatData = 0;
+    //    var actualFormatData = tfd[actualCharFormatData];
+    //    var followingFormatData = tfd[actualCharFormatData + 1];
+    //    //int charCount = result.Length;
+    //    //if (tfd.RequiredLength != -1)
+    //    //{
+    //    //    if (result.Length != tfd.RequiredLength)
+    //    //    {
+    //    //        return false;
+    //    //    }
+    //    //    charCount = Math.Min(result.Length, tfd.RequiredLength);
+    //    //}
+    //    var actualChar = 0;
+    //    var processed = 0;
+    //    var from = actualFormatData.FromTo.FromL;
+    //    var remains = actualFormatData.FromTo.ToL;
+    //    var tfdCountM1 = tfd.Count - 1;
+    //    while (true)
+    //    {
+    //        var canBeAnyChar =
+    //            actualFormatData.MustBe == null ||
+    //            actualFormatData.MustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
+    //        var isRightChar = false;
+    //        if (canBeAnyChar)
+    //        {
+    //            isRightChar = true;
+    //            remains--;
+    //        }
+    //        else
+    //        {
+    //            if (result.Length <= actualChar) return false;
+    //            isRightChar = actualFormatData.MustBe.Any(data => data == result[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+    //            if (isRightChar && !canBeAnyChar)
+    //            {
+    //                actualChar++;
+    //                processed++;
+    //                remains--;
+    //            }
+    //        }
+    //        if (!isRightChar)
+    //        {
+    //            if (result.Length <= actualChar) return false;
+    //            isRightChar =
+    //                followingFormatData.MustBe.Any(data => data == result[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+    //            if (!isRightChar) return false;
+    //            if (remains != 0 && processed < from) return false;
+    //            if (isRightChar && !canBeAnyChar)
+    //            {
+    //                actualCharFormatData++;
+    //                processed++;
+    //                actualChar++;
+    //                if (!CA.HasIndex(actualCharFormatData, tfd) && result.Length > actualChar) return false;
+    //                actualFormatData = tfd[actualCharFormatData];
+    //                if (CA.HasIndex(actualCharFormatData + 1, tfd))
+    //                    followingFormatData = tfd[actualCharFormatData + 1];
+    //                else
+    //                    followingFormatData = CharFormatDataString.Templates.Any;
+    //                processed = 0;
+    //                remains = actualFormatData.FromTo.To;
+    //                remains--;
+    //            }
+    //        }
+    //        if (actualChar == tfdOverallLength)
+    //            if (actualChar == result.Length)
+    //                //break;
+    //                return true;
+    //        if (remains == 0)
+    //        {
+    //            ++actualCharFormatData;
+    //            if (!CA.HasIndex(actualCharFormatData, tfd) && result.Length > actualChar) return false;
+    //            actualFormatData = tfd[actualCharFormatData];
+    //            if (CA.HasIndex(actualCharFormatData + 1, tfd))
+    //                followingFormatData = tfd[actualCharFormatData + 1];
+    //            else
+    //                followingFormatData = CharFormatDataString.Templates.Any;
+    //            processed = 0;
+    //            remains = actualFormatData.FromTo.To;
+    //        }
+    //    }
+    //}
     /// <param name="strategy"></param>
     /// <param name="append"></param>
     public static string AppendIfDontEndingWith(string strategy, string append)

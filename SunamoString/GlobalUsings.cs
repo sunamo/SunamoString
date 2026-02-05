@@ -12,7 +12,6 @@ global using SunamoString.Enums;
 global using SunamoString._sunamo.SunamoBts;
 global using SunamoString._sunamo.SunamoCollectionsGeneric;
 global using SunamoString._sunamo.SunamoDictionary;
-global using SunamoString._sunamo.SunamoExtensions;
 global using SunamoString._sunamo.SunamoNumbers;
 global using SunamoString._sunamo.SunamoRegex;
 global using SunamoString._sunamo.SunamoStringParts;
