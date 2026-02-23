@@ -2,14 +2,35 @@ namespace SunamoString._public.SunamoData.Data;
 
 using SunamoString.Enums;
 
+/// <summary>
+/// Provides string helper methods for various text operations.
+/// </summary>
 public class SquareMapLines
 {
-    public Dictionary<int, List<int>> CurlyBrackets { get; set; }
-    public Dictionary<int, List<int>> SquareBrackets { get; set; }
-    public Dictionary<int, List<int>> Brackets { get; set; }
-    public Dictionary<int, List<int>> EndingCurlyBrackets { get; set; }
-    public Dictionary<int, List<int>> EndingSquareBrackets { get; set; }
-    public Dictionary<int, List<int>> EndingBrackets { get; set; }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public Dictionary<int, List<int>> CurlyBrackets { get; set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public Dictionary<int, List<int>> SquareBrackets { get; set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public Dictionary<int, List<int>> Brackets { get; set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public Dictionary<int, List<int>> EndingCurlyBrackets { get; set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public Dictionary<int, List<int>> EndingSquareBrackets { get; set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public Dictionary<int, List<int>> EndingBrackets { get; set; } = null!;
     void Init(int curlyBracketCapacity, int squareBracketCapacity, int bracketCapacity)
     {
         CurlyBrackets = new Dictionary<int, List<int>>(curlyBracketCapacity);
@@ -19,10 +40,16 @@ public class SquareMapLines
         EndingSquareBrackets = new Dictionary<int, List<int>>(squareBracketCapacity);
         EndingBrackets = new Dictionary<int, List<int>>(bracketCapacity);
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public SquareMapLines(SquareMap squareMap)
     {
         Init(squareMap.CurlyBrackets.Count, squareMap.SquareBrackets.Count, squareMap.Brackets.Count);
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public SquareMapLines()
     {
         Init(0, 0, 0);
@@ -35,6 +62,9 @@ public class SquareMapLines
 
     // EN: Add bracket index to appropriate dictionary based on bracket type, line number, and whether it's an ending bracket
     // CZ: Přidat index závorky do příslušného dictionary podle typu závorky, čísla řádku a zda je to uzavírací závorka
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public void Add(Enums.Brackets bracketType, bool end, int index, int line)
     {
         Dictionary<int, List<int>>? targetDict = null;

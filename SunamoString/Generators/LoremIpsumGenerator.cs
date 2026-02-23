@@ -1,5 +1,8 @@
 namespace SunamoString.Generators;
 
+/// <summary>
+/// Performs an operation.
+/// </summary>
 public static class LoremIpsumGenerator
 {
     private static List<string> s_words = new List<string>{"consetetur", "sadipscing", "elitr", "sed", "diam", "nonumy", "eirmod",
@@ -49,6 +52,9 @@ public static class LoremIpsumGenerator
 "rebum", "stet", "clita", "kasd", "gubergren", "no", "sea", "takimata", "sanctus", "est", "lorem", "ipsum"};
 
 
+    /// <summary>
+    /// Generate operation on the string.
+    /// </summary>
     public static string Generate(int maxChars)
     {
         StringBuilder stringBuilder = new StringBuilder();

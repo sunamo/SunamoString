@@ -1,16 +1,31 @@
 namespace SunamoString;
 
+/// <summary>
+/// Provides string helper methods for various text operations.
+/// </summary>
 public class SH
 {
-    protected static List<char> BracketsLeftList { get; set; }
-    protected static List<char> BracketsRightList { get; set; }
+    /// <summary>
+    /// List of left bracket characters.
+    /// </summary>
+    protected static List<char> BracketsLeftList { get; set; } = null!;
+    /// <summary>
+    /// List of right bracket characters.
+    /// </summary>
+    protected static List<char> BracketsRightList { get; set; } = null!;
     private static StringBuilder StringBuilder { get; set; } = new();
+    /// <summary>
+    /// Exception message constant.
+    /// </summary>
     public static string XMismatchCountInInputArraysOfSHAllHaveRightFormat =
         "MismatchCountInInputArraysOfSHAllHaveRightFormat";
 
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsCl(string input, StringOrStringList searchTerm, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
     {
-        string term = null;
+        string? term = null;
         if (!caseSensitive)
         {
             input = input.ToLower();
@@ -57,8 +72,11 @@ public class SH
             }
             return containsAll;
         }
-        return input.Contains(term);
+        return input.Contains(term!);
     }
+    /// <summary>
+    /// Extracts whitespace characters from the specified position.
+    /// </summary>
     public static string WhiteSpaceFromStart(string input)
     {
         var stringBuilder = new StringBuilder();
@@ -181,6 +199,9 @@ public class SH
     {
         return Contains(input, term, searchStrategy, true);
     }
+    /// <summary>
+    /// Adds a prefix to the string if not already present.
+    /// </summary>
     public static string PrefixIfNotStartedWith(string item, string prefix, bool skipWhitespaces = false)
     {
         var whitespaces = string.Empty;
@@ -192,6 +213,9 @@ public class SH
         if (!item.StartsWith(prefix)) return whitespaces + prefix + item;
         return whitespaces + item;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveLastChar(string input)
     {
         return input.Substring(0, input.Length - 1);
@@ -209,6 +233,9 @@ public class SH
                 return input + postfix;
         return input;
     }
+    /// <summary>
+    /// Adds specified content to the string.
+    /// </summary>
     public static string AddBeforeUpperChars(string input, char add, bool preserveAcronyms)
     {
         if (string.IsNullOrWhiteSpace(input))
@@ -226,22 +253,28 @@ public class SH
         }
         return newText.ToString();
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveEndingPairCharsWhenDontHaveStarting(string input, string leftBracket, string rightBracket)
     {
         var removeOnIndexes = new List<int>();
         var stringBuilder = new StringBuilder(input);
         var leftBracketOccurrences = ReturnOccurencesOfString(input, leftBracket);
         var rightBracketOccurrences = ReturnOccurencesOfString(input, rightBracket);
-        List<int> unmatchedLeftBrackets = null;
-        List<int> unmatchedRightBrackets = null;
+        List<int>? unmatchedLeftBrackets = null;
+        List<int>? unmatchedRightBrackets = null;
         var list = GetPairsStartAndEnd(leftBracketOccurrences, rightBracketOccurrences, ref unmatchedLeftBrackets, ref unmatchedRightBrackets);
-        unmatchedLeftBrackets.AddRange(unmatchedRightBrackets);
+        unmatchedLeftBrackets!.AddRange(unmatchedRightBrackets!);
         unmatchedLeftBrackets.Sort();
         for (var i = unmatchedLeftBrackets.Count - 1; i >= 0; i--) stringBuilder.Remove(unmatchedLeftBrackets[i], 1);
         return stringBuilder.ToString();
     }
-    public static List<Tuple<int, int>> GetPairsStartAndEnd(List<int> leftBracketOccurrences, List<int> rightBracketOccurrences, ref List<int> unmatchedLeftBrackets,
-        ref List<int> unmatchedRightBrackets)
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public static List<Tuple<int, int>> GetPairsStartAndEnd(List<int> leftBracketOccurrences, List<int> rightBracketOccurrences, ref List<int>? unmatchedLeftBrackets,
+        ref List<int>? unmatchedRightBrackets)
     {
         var list = new List<Tuple<int, int>>();
         unmatchedLeftBrackets = leftBracketOccurrences.ToList();
@@ -334,6 +367,9 @@ public class SH
         result.Reverse();
         return result;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveAndInsertReplace(string input, int startIndex, string oldValue, string newValue)
     {
         input = input.Remove(startIndex, oldValue.Length);
@@ -344,6 +380,9 @@ public class SH
     //{
     //    return data;
     //}
+    /// <summary>
+    /// Replaces content in the string.
+    /// </summary>
     public static string ReplaceOnce(string input, string oldValue, string replacement)
     {
         if (oldValue == "") return input;
@@ -351,11 +390,17 @@ public class SH
         if (position == -1) return input;
         return input.Substring(0, position) + replacement + input.Substring(position + oldValue.Length);
     }
+    /// <summary>
+    /// Replaces content in the string.
+    /// </summary>
     public static string ReplaceOnceIfStartedWith(string input, string searchPrefix, string replacement)
     {
         bool replaced;
         return ReplaceOnceIfStartedWith(input, searchPrefix, replacement, out replaced);
     }
+    /// <summary>
+    /// Replaces content in the string.
+    /// </summary>
     public static string ReplaceOnceIfStartedWith(string input, string searchPrefix, string replacement, out bool replaced)
     {
         replaced = false;
@@ -366,6 +411,9 @@ public class SH
         }
         return input;
     }
+    /// <summary>
+    /// Normalizes the string by standardizing its format.
+    /// </summary>
     public static string NormalizeString(string input)
     {
         if (input.Contains((char)160))
@@ -403,6 +451,9 @@ public class SH
         }
         return Results;
     }
+    /// <summary>
+    /// Tab Or Space Next To operation on the input.
+    /// </summary>
     public static List<int> TabOrSpaceNextTo(string input)
     {
         var tabs = ReturnOccurencesOfString(input, "\t");
@@ -425,27 +476,45 @@ public class SH
         //}
         return tabs;
     }
+    /// <summary>
+    /// Wraps the string with the specified characters.
+    /// </summary>
     public static string WrapWithBs(string input)
     {
         return WrapWithChar(input, '\\');
     }
+    /// <summary>
+    /// Wraps the string with the specified characters.
+    /// </summary>
     public static string WrapWithSpace(string input)
     {
         return WrapWithChar(input, ' ');
     }
+    /// <summary>
+    /// Wraps the string with the specified characters.
+    /// </summary>
     public static string WrapWithQm(string input)
     {
         return WrapWithQm(input, true);
     }
+    /// <summary>
+    /// Wraps the string with the specified characters.
+    /// </summary>
     public static string WrapWithIf(string value, string wrapper, Func<string, string, bool> predicate)
     {
         if (predicate.Invoke(value, wrapper)) return WrapWith(value, wrapper);
         return value;
     }
+    /// <summary>
+    /// Wraps the string with the specified characters.
+    /// </summary>
     public static string WrapWithQm(string input, bool alsoIfIsWhitespaceOrEmpty = true)
     {
         return WrapWithChar(input, '"', alsoIfIsWhitespaceOrEmpty);
     }
+    /// <summary>
+    /// Counts occurrences of the specified pattern in the string.
+    /// </summary>
     public static int OccurencesOfStringIn(string source, string searchTerm)
     {
         return source.Split(new[] { searchTerm }, StringSplitOptions.None).Length - 1;
@@ -473,12 +542,18 @@ public class SH
                 after = string.Empty;
         }
     }
+    /// <summary>
+    /// Get Parts By Location No Out Int on the input.
+    /// </summary>
     public static (string, string) GetPartsByLocationNoOutInt(string input, int position)
     {
         string before, after;
         GetPartsByLocation(out before, out after, input, position);
         return (before, after);
     }
+    /// <summary>
+    /// Get Parts By Location No Out on the input.
+    /// </summary>
     public static (string, string) GetPartsByLocationNoOut(string input, char delimiter)
     {
         GetPartsByLocation(out var pred, out var after, input, delimiter);
@@ -527,7 +602,7 @@ public class SH
     /// <param name="begin"></param>
     /// <param name="end"></param>
     public static string GetTextBetweenTwoChars(string parameter, char beginS, char endS,
-        bool throwExceptionIfNotContains = true, object notAllowedInRanges = null, bool endLastIndexOf = false)
+        bool throwExceptionIfNotContains = true, object? notAllowedInRanges = null, bool endLastIndexOf = false)
     {
         var begin = parameter.IndexOf(beginS);
         var end = -1;
@@ -550,7 +625,7 @@ public class SH
             }
             else
             {
-                if (end == NumConsts.MOne) return null;
+                if (end == NumConsts.MOne) return null!;
             }
         }
         else
@@ -559,6 +634,9 @@ public class SH
         }
         return parameter;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetTextBetweenTwoCharsInts(string parameter, int begin, int end)
     {
         if (end > begin)
@@ -568,10 +646,16 @@ public class SH
         //return parameter.Substring(begin+1, end - begin - 1);
         return parameter;
     }
+    /// <summary>
+    /// Processes or retrieves content from the beginning of the string.
+    /// </summary>
     public static void FirstCharUpper(ref string input)
     {
         input = FirstCharUpper(input);
     }
+    /// <summary>
+    /// Processes or retrieves content from the beginning of the string.
+    /// </summary>
     public static string FirstCharUpper(string input)
     {
         if (input.Length == 1) return input.ToUpper();
@@ -599,11 +683,17 @@ public class SH
         }
         return result.ToString();
     }
+    /// <summary>
+    /// Converts character encoding from one format to another.
+    /// </summary>
     public static string FromSpace160To32(string input)
     {
         input = Regex.Replace(input, @"\p{Z}", " ");
         return input;
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsNumber(string str, params char[] nextAllowedChars)
     {
         foreach (var character in str)
@@ -612,6 +702,9 @@ public class SH
                     return false;
         return true;
     }
+    /// <summary>
+    /// Formats the value to have the specified number of characters.
+    /// </summary>
     public static string MakeUpToXChars(int parameter, int targetLength)
     {
         var stringBuilder = new StringBuilder();
@@ -621,10 +714,16 @@ public class SH
         stringBuilder.Append(data);
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static char GetFirstChar(string arg)
     {
         return arg[0];
     }
+    /// <summary>
+    /// Converts the string to the specified format.
+    /// </summary>
     public static string ToPascalCase(string str)
     {
         if (string.IsNullOrEmpty(str))
@@ -638,21 +737,33 @@ public class SH
         // Spojení slov do Pascal konvence
         return string.Join("", words);
     }
+    /// <summary>
+    /// Checks if the string starts with a whitespace character.
+    /// </summary>
     public static bool StartWithWhitespace(string input)
     {
         // toto nefungovalo
         //return new List<char>(['\n', '\r', '\t', ' ']).Any(data => text.StartsWith(data));
         return input.TrimStart() != input;
     }
+    /// <summary>
+    /// Detects the newline format used in the string.
+    /// </summary>
     public static string DetectNewline(string input)
     {
         if (input.Contains("\r\n")) return "\r\n";
         return "\n";
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveLastWord(string temp)
     {
         return SHParts.RemoveAfterLast(temp.Trim(), " ");
     }
+    /// <summary>
+    /// Get Indexes Of Lines Starting With operation on the input.
+    /// </summary>
     public static List<int> GetIndexesOfLinesStartingWith(List<string> list, Func<string, bool> predicate)
     {
         var allIndices = list.Select((strategy, i) => new { Str = strategy, Index = i })
@@ -660,6 +771,9 @@ public class SH
             .Select(x => x.Index).ToList();
         return allIndices;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveLinesWhichContains(string parameter, string textToRemove)
     {
         var list = SHGetLines.GetLines(parameter);
@@ -667,7 +781,10 @@ public class SH
         var result = string.Join(Environment.NewLine, list);
         return result;
     }
-    public static string AddIfNotContains(string input, string textToAdd, string lowerCaseVersion = null)
+    /// <summary>
+    /// Adds specified content to the string.
+    /// </summary>
+    public static string AddIfNotContains(string input, string textToAdd, string? lowerCaseVersion = null)
     {
         if (lowerCaseVersion != null)
         {
@@ -677,22 +794,31 @@ public class SH
         if (!input.Contains(textToAdd)) return input + " " + textToAdd;
         return input;
     }
+    /// <summary>
+    /// Swaps parts of the string around the delimiter.
+    /// </summary>
     public static string SwitchSwap(string input, string delimiter)
     {
         var parameter = SHSplit.Split(input, delimiter);
         if (parameter.Count == 2) return parameter[1] + "," + parameter[0];
-        return null;
+        return null!;
     }
+    /// <summary>
+    /// Inserts content into the string at the specified position.
+    /// </summary>
     public static string InsertBeforeEndingBracket(string postfixSpaceCommaNewline, string textToInsert)
     {
         var bracketIndex = postfixSpaceCommaNewline.LastIndexOf(')');
         if (bracketIndex != -1) return postfixSpaceCommaNewline.Insert(bracketIndex, textToInsert);
         return postfixSpaceCommaNewline;
     }
+    /// <summary>
+    /// Statistic Letter Chars operation on the input.
+    /// </summary>
     public static Dictionary<char, int> StatisticLetterChars(string between, StatisticLetterCharsStrategy strategy,
         params char[] charsToStrategy)
     {
-        List<char> ignoreCompletely = null;
+        List<char>? ignoreCompletely = null;
         if (strategy == StatisticLetterCharsStrategy.IgnoreCompletely) ignoreCompletely = new List<char>(charsToStrategy);
         var list = new Dictionary<char, int>();
         if (strategy == StatisticLetterCharsStrategy.AddAsFirst)
@@ -701,12 +827,15 @@ public class SH
         foreach (var character in between)
         {
             if (strategy == StatisticLetterCharsStrategy.IgnoreCompletely)
-                if (ignoreCompletely.Contains(character))
+                if (ignoreCompletely!.Contains(character))
                     continue;
             DictionaryHelper.AddOrPlus(list, character, 1);
         }
         return list;
     }
+    /// <summary>
+    /// All Brackets operation on the input.
+    /// </summary>
     public static List<char> AllBrackets(string strategy)
     {
         var bracketChars = new List<char>();
@@ -718,6 +847,9 @@ public class SH
         }
         return bracketChars;
     }
+    /// <summary>
+    /// Indexes Of Brackets operation on the input.
+    /// </summary>
     public static Tuple<SquareMap, SquareMapLines> IndexesOfBrackets(string strategy)
     {
         var message = new SquareMap();
@@ -753,12 +885,18 @@ public class SH
         }
         return new Tuple<SquareMap, SquareMapLines>(message, lineBasedMap);
     }
+    /// <summary>
+    /// Replaces content in the string.
+    /// </summary>
     public static string ReplaceBrackets(string strategy, Brackets from, Brackets to)
     {
         strategy = strategy.Replace(BracketsLeft[from], BracketsLeft[to]);
         strategy = strategy.Replace(BracketsRight[from], BracketsRight[to]);
         return strategy;
     }
+    /// <summary>
+    /// Contains Any From Element operation on the input.
+    /// </summary>
     public static List<int> ContainsAnyFromElement(StringBuilder strategy, IList<string> list)
     {
         var result = new List<int>();
@@ -770,11 +908,17 @@ public class SH
         }
         return result;
     }
+    /// <summary>
+    /// Finds the specified element in the string.
+    /// </summary>
     public static int FindClosingBracketIndexChar(StringBuilder strategy, bool removeBetween, string openedBracket = "{")
     {
         var index = strategy.ToString().IndexOf(openedBracket);
         return FindClosingBracketIndex(strategy, removeBetween, strategy[index]);
     }
+    /// <summary>
+    /// Finds the specified element in the string.
+    /// </summary>
     public static int FindClosingBracketIndex(StringBuilder strategy, bool removeBetween, int dxOfStart)
     {
         var openedBracket = strategy[dxOfStart];
@@ -804,10 +948,16 @@ public class SH
         start++;
         for (; start < end; start++) strategy[start] = ' ';
     }
+    /// <summary>
+    /// Validates the specified condition in the string.
+    /// </summary>
     public static bool CheckWhetherNoBrackedIsBeforeOther2(string braces)
     {
         return BalancedBrackets.AreBracketsBalanced(AllBrackets(braces));
     }
+    /// <summary>
+    /// Validates the specified condition in the string.
+    /// </summary>
     public static bool CheckWhetherNoBrackedIsBeforeOther1(string braces)
     {
         const string openBraces = "([{";
@@ -819,6 +969,9 @@ public class SH
             else if (stack.Count == 0 || openBraces.IndexOf(stack.Pop()) != closeBraces.IndexOf(count)) return false;
         return stack.Count == 0;
     }
+    /// <summary>
+    /// Converts the string content to the specified format.
+    /// </summary>
     public static string ConvertWhitespaceToVisible(string temp)
     {
         temp = temp.Replace('\t', UnicodeWhiteToVisible.Tab);
@@ -827,12 +980,18 @@ public class SH
         temp = temp.Replace(' ', UnicodeWhiteToVisible.Space);
         return temp;
     }
+    /// <summary>
+    /// Concatenates strings with the specified separator.
+    /// </summary>
     public static string ConcatSpace(IList result)
     {
         var stringBuilder = new StringBuilder();
         foreach (string element in result) stringBuilder.Append(element + " ");
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsNullOrWhiteSpaceRange(params string[] list)
     {
         foreach (var text in list)
@@ -840,10 +999,16 @@ public class SH
                 return true;
         return false;
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsSingleLine(string strategy)
     {
         return !strategy.Trim().Contains(Environment.NewLine);
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetWhitespaceFromBeginning(StringBuilder stringBuilder, string line)
     {
         stringBuilder.Clear();
@@ -888,10 +1053,16 @@ public class SH
         }
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsNewLine(string between)
     {
         return between.Contains('\n') || between.Contains('\r');
     }
+    /// <summary>
+    /// Changes encoding or format of the string.
+    /// </summary>
     public static bool ChangeEncodingProcessWrongCharacters(ref string input)
     {
         return ChangeEncodingProcessWrongCharacters(ref input, Encoding.GetEncoding("latin1"));
@@ -930,6 +1101,9 @@ public class SH
 ", ",");
         return true;
     }
+    /// <summary>
+    /// Add Space After First Letter For Every And Sort operation on the input.
+    /// </summary>
     public static List<string> AddSpaceAfterFirstLetterForEveryAndSort(List<string> input)
     {
         CA.Trim(input);
@@ -937,6 +1111,9 @@ public class SH
         input.Sort();
         return input;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetLastWord(string parameter, bool returnEmptyWhenDontHaveLenght = true)
     {
         parameter = parameter.Trim();
@@ -945,9 +1122,12 @@ public class SH
         if (returnEmptyWhenDontHaveLenght) return string.Empty;
         return parameter;
     }
+    /// <summary>
+    /// Adds specified content to the string.
+    /// </summary>
     public static string AddSpaceAndDontDuplicate(bool after, string strategy, string colon)
     {
-        List<int> dxsColons = null;
+        List<int>? dxsColons = null;
         var stringBuilder = new StringBuilder();
         stringBuilder.Append(strategy);
         if (after)
@@ -966,12 +1146,18 @@ public class SH
         }
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Counts the specified elements in the string.
+    /// </summary>
     public static string CountOfItems(List<KeyValuePair<string, int>> counted)
     {
         var stringBuilder = new StringBuilder();
         foreach (var kvp in counted) stringBuilder.AppendLine(kvp.Value + "x " + kvp.Key);
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Reduces multiple whitespace lines to a single one.
+    /// </summary>
     public static string MultiWhitespaceLineToSingle(List<string> lines)
     {
         var str = string.Join(Environment.NewLine, lines);
@@ -1007,10 +1193,13 @@ public class SH
         //    }
         //}
     }
+    /// <summary>
+    /// Adjusts indentation of lines based on the previous line.
+    /// </summary>
     public static void IndentAsPreviousLine(List<string> lines)
     {
         var indentPrevious = string.Empty;
-        string line = null;
+        string? line = null;
         var stringBuilder = new StringBuilder();
         for (var i = 0; i < lines.Count - 1; i++)
         {
@@ -1034,6 +1223,9 @@ public class SH
             }
         }
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsLine(string strategy, bool checkInCaseOnlyOneString, params string[] contains)
     {
         return ContainsLine2(strategy, checkInCaseOnlyOneString, contains);
@@ -1061,6 +1253,9 @@ public class SH
         }
         return hasLine;
     }
+    /// <summary>
+    /// Gets the word at the specified position in the string.
+    /// </summary>
     public static string WordAfter(string input, string word)
     {
         input = WrapWithChar(input, ' ');
@@ -1081,6 +1276,9 @@ public class SH
         }
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Gets leading characters matching the predicate.
+    /// </summary>
     public static string Leading(string input, Func<char, bool> isWhiteSpace)
     {
         var stringBuilder = new StringBuilder();
@@ -1091,15 +1289,24 @@ public class SH
                 break;
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsOnIndex(string input, int index, Func<char, bool> isWhiteSpace)
     {
         if (input.Length > index) return isWhiteSpace.Invoke(input[index]);
         return false;
     }
+    /// <summary>
+    /// Counts the specified elements in the string.
+    /// </summary>
     public static int CountLines(string strategy)
     {
         return Regex.Matches(strategy, Environment.NewLine).Count;
     }
+    /// <summary>
+    /// Checks whether the string has the specified characteristic.
+    /// </summary>
     public static bool HasLetter(string strategy)
     {
         foreach (var item in strategy)
@@ -1107,12 +1314,17 @@ public class SH
                 return true;
         return false;
     }
+    /// <summary>
+    /// Get Texts Between operation on the input.
+    /// </summary>
     public static List<string> GetTextsBetween(string parameter, string after, string before,
         bool cannotBeLetterBeforeFounded = false)
     {
-        var firstCharBeforeIsLetter = false;
         return GetTextsBetween(parameter, after, before, cannotBeLetterBeforeFounded, out cannotBeLetterBeforeFounded);
     }
+    /// <summary>
+    /// Get Texts Between operation on the input.
+    /// </summary>
     public static List<string> GetTextsBetween(string parameter, string after, string before, bool cannotBeLetterBeforeFounded,
         out bool firstCharBeforeIsLetter)
     {
@@ -1139,7 +1351,7 @@ public class SH
                 {
                     indexAfterFinal = indexesAfter[0] + after.Length;
                     indexBeforeFinal = indexesBefore.FirstOrDefault(data => data > indexAfterFinal) - 1;
-                    if (indexBeforeFinal == 0) ;
+                    if (indexBeforeFinal == 0)
                     {
                         throw new Exception("There is no number higher than " + indexAfterFinal);
                     }
@@ -1181,6 +1393,9 @@ public class SH
         }
         return results;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveLastLetters(string input, int characterCount)
     {
         if (input.Length > characterCount) return input.Substring(0, input.Length - characterCount);
@@ -1210,6 +1425,9 @@ public class SH
     //            return false;
     //    return true;
     //}
+    /// <summary>
+    /// Checks whether the string has the specified characteristic.
+    /// </summary>
     public static bool HasCharRightFormat(char character, CharFormatDataString cfd)
     {
         if (cfd.Upper.HasValue)
@@ -1223,7 +1441,7 @@ public class SH
                 if (char.IsUpper(character)) return false;
             }
         }
-        if (cfd.MustBe.Length != 0)
+        if (cfd.MustBe != null && cfd.MustBe.Length != 0)
         {
             foreach (var requiredChar in cfd.MustBe)
                 if (requiredChar == character)
@@ -1232,9 +1450,12 @@ public class SH
         }
         return true;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static bool GetTextInLastSquareBracketsAndOther(string parameter, out string mainText, out string bracketedText)
     {
-        mainText = bracketedText = null;
+        mainText = bracketedText = null!;
         parameter = parameter.Trim();
         if (parameter[parameter.Length - 1] != ']')
             return false;
@@ -1245,6 +1466,9 @@ public class SH
         if (firstHranata != -1) SHSplit.SplitByIndex(parameter, firstHranata, out mainText, out bracketedText);
         return true;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveBracketsWithTextCaseInsensitive(string input, string replacement, params string[] patterns)
     {
         input = SHReplace.ReplaceAll(input, "(", "( ");
@@ -1254,10 +1478,16 @@ public class SH
         for (var i = 0; i < patterns.Length; i++) input = Regex.Replace(input, patterns[i], replacement, RegexOptions.IgnoreCase);
         return input;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveBracketsWithoutText(string input)
     {
         return SHReplace.ReplaceAll(input, "", "()", "[]");
     }
+    /// <summary>
+    /// Without Special Chars operation on the string.
+    /// </summary>
     public static string WithoutSpecialChars(string input, params char[] over)
     {
         SpecialCharsService specialCharsService = new();
@@ -1268,6 +1498,9 @@ public class SH
                 stringBuilder.Append(character);
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveBracketsFromStart(string input)
     {
         while (true)
@@ -1295,6 +1528,9 @@ public class SH
         }
         return input;
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveLastCharIfIs(string input, char znak)
     {
         var argument = input.Length - 1;
@@ -1315,12 +1551,18 @@ public class SH
         if (start < input.Length) return input.Substring(start);
         return input;
     }
+    /// <summary>
+    /// Adds specified content to the string.
+    /// </summary>
     public static string AddEmptyLines(string content, int addRowsDuringScrolling)
     {
         var lines = SHGetLines.GetLines(content);
         for (var i = 0; i < addRowsDuringScrolling; i++) lines.Add(string.Empty);
         return string.Join(Environment.NewLine, lines);
     }
+    /// <summary>
+    /// Converts the string to the specified format.
+    /// </summary>
     public static string ToCase(string input, bool? velkym)
     {
         if (velkym.HasValue)
@@ -1331,6 +1573,9 @@ public class SH
         }
         return input;
     }
+    /// <summary>
+    /// Checks if the string ends with the specified suffix.
+    /// </summary>
     public static bool EndsWithNumber(string input)
     {
         for (var i = 0; i < 10; i++)
@@ -1343,11 +1588,14 @@ public class SH
     ///     OrNull pro odliseni od metody NullToStringOrEmpty
     /// </summary>
     /// <param name="value"></param>
-    public static string NullToStringOrNull(object value)
+    public static string? NullToStringOrNull(object? value)
     {
         if (value == null) return null;
         return value.ToString();
     }
+    /// <summary>
+    /// Processes or retrieves content from the end of the string.
+    /// </summary>
     public static bool LastCharEquals(string input, char delimiter)
     {
         if (!string.IsNullOrEmpty(input)) return false;
@@ -1355,6 +1603,9 @@ public class SH
         if (lastChar == delimiter) return true;
         return false;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetWithoutLastWord(string parameter)
     {
         parameter = parameter.Trim();
@@ -1362,6 +1613,9 @@ public class SH
         if (dex != -1) return parameter.Substring(0, dex);
         return parameter;
     }
+    /// <summary>
+    /// Deletes characters outside the valid range.
+    /// </summary>
     public static string DeleteCharsOutOfAscii(string strategy)
     {
         var stringBuilder = new StringBuilder();
@@ -1398,6 +1652,9 @@ public class SH
         return string.Join("_", result.Split(new[] { '_' }
             , StringSplitOptions.RemoveEmptyEntries)); // remove duplicate underscores
     }
+    /// <summary>
+    /// Strips punctuation and symbols from the string.
+    /// </summary>
     public static string StripFunctationsAndSymbols(string parameter)
     {
         var stringBuilder = new StringBuilder();
@@ -1425,6 +1682,9 @@ public class SH
             }
         return Results;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetWithoutFirstWord(string item2)
     {
         item2 = item2.Trim();
@@ -1433,6 +1693,9 @@ public class SH
         if (dex != -1) return item2.Substring(dex + 1);
         return item2;
     }
+    /// <summary>
+    /// Checks if the string ends with the specified suffix.
+    /// </summary>
     public static int EndsWithIndex(string source, params string[] endingsToCheck)
     {
         for (var i = 0; i < endingsToCheck.Length; i++)
@@ -1452,6 +1715,9 @@ public class SH
         return input;
     }
 
+    /// <summary>
+    /// Processes or retrieves content from the beginning of the string.
+    /// </summary>
     public static string FirstCharLower(string input)
     {
         if (input.Length < 2) return input;
@@ -1479,14 +1745,6 @@ public class SH
         return delimiter;
     }
 
-    /// <summary>
-    ///     Usage: BadFormatOfElementInList
-    ///     If null, return "(null)"
-    ///     nemůžu odstranit z sunamo, i tam se používá.
-    /// </summary>
-    /// <param name="nullableObject"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
     //public static string NullToStringOrDefault(object n, string v)
     //{
     //    throw new Exception(
@@ -1507,19 +1765,18 @@ public class SH
         //return NullToStringOrDefault(n, null);
         return nullableObject == null ? " " + "(null)" : " " + nullableObject;
     }
-    /// <summary>
-    ///     Usage: Exceptions.MoreCandidates
-    ///     není v .net (pouze char), přes split to taky nedává smysl (dá se to udělat i text .net ale bude to pomalejší)
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="ext"></param>
-    /// <returns></returns>
     #region MyRegion
+    /// <summary>
+    /// Wraps the string with the specified wrapper on both sides.
+    /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string WrapWith(string value, string wrapper)
     {
         return wrapper + value + wrapper;
     }
+    /// <summary>
+    /// Wraps the string with the specified character on both sides.
+    /// </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string WrapWithChar(string value, char wrapperChar, bool _trimWrapping = false,
         bool alsoIfIsWhitespaceOrEmpty = true)
@@ -1535,8 +1792,17 @@ public class SH
      * když byl Brackets globální, často jsem měl "claims it is defined"
      * takže jsem musel Brackets přesunout zde argument text ním i kód níže
      */
-    protected static Dictionary<Brackets, char> BracketsLeft;
-    protected static Dictionary<Brackets, char> BracketsRight;
+    /// <summary>
+    /// Mapping of bracket types to their left characters.
+    /// </summary>
+    protected static Dictionary<Brackets, char> BracketsLeft = null!;
+    /// <summary>
+    /// Mapping of bracket types to their right characters.
+    /// </summary>
+    protected static Dictionary<Brackets, char> BracketsRight = null!;
+    /// <summary>
+    /// Initializes bracket mappings and related data structures.
+    /// </summary>
     protected static void Init()
     {
         if (BracketsLeft == null)
@@ -1556,6 +1822,9 @@ public class SH
     #endregion
     #region MyRegion
     private static Type type = typeof(SH);
+    /// <summary>
+    /// Counts the specified elements in the string.
+    /// </summary>
     public static int CountOf(string input, char character)
     {
         var i = 0;
@@ -1597,6 +1866,9 @@ public class SH
     //{
     //    return se.SHTrim.TrimStart(v, text);
     //}
+    /// <summary>
+    /// Checks whether the string has the specified characteristic.
+    /// </summary>
     public static bool HasIndex(int parameter, string strategy, bool throwExcWhenInvalidIndex = true)
     {
         if (parameter < 0)
@@ -1608,11 +1880,17 @@ public class SH
         if (strategy.Length > parameter) return true;
         return false;
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsNegation(string contains)
     {
         if (contains[0] == '!') return true;
         return false;
     }
+    /// <summary>
+    /// Is Negation Tuple on the input.
+    /// </summary>
     public static (bool, string) IsNegationTuple(string contains)
     {
         if (contains[0] == '!')
@@ -1637,6 +1915,9 @@ public class SH
         if (!negation && !strategy.Contains(contains)) return false;
         return true;
     }
+    /// <summary>
+    /// Checks equality of the string against specified values.
+    /// </summary>
     public static bool EqualsOneOfThis(string p1, params string[] p2)
     {
         foreach (var element in p2)
@@ -1697,13 +1978,9 @@ public class SH
     //{
     //    return se.SHSplit.Split(parametry, deli);
     //}
-    /// <summary>
-    ///     Will be delete after final refactoring
-    ///     Automaticky ořeže poslední znad A1
-    ///     Pokud máš inty v A2, použij metodu JoinMakeUpTo2NumbersToZero
-    /// </summary>
-    /// <param name="delimiter"></param>
-    /// <param name="parts"></param>
+    // Will be deleted after final refactoring
+    // Automaticky ořeže poslední znad A1
+    // Pokud máš inty v A2, použij metodu JoinMakeUpTo2NumbersToZero
     //private static string Join(IList parts, object delimiter)
     //{
     //    if (delimiter is string)
@@ -1753,6 +2030,9 @@ public class SH
     //}
     #endregion
     #region For easy copy
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsAnyBool(string strategy, bool checkInCaseOnlyOneString, IList<string> contains)
     {
         return ContainsAny(strategy, checkInCaseOnlyOneString, contains).Count > 0;
@@ -1851,8 +2131,10 @@ public class SH
             return FirstWordWhichIsNumberAllIndexes(parameter, joinAnotherWordsIfIsAlsoNumber);
         }
         return FirstWordWhichIsNumberAllIndexes(parameter, joinAnotherWordsIfIsAlsoNumber);
-        return int.MinValue;
     }
+    /// <summary>
+    /// Processes or retrieves content from the beginning of the string.
+    /// </summary>
     public static int FirstWordWhichIsNumberAllIndexes(List<string> parameter, bool joinAnotherWordsIfIsAlsoNumber = true)
     {
         var i = 0;
@@ -1869,11 +2151,17 @@ public class SH
             }
         return int.MinValue;
     }
+    /// <summary>
+    /// Compares strings ignoring whitespace differences.
+    /// </summary>
     public static bool CompareStringIgnoreWhitespaces2(string s1, string s2)
     {
         return string.Compare(s1, s2, CultureInfo.CurrentCulture,
             CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
     }
+    /// <summary>
+    /// Compares strings ignoring whitespace differences.
+    /// </summary>
     public static bool CompareStringIgnoreWhitespaces(string s1, string s2)
     {
         var normalized1 = Regex.Replace(s1, @"\s", "");
@@ -1903,6 +2191,9 @@ public class SH
     //    }
     //    return temp;
     //}
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsOnly(string input, List<char> numericChars)
     {
         if (input.Length == 0) return false;
@@ -1948,8 +2239,11 @@ public class SH
             if (only) stringBuilder = stringBuilder.ToLower();
             return strategy[0].ToString().ToUpper() + stringBuilder;
         }
-        return null;
+        return null!;
     }
+    /// <summary>
+    /// In Brackets operation on the string.
+    /// </summary>
     public static string InBrackets(string input)
     {
         return GetTextBetweenTwoCharsInts(input, input.IndexOf('('), input.IndexOf(')'));
@@ -1980,6 +2274,9 @@ public class SH
                     founded.Add(count);
         return founded;
     }
+    /// <summary>
+    /// Contains Any Char operation on the input.
+    /// </summary>
     public static List<char> ContainsAnyChar( /*T itemT,*/ /*IList<T> containsT,*/ string strategy, bool checkInCaseOnlyOneString, IList<char> contains)
     {
         var founded = new List<char>();
@@ -2026,15 +2323,24 @@ public class SH
         //}
         //return founded;
     }
+    /// <summary>
+    /// Gets the word at the specified character index in the line.
+    /// </summary>
     [Obsolete("Tahle metoda využívala SHData.ReturnCharsForSplitBySpaceAndPunctuationCharsAndWhiteSpaces. To bylo úplně složité. Už to nevracat argument případně to napsat znovu")]
     public static string? GetWordOnIndex(string line, int index)
     {
         return null;
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsUpper(string data)
     {
         return data.Any(char.IsUpper);
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsLower(string data)
     {
         return data.Any(char.IsLower);
@@ -2227,18 +2533,24 @@ public class SH
     /// <returns></returns>
     public static string GetTextBetween(string parameter, char after, char before,
         bool throwExceptionIfNotContains = true /*cant have implicit value*/,
-        object notAllowedInRanges = null /*cant have implicit value*/, bool endLastIndexOf = false)
+        object? notAllowedInRanges = null /*cant have implicit value*/, bool endLastIndexOf = false)
     {
         return GetTextBetweenTwoChars(parameter, after, before, throwExceptionIfNotContains, notAllowedInRanges,
             endLastIndexOf);
     }
     #endregion
+    /// <summary>
+    /// Values Between Quotes operation on the input.
+    /// </summary>
     public static List<string> ValuesBetweenQuotes(string str, bool insertAgainToQm, bool apos = false)
     {
         var quoteString = "\"";
         if (apos) quoteString = "'";
         return ValuesBetweenQuotesOrApos(str, insertAgainToQm, quoteString);
     }
+    /// <summary>
+    /// Values Between Quotes And Apos operation on the input.
+    /// </summary>
     public static List<string> ValuesBetweenQuotesAndApos(string str, bool insertAgainToQm,
         bool onlyWhichIsNotInT = false)
     {
@@ -2255,7 +2567,7 @@ public class SH
         var result = new List<string>(matches.Count);
         foreach (var item in matches)
         {
-            var itemS = item.ToString();
+            var itemS = item.ToString()!;
 #if DEBUG
             if (itemS.Contains("Module registration is not provided!"))
             {
@@ -2272,6 +2584,9 @@ public class SH
         //SunamoCollectionsShared.CA.RemoveStringsEmpty2(result);
         return result;
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsAtLeastOne(string parameter, List<string> aggregate)
     {
         foreach (var item in aggregate)
@@ -2331,6 +2646,9 @@ public class SH
         var lineNumber = input.Take(pos).Count(input => input == '\n') + 1;
         return lineNumber - 1;
     }
+    /// <summary>
+    /// Finds the next non-letter-or-digit character from the start index.
+    /// </summary>
     public static int AnotherOtherThanLetterOrDigit(string content, int startIndex)
     {
         var currentIndex = startIndex;
@@ -2341,11 +2659,17 @@ public class SH
         //currentIndex--;
         return currentIndex--;
     }
+    /// <summary>
+    /// Processes or retrieves content from the end of the string.
+    /// </summary>
     public static string LastChars(string strategy, int input)
     {
         return strategy.Substring(strategy.Length - input);
         //mystring.Substring(Math.Max(0, mystring.Length - 4));
     }
+    /// <summary>
+    /// Processes tab-related content in the string.
+    /// </summary>
     public static string TabToNewLine(string input)
     {
         //Environment.NewLine
@@ -2355,6 +2679,9 @@ public class SH
         list = list.Where(data => data.Trim() != string.Empty).ToList();
         return string.Join(Environment.NewLine, list);
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsAllLower(string ext)
     {
         return IsAllLower(ext, char.IsLower);
@@ -2366,22 +2693,34 @@ public class SH
                 return false;
         return true;
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsAllUpper(string ext)
     {
         return IsAllLower(ext, char.IsUpper);
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsBracket(string temp, bool mustBeLeftAndRight = false)
     {
-        List<char> left, right;
-        left = right = null;
+        List<char>? left = null;
+        List<char>? right = null;
         return ContainsBracket(temp, ref left, ref right, mustBeLeftAndRight);
     }
+    /// <summary>
+    /// Indicates whether the current UI culture is Czech.
+    /// </summary>
     protected static bool S_Cs;
     static SH()
     {
         S_Cs = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "cs";
         Init();
     }
+    /// <summary>
+    /// Indexes Of Chars operation on the input.
+    /// </summary>
     public static List<int> IndexesOfChars(string input, char searchChar)
     {
         return IndexesOfCharsList(input, new List<char>(searchChar));
@@ -2400,7 +2739,10 @@ public class SH
         indices.Sort();
         return indices;
     }
-    public static bool ContainsBracket(string temp, ref List<char> left, ref List<char> right,
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
+    public static bool ContainsBracket(string temp, ref List<char>? left, ref List<char>? right,
         bool mustBeLeftAndRight = false)
     {
         left = ContainsAnyChar(temp, false, AllLists.LeftBrackets);
@@ -2415,6 +2757,9 @@ public class SH
         }
         return false;
     }
+    /// <summary>
+    /// Gets the closing bracket character for the given opening bracket.
+    /// </summary>
     public static char ClosingBracketFor(char openingBracket)
     {
         foreach (var item in BracketsLeft)
@@ -2434,16 +2779,25 @@ public class SH
         if (dex != -1) return strategy.Substring(dex + after.Length);
         return string.Empty;
     }
+    /// <summary>
+    /// Pads the string to the specified length.
+    /// </summary>
     public static string PadRight(string baseString, string newLine, int input)
     {
         var stringBuilder = new StringBuilder(baseString);
         for (var i = 0; i < input; i++) stringBuilder.Append(newLine);
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static void RemoveLastCharSb(StringBuilder stringBuilder)
     {
         if (stringBuilder.Length > 0) stringBuilder.Remove(stringBuilder.Length - 1, 1);
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveUselessWhitespaces(string innerText)
     {
         var parameter = SHSplit.SplitChar(innerText);
@@ -2479,10 +2833,16 @@ public class SH
         }
         return strategy;
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public static T ToNumber<T>(Func<string, T> parse, string input)
     {
         return parse.Invoke(input);
     }
+    /// <summary>
+    /// Repairs malformed content in the string.
+    /// </summary>
     public static string RepairQuotes(string strategy)
     {
         strategy = strategy.Replace("�", "\"");
@@ -2491,6 +2851,9 @@ public class SH
         strategy = strategy.Replace("�", "'");
         return strategy;
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsNumbered(string input)
     {
         var i = 0;
@@ -2509,6 +2872,9 @@ public class SH
             }
         return false;
     }
+    /// <summary>
+    /// Inserts content into the string at the specified position.
+    /// </summary>
     public static string InsertEndingBracket(string input, char startingBracket)
     {
         var closingBracket = ClosingBracketFor(startingBracket);
@@ -2521,10 +2887,16 @@ public class SH
     {
         return InsertEndingBracketWorker(input, countStart.Count, countEnd.Count, new List<char>(), startingBracket);
     }
+    /// <summary>
+    /// Inserts content into the string at the specified position.
+    /// </summary>
     public static string InsertEndingBracket(string input, List<char> countStart, List<char> countEnd)
     {
         return InsertEndingBracketWorker(input, countStart.Count, countEnd.Count, countStart, char.MaxValue);
     }
+    /// <summary>
+    /// Inserts content into the string at the specified position.
+    /// </summary>
     public static string InsertEndingBracketWorker(string input, int countStartCount, int countEndCount,
         List<char> countStart, char startingBracket)
     {
@@ -2551,6 +2923,9 @@ public class SH
         }
         return input;
     }
+    /// <summary>
+    /// Processes paired bracket elements in the string.
+    /// </summary>
     public static string PairsBracketsToCompleteBlock(string input)
     {
 #if DEBUG
@@ -2615,6 +2990,9 @@ public class SH
         }
         return Brackets.None;
     }
+    /// <summary>
+    /// Include Brackets operation on the input.
+    /// </summary>
     public static List<char> IncludeBrackets(string strategy, bool starting)
     {
         var containsBracket = new List<char>();
@@ -2632,6 +3010,9 @@ public class SH
         }
         return containsBracket;
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsValidISO(string input)
     {
         // ISO-8859-1 je to samé jako latin1 https://en.wikipedia.org/wiki/ISO/IEC_8859-1
@@ -2682,6 +3063,9 @@ public class SH
         }
         return parameter;
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsOnlyCase(string between, bool upper, bool ignoreOtherThanLetters = false)
     {
         var isLetter = false;
@@ -2706,6 +3090,9 @@ public class SH
         }
         return true;
     }
+    /// <summary>
+    /// Shortens the string to the specified length.
+    /// </summary>
     public static string ShortForLettersCount(string parameter, int maxLetterCount)
     {
         var shouldAddEllipsis = false;
@@ -2723,10 +3110,16 @@ public class SH
         parameter[0] = "(" + parameter[0] + ")";
         return string.Join(" ", parameter);
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsVariable(string innerHtml)
     {
         return ContainsVariable('{', '}', innerHtml);
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsVariable(char parameter, char closingChar, string innerHtml)
     {
         if (string.IsNullOrEmpty(innerHtml)) return false;
@@ -2757,16 +3150,20 @@ public class SH
             }
         return false;
     }
+    /// <summary>
+    /// Get Variables In String operation on the input.
+    /// </summary>
     public static List<int> GetVariablesInString(string innerHtml)
     {
         return GetVariablesInString('{', '}', innerHtml);
     }
-    /// <param name="ret"></param>
-    /// <param name="pocetDo"></param>
+    /// <param name="parameter">The opening bracket character.</param>
+    /// <param name="closingChar">The closing bracket character.</param>
+    /// <param name="innerHtml">The text to search for variable references.</param>
     public static List<int> GetVariablesInString(char parameter, char closingChar, string innerHtml)
     {
-        /// Vrátí mi formáty, které jsou v A1 od 0 do A2-1
-        /// A1={0} {2} {3} A2=3 G=0,2
+        // Vrátí mi formáty, které jsou v A1 od 0 do A2-1
+        // A1={0} {2} {3} A2=3 G=0,2
         var variableIndices = new List<int>();
         var unprocessedVariableContent = new StringBuilder();
         //StringBuilder processedContent = new StringBuilder();
@@ -2846,6 +3243,9 @@ public class SH
         result = result.Replace("\"", string.Empty);
         return result;
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsOtherChatThanLetterAndDigit(string parameter)
     {
         foreach (var item in parameter)
@@ -2853,6 +3253,9 @@ public class SH
                 return true;
         return false;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetOddIndexesOfWord(string input)
     {
         var half = input.Length / 2;
@@ -2905,6 +3308,9 @@ public class SH
     //{
     //    return se.SH.FirstCharUpper(nazevPP, only);
     //}
+    /// <summary>
+    /// Remove Duplicates None operation on the input.
+    /// </summary>
     public static List<string> RemoveDuplicatesNone(string input, string delimiter)
     {
         var split = SHSplit.SplitNone(input, delimiter);
@@ -3046,6 +3452,9 @@ public class SH
         }
         return parameter;
     }
+    /// <summary>
+    /// Return Occurences Of String From To Word operation on the input.
+    /// </summary>
     public static List<FromToWordString> ReturnOccurencesOfStringFromToWord(string textContent,
         params string[] hledaneSlova)
     {
@@ -3109,6 +3518,9 @@ public class SH
         var delimiterIndex = input.IndexOf(deli);
         return GetFirstPartByLocation(input, delimiterIndex);
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetFirstPartByLocation(string input, int delimiterIndex)
     {
         string parameter, remainder;
@@ -3156,7 +3568,7 @@ public class SH
     public static string GetTextBetween(string parameter, string after, string before, out int dxOfFounded,
         int startSearchingAt, bool throwExceptionIfNotContains = true)
     {
-        string vr = null;
+        string? vr = null;
         dxOfFounded = parameter.IndexOf(after, startSearchingAt);
         var p3 = parameter.IndexOf(before, dxOfFounded + after.Length);
         var b2 = dxOfFounded != -1;
@@ -3180,16 +3592,22 @@ public class SH
                 ThrowEx.NotContains(parameter, after, before);
             else
                 // 24-1-21 return null instead of parameter
-                return null;
+                return null!;
             //vr = parameter;
         }
-        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničili i tam kde bylo AllChars.space. Doteď jsem vůbec nevěděl co to způsobuje argument to jsem už tímhle opravil celé pinp. 
-        return vr;
+        // Na co to tady trimovat? Např. při vrácení zpět na hard coded se mi zničil kód tím že jsem místo AllStrings.space vkládal "". Částečně se mi zničili i tam kde bylo AllChars.space. Doteď jsem vůbec nevěděl co to způsobuje argument to jsem už tímhle opravil celé pinp.
+        return vr!;
     }
+    /// <summary>
+    /// Checks if the string ends with the specified suffix.
+    /// </summary>
     public static bool EndsWith(string input, string endsWith)
     {
         return input.EndsWith(endsWith);
     }
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static bool RemovePrefix(ref string strategy, string prefix)
     {
         if (strategy.StartsWith(prefix))
@@ -3199,6 +3617,9 @@ public class SH
         }
         return false;
     }
+    /// <summary>
+    /// Retrieves the specified portion or data from the string.
+    /// </summary>
     public static string GetToFirstChar(string input, int indexOfChar)
     {
         if (indexOfChar != -1) return input.Substring(0, indexOfChar + 1);
@@ -3212,9 +3633,12 @@ public class SH
     public static string NullToStringOrEmpty(object value)
     {
         if (value == null) return "";
-        var strategy = value.ToString();
+        var strategy = value.ToString()!;
         return strategy;
     }
+    /// <summary>
+    /// Checks if the input string contains the specified content.
+    /// </summary>
     public static bool ContainsFromEnd(string input, char character, out int ContainsFromEndResult)
     {
         for (var i = input.Length - 1; i >= 0; i--)
@@ -3226,6 +3650,9 @@ public class SH
         ContainsFromEndResult = -1;
         return false;
     }
+    /// <summary>
+    /// Processes or retrieves content from the beginning of the string.
+    /// </summary>
     public static string FirstWhichIsNotEmpty(params string[] strategy)
     {
         foreach (var item in strategy)
@@ -3274,6 +3701,9 @@ public class SH
         //p = CAChangeContent.ChangeContent0(null, parameter, FirstCharUpper);
         return string.Join(" ", parameter);
     }
+    /// <summary>
+    /// Determines whether the string matches the specified condition.
+    /// </summary>
     public static bool IsNullOrWhiteSpace(string strategy)
     {
         if (strategy != null)

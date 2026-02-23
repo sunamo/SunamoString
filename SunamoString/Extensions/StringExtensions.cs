@@ -3,8 +3,14 @@ namespace SunamoString.Extensions;
 // variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Performs an operation.
+/// </summary>
 public static class StringExtensions
 {
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveInvisibleChars(this string input)
     {
         int[] charsToRemove = [8205];
@@ -13,6 +19,9 @@ public static class StringExtensions
             .ToArray());
     }
 
+    /// <summary>
+    /// Removes specified content from the string.
+    /// </summary>
     public static string RemoveWhitespaceChars(this string input)
     {
         // https://g.co/gemini/share/b47b0b16b54f
@@ -22,16 +31,22 @@ public static class StringExtensions
             .ToArray());
     }
 
+    /// <summary>
+    /// Converts character encoding from one format to another.
+    /// </summary>
     public static string FromSpace160To32(this string text)
     {
         return Regex.Replace(text, @"\p{Z}", " ");
     }
 
+    /// <summary>
+    /// Split And Keep operation on the input.
+    /// </summary>
     public static IEnumerable<string> SplitAndKeep(this string input, char[] delims)
     {
         //delims allow only char[], not List<string>
         int start = 0, index;
-        string selectedSeparator = null;
+        string? selectedSeparator = null;
         while ((index = input.IndexOfAny(delims, start)) != -1)
         {
             if (selectedSeparator == null)

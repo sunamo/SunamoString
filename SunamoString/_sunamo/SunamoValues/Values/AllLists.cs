@@ -5,19 +5,19 @@ internal class AllLists
     /// <summary>
     /// In key is long name, in value letter
     /// </summary>
-    internal static Dictionary<string, string> HtmlEntitiesDict { get; set; } = null;
+    internal static Dictionary<string, string>? HtmlEntitiesDict { get; set; } = null;
     /// <summary>
     /// When entity have more names, there is just one
     /// In key is letter, in value long name
     /// </summary>
-    internal static Dictionary<string, string> HtmlEntitiesFullNames { get; set; } = null;
+    internal static Dictionary<string, string>? HtmlEntitiesFullNames { get; set; } = null;
     internal static List<char> LeftBrackets { get; set; } = CAGConsts.ToList('(', '{', '[');
     internal static List<char> RightBrackets { get; set; } = CAGConsts.ToList(')', '}', ']');
     internal static List<string> LeftBracketsS { get; set; } = CAGConsts.ToList("(", "{", "[");
     internal static List<string> RightBracketsS { get; set; } = CAGConsts.ToList(")", "}", "]");
     internal static List<string> FeatUpper { get; set; } = new List<string>(["Feat.", "Featuring", "Ft."]);
     internal static List<string> FeatLower { get; set; } = new List<string>(["feat.", "featuring", "ft."]);
-    internal static List<string> OstravaCityParts { get; set; } = null;
+    internal static List<string>? OstravaCityParts { get; set; } = null;
     internal static List<string> HtmlNonPairTags = new List<string>(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
     internal static List<string> PairingTagsDontWrapToParagraph = new List<string>(["h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li"]);
     /// <summary>
@@ -31,7 +31,7 @@ internal class AllLists
     /// <summary>
     /// parsed with WikipediaHelper.HtmlEntitiesList
     /// </summary>
-    internal static List<string> HtmlEntities { get; set; } = null;
+    internal static List<string>? HtmlEntities { get; set; } = null;
     internal static readonly List<string> BasicImageExtensions = new List<string>([".png",
         ".bmp",
         ".jpg",

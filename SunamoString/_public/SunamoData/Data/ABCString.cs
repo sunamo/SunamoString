@@ -1,11 +1,23 @@
 namespace SunamoString._public.SunamoData.Data;
 
+/// <summary>
+/// Provides string helper methods for various text operations.
+/// </summary>
 public class ABCString : List<ABString>
 {
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public static ABCString Empty = new ABCString();
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public ABCString()
     {
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public override string ToString()
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -15,6 +27,9 @@ public class ABCString : List<ABString>
         }
         return stringBuilder.ToString();
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public int Length
     {
         get
@@ -22,13 +37,19 @@ public class ABCString : List<ABString>
             return Count;
         }
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public ABCString(int capacity) : base(capacity)
     {
         for (int i = 0; i < capacity; i++)
         {
-            this.Add(null);
+            this.Add(null!);
         }
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public ABCString(params Object[] nameValuePairs)
     {
         if (nameValuePairs.Length == 0)
@@ -41,8 +62,8 @@ public class ABCString : List<ABString>
         if (firstElement is IList)
         {
             var listItems = firstElement as IList;
-            var firstListElement = listItems.Count != 0 ? listItems[0] : null;
-            actualType = firstListElement.GetType();
+            var firstListElement = listItems!.Count != 0 ? listItems[0] : null;
+            actualType = firstListElement!.GetType();
         }
 
         if (actualType == typeof(ABString))
@@ -81,10 +102,13 @@ public class ABCString : List<ABString>
 
             for (int i = 0; i < nameValuePairs.Length; i++)
             {
-                this.Add(ABString.Get(nameValuePairs[i].ToString(), nameValuePairs[++i]));
+                this.Add(ABString.Get(nameValuePairs[i].ToString()!, nameValuePairs[++i]));
             }
         }
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public ABCString(params ABString[] abStringItems)
     {
 
@@ -93,10 +117,16 @@ public class ABCString : List<ABString>
     
     
     
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public Object[] OnlyBs()
     {
         return OnlyBsList().ToArray();
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public List<object> OnlyBsList()
     {
         List<object> values = new List<object>(this.Count);
@@ -106,6 +136,9 @@ public class ABCString : List<ABString>
         }
         return values;
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public List<string> OnlyAs()
     {
         List<string> keys = new List<string>(this.Count);
@@ -116,6 +149,9 @@ public class ABCString : List<ABString>
         }
         return keys;
     }
+    /// <summary>
+    /// Only Bs operation on the input.
+    /// </summary>
     public static List<object> OnlyBs(List<ABString> abStringList)
     {
         return abStringList.Select(abString => abString.B).ToList();

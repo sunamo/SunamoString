@@ -1,5 +1,8 @@
 namespace SunamoString;
 
+/// <summary>
+/// Performs an operation.
+/// </summary>
 public static class SHNotTranslateAble
 {
     /// <summary>

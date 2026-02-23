@@ -1,5 +1,8 @@
 namespace SunamoString;
 
+/// <summary>
+/// Provides string helper methods for various text operations.
+/// </summary>
 public class BalancedBrackets
 {
     // Returns true if openingChar and closingChar
@@ -18,6 +21,9 @@ public class BalancedBrackets
 
     // Return true if expression has balanced
     // Brackets
+    /// <summary>
+    /// Are Brackets Balanced operation on the string.
+    /// </summary>
     public static bool AreBracketsBalanced(List<char> brackets)
     {
         // Declare an empty character stack */

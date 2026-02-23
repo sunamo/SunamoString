@@ -13,7 +13,7 @@ internal class SpecialCharsService
     /// <summary>
     ///     Used in enigma
     /// </summary>
-    internal readonly List<char> SpecialCharsAll;
+    internal readonly List<char> SpecialCharsAll = null!;
     internal readonly List<char> SpecialCharsWhite = new(new[] { space });
     internal readonly List<char> SpecialCharsNotEnigma = new(new[] { nonBreakingSpace, copyright });
     private const char leftApostrophe = '\u2018';

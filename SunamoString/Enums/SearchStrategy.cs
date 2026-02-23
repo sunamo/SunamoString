@@ -1,5 +1,8 @@
 namespace SunamoString.Enums;
 
+/// <summary>
+/// Defines the strategy for searching within strings.
+/// </summary>
 public enum SearchStrategy
 {
     /// <summary>

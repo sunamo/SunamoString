@@ -1,17 +1,35 @@
 namespace SunamoString._public;
 
+/// <summary>
+/// Provides string helper methods for various text operations.
+/// </summary>
 public class StringOrStringList
 {
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public StringOrStringList(string stringValue)
     {
         String = stringValue;
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public StringOrStringList(List<string> list)
     {
         List = list;
     }
-    public string String { get; private set; }
-    public List<string> List { get; private set; }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public string String { get; private set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
+    public List<string> List { get; private set; } = null!;
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public string GetString()
     {
         if (String != null)
@@ -28,6 +46,9 @@ public class StringOrStringList
         }
         throw new Exception("Both is null");
     }
+    /// <summary>
+    /// Performs an operation.
+    /// </summary>
     public List<string> GetList()
     {
         if (String != null)

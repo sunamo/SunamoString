@@ -30,13 +30,12 @@ internal class SHReplace
 
     internal static string ReplaceManyFromString(string input, string mappingDefinition, string delimiter)
     {
-        string methodName = "ReplaceManyFromString";
         var list = SHGetLines.GetLines(mappingDefinition);
         foreach (var item in list)
         {
             var parameter = SHSplit.Split(item, delimiter);
             parameter = parameter.ConvertAll(d => d.Trim());
-            string from, to;
+            string? from, to;
             from = to = null;
             if (parameter.Count > 0)
             {
