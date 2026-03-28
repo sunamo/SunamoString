@@ -1,5 +1,8 @@
 namespace SunamoString._sunamo.SunamoValues.Values;
 
+/// <summary>
+/// String constants that should not be translated (used as code identifiers or markers).
+/// </summary>
 internal class SunamoNotTranslateAble
 {
     internal const string From = " - From";

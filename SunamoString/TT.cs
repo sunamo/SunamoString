@@ -1,7 +1,7 @@
 namespace SunamoString;
 
 /// <summary>
-///     Text Templates
+/// Text template helper for formatting name-value pairs.
 /// </summary>
 public class TT
 {
@@ -17,12 +17,14 @@ public class TT
     }
 
     /// <summary>
-    /// Name Value operation on the string.
+    /// Formats all name-value pairs from the collection, separated by the specified delimiter.
     /// </summary>
-    public static string NameValue(ABCString items, string delimiter)
+    /// <param name="abcString">The collection of name-value pairs.</param>
+    /// <param name="delimiter">The delimiter between formatted pairs.</param>
+    public static string NameValue(ABCString abcString, string delimiter)
     {
-        var builder = new StringBuilder();
-        foreach (var abString in items) builder.Append(NameValue(abString.A, abString.B.ToString()!) + delimiter);
-        return builder.ToString();
+        var stringBuilder = new StringBuilder();
+        foreach (var abStringEntry in abcString) stringBuilder.Append(NameValue(abStringEntry.A, abStringEntry.B.ToString()!) + delimiter);
+        return stringBuilder.ToString();
     }
 }

@@ -1,11 +1,11 @@
 namespace SunamoString.Generators;
 
 /// <summary>
-/// Performs an operation.
+/// Generates Lorem Ipsum placeholder text up to a specified character limit.
 /// </summary>
 public static class LoremIpsumGenerator
 {
-    private static List<string> s_words = new List<string>{"consetetur", "sadipscing", "elitr", "sed", "diam", "nonumy", "eirmod",
+    private static List<string> words = new List<string>{"consetetur", "sadipscing", "elitr", "sed", "diam", "nonumy", "eirmod",
 "tempor", "invidunt", "ut", "labore", "et", "dolore", "magna", "aliquyam", "erat", "sed", "diam", "voluptua",
 "at", "vero", "eos", "et", "accusam", "et", "justo", "duo", "dolores", "et", "ea", "rebum", "stet", "clita",
 "kasd", "gubergren", "no", "sea", "takimata", "sanctus", "est", "lorem", "ipsum", "dolor", "sit", "amet",
@@ -53,8 +53,9 @@ public static class LoremIpsumGenerator
 
 
     /// <summary>
-    /// Generate operation on the string.
+    /// Generates Lorem Ipsum text with at most the specified number of characters.
     /// </summary>
+    /// <param name="maxChars">The maximum number of characters for the generated text.</param>
     public static string Generate(int maxChars)
     {
         StringBuilder stringBuilder = new StringBuilder();
@@ -63,7 +64,7 @@ public static class LoremIpsumGenerator
         Random random = new Random();
         while (true)
         {
-            string word = s_words[random.Next(s_words.Count)];
+            string word = words[random.Next(words.Count)];
             if (stringBuilder.Length + spaceLength + word.Length + periodLength >= maxChars)
             {
                 stringBuilder.Append(".");

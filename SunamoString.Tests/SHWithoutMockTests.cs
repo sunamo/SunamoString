@@ -1,34 +1,75 @@
 namespace sunamo.Tests.Helpers.Text;
 // variables names: ok
+
+/// <summary>
+/// Tests for string helper methods that do not require mocking.
+/// </summary>
 public class SHWithoutMockTests
 {
-    //[Fact]
-    public
-#if ASYNC
-async Task
-#else
-    void
-#endif
-ReplaceManyFromStringTest()
+    /// <summary>
+    /// Tests that Contains correctly finds a term in the input text using FixedSpace strategy.
+    /// </summary>
+    [Fact]
+    public void ContainsFixedSpaceTest()
     {
-        //            string testString = @"Assert.Equal -> Assert.AreEqual
-        //Assert.AreEqual<*> -> CollectionAssert.AreEqual
-        //[Fact] -> [Fact]
-        //            testString = "Assert.AreEqual<*> -> CollectionAssert.AreEqual";
+        string input = "Hello World";
+        string term = "World";
 
-        //            string file = @"E:\vs\Projects\PlatformIndependentNuGetPackages.Tests\sunamo.Tests.Data\ReplaceManyFromString\In_ReplaceManyFromString.cs";
-        //            var s =
-        //#if ASYNC
-        //    await
-        //#endif
-        // TF.ReadAllText(file);
+        bool result = SH.Contains(input, term, SearchStrategy.FixedSpace);
 
-        //            s = SHReplace.ReplaceManyFromString(s, testString, Consts.transformTo);
+        Assert.True(result);
+    }
 
+    /// <summary>
+    /// Tests that Contains returns false when the term is not in the input text.
+    /// </summary>
+    [Fact]
+    public void ContainsFixedSpaceNotFoundTest()
+    {
+        string input = "Hello World";
+        string term = "Earth";
 
-        //#if ASYNC
-        //            await
-        //#endif
-        //            TF.WriteAllText(file, s);
+        bool result = SH.Contains(input, term, SearchStrategy.FixedSpace);
+
+        Assert.False(result);
+    }
+
+    /// <summary>
+    /// Tests that FirstCharUpper correctly uppercases the first character of the text.
+    /// </summary>
+    [Fact]
+    public void FirstCharUpperTest()
+    {
+        string input = "hello world";
+
+        string result = SH.FirstCharUpper(input);
+
+        Assert.Equal("Hello world", result);
+    }
+
+    /// <summary>
+    /// Tests that ContainsAll returns true when the input contains all specified words.
+    /// </summary>
+    [Fact]
+    public void ContainsAllTest()
+    {
+        string input = "The quick brown fox";
+        var words = new List<string> { "quick", "fox" };
+
+        bool result = SH.ContainsAll(input, words);
+
+        Assert.True(result);
+    }
+
+    /// <summary>
+    /// Tests that IsNullOrWhiteSpace returns true for null, empty, and whitespace strings.
+    /// </summary>
+    [Fact]
+    public void IsNullOrWhiteSpaceTest()
+    {
+        Assert.True(SH.IsNullOrWhiteSpace(null!));
+        Assert.True(SH.IsNullOrWhiteSpace(""));
+        Assert.True(SH.IsNullOrWhiteSpace("   "));
+        Assert.False(SH.IsNullOrWhiteSpace("hello"));
     }
 }

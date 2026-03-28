@@ -1,35 +1,42 @@
 namespace SunamoString._sunamo.SunamoExceptions;
 
-// © www.sunamo.cz. All Rights Reserved.
+/// <summary>
+/// Provides methods for generating formatted exception messages and inspecting the call stack.
+/// </summary>
 internal sealed partial class Exceptions
 {
-    #region Other
+    /// <summary>
+    /// Prepends a context prefix to an exception message if provided.
+    /// </summary>
+    /// <param name="before">The context prefix, or null/whitespace to skip.</param>
     internal static string CheckBefore(string before)
     {
         return string.IsNullOrWhiteSpace(before) ? string.Empty : before + ": ";
     }
 
-
-    internal static Tuple<string, string, string> PlaceOfException(
-bool fillAlsoFirstTwo = true)
+    /// <summary>
+    /// Extracts the type name, method name, and full stack trace from the current call stack.
+    /// </summary>
+    /// <param name="isFillAlsoFirstTwo">Whether to also extract type and method name from the first non-ThrowEx frame.</param>
+    internal static Tuple<string, string, string> PlaceOfException(bool isFillAlsoFirstTwo = true)
     {
-        StackTrace st = new();
-        var value = st.ToString();
-        var lines = value.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        StackTrace stackTrace = new();
+        var text = stackTrace.ToString();
+        var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
         lines.RemoveAt(0);
-        var i = 0;
+        var lineIndex = 0;
         string type = string.Empty;
         string methodName = string.Empty;
-        for (; i < lines.Count; i++)
+        for (; lineIndex < lines.Count; lineIndex++)
         {
-            var item = lines[i];
-            if (fillAlsoFirstTwo)
-                if (!item.StartsWith("   at ThrowEx"))
+            var line = lines[lineIndex];
+            if (isFillAlsoFirstTwo)
+                if (!line.StartsWith("   at ThrowEx"))
                 {
-                    TypeAndMethodName(item, out type, out methodName);
-                    fillAlsoFirstTwo = false;
+                    TypeAndMethodName(line, out type, out methodName);
+                    isFillAlsoFirstTwo = false;
                 }
-            if (item.StartsWith("at System."))
+            if (line.StartsWith("at System."))
             {
                 lines.Add(string.Empty);
                 lines.Add(string.Empty);
@@ -38,19 +45,31 @@ bool fillAlsoFirstTwo = true)
         }
         return new Tuple<string, string, string>(type, methodName, string.Join(Environment.NewLine, lines));
     }
-    internal static void TypeAndMethodName(string lines, out string type, out string methodName)
+
+    /// <summary>
+    /// Extracts the type name and method name from a stack trace line.
+    /// </summary>
+    /// <param name="line">A single stack trace line.</param>
+    /// <param name="type">Output: the extracted type name.</param>
+    /// <param name="methodName">Output: the extracted method name.</param>
+    internal static void TypeAndMethodName(string line, out string type, out string methodName)
     {
-        var methodCallInfo = lines.Split("at ")[1].Trim();
+        var methodCallInfo = line.Split("at ")[1].Trim();
         var text = methodCallInfo.Split("(")[0];
-        var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        methodName = parameter[^1];
-        parameter.RemoveAt(parameter.Count - 1);
-        type = string.Join(".", parameter);
+        var parts = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        methodName = parts[^1];
+        parts.RemoveAt(parts.Count - 1);
+        type = string.Join(".", parts);
     }
-    internal static string CallingMethod(int value = 1)
+
+    /// <summary>
+    /// Gets the name of the calling method at the specified stack depth.
+    /// </summary>
+    /// <param name="depth">The stack frame depth (1 = direct caller).</param>
+    internal static string CallingMethod(int depth = 1)
     {
         StackTrace stackTrace = new();
-        var methodBase = stackTrace.GetFrame(value)?.GetMethod();
+        var methodBase = stackTrace.GetFrame(depth)?.GetMethod();
         if (methodBase == null)
         {
             return "Method name cannot be get";
@@ -58,32 +77,52 @@ bool fillAlsoFirstTwo = true)
         var methodName = methodBase.Name;
         return methodName;
     }
-    #endregion
 
-    #region IsNullOrWhitespace
-    readonly static StringBuilder sbAdditionalInfoInner = new();
-    readonly static StringBuilder sbAdditionalInfo = new();
-    #endregion
-
-    #region OnlyReturnString 
-
+    /// <summary>
+    /// Returns a formatted message indicating that something is not allowed.
+    /// </summary>
+    /// <param name="before">The context prefix.</param>
+    /// <param name="what">The item that is not allowed.</param>
     internal static string? IsNotAllowed(string before, string what)
     {
         return CheckBefore(before) + what + " is not allowed.";
     }
+
+    /// <summary>
+    /// Returns a formatted custom exception message.
+    /// </summary>
+    /// <param name="before">The context prefix.</param>
+    /// <param name="message">The custom message.</param>
     internal static string? Custom(string before, string message)
     {
         return CheckBefore(before) + message;
     }
+
+    /// <summary>
+    /// Returns a formatted message indicating a method is not implemented.
+    /// </summary>
+    /// <param name="before">The context prefix.</param>
     internal static string? NotImplementedMethod(string before)
     {
         return CheckBefore(before) + "Not implemented method.";
     }
-    #endregion
+
+    /// <summary>
+    /// Returns a formatted message if start is higher than end, or null if valid.
+    /// </summary>
+    /// <param name="before">The context prefix.</param>
+    /// <param name="start">The start value.</param>
+    /// <param name="end">The end value.</param>
     internal static string? StartIsHigherThanEnd(string before, int start, int end)
     {
         return start > end ? CheckBefore(before) + $"Start {start} is higher than end {end}" : null;
     }
+
+    /// <summary>
+    /// Returns a formatted message for a not-implemented case.
+    /// </summary>
+    /// <param name="before">The context prefix.</param>
+    /// <param name="notImplementedName">The name or type of the not-implemented case.</param>
     internal static string? NotImplementedCase(string before, object notImplementedName)
     {
         var forClause = string.Empty;
@@ -98,12 +137,19 @@ bool fillAlsoFirstTwo = true)
         return CheckBefore(before) + "Not implemented case" + forClause + " . internal program error. Please contact developer" +
         ".";
     }
-    internal static string? NotContains(string before, string originalText, params string[] shouldContains)
+
+    /// <summary>
+    /// Returns a formatted message listing which expected values are not contained in the original text, or null if all are found.
+    /// </summary>
+    /// <param name="before">The context prefix.</param>
+    /// <param name="originalText">The text to search in.</param>
+    /// <param name="expectedValues">The values that should be contained in the text.</param>
+    internal static string? NotContains(string before, string originalText, params string[] expectedValues)
     {
         List<string> notContained = [];
-        foreach (var item in shouldContains)
-            if (!originalText.Contains(item))
-                notContained.Add(item);
+        foreach (var expectedValue in expectedValues)
+            if (!originalText.Contains(expectedValue))
+                notContained.Add(expectedValue);
         return notContained.Count == 0
         ? null
         : CheckBefore(before) + "Original text dont contains: " + string.Join(",", notContained) + ". Original text: " + originalText;

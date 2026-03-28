@@ -1,30 +1,30 @@
 namespace SunamoString._public.SunamoData.Data;
 
 /// <summary>
-/// Provides string helper methods for various text operations.
+/// Represents a key-value pair where the key is a string and the value is an object.
 /// </summary>
 public class ABString
 {
     /// <summary>
-    /// Performs an operation.
+    /// The type of this class, used for runtime type checking.
     /// </summary>
     public static Type Type = typeof(ABString);
 
     /// <summary>
-    /// EN: First component of the pair (A).
-    /// CZ: První komponenta páru (A).
+    /// First component of the pair (A).
     /// </summary>
     public string A { get; set; } = null!;
 
     /// <summary>
-    /// EN: Second component of the pair (B).
-    /// CZ: Druhá komponenta páru (B).
+    /// Second component of the pair (B).
     /// </summary>
     public object B { get; set; } = null!;
 
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new instance of the <see cref="ABString"/> class.
     /// </summary>
+    /// <param name="firstValue">The first component (key).</param>
+    /// <param name="secondValue">The second component (value).</param>
     public ABString(string firstValue, object secondValue)
     {
         A = firstValue;
@@ -32,23 +32,27 @@ public class ABString
     }
 
     /// <summary>
-    /// Retrieves the specified portion or data from the string.
+    /// Creates a new <see cref="ABString"/> from a type's full name and a value.
     /// </summary>
-    public static ABString Get(Type firstValue, object secondValue)
+    /// <param name="type">The type whose full name becomes the first component.</param>
+    /// <param name="secondValue">The second component (value).</param>
+    public static ABString Get(Type type, object secondValue)
     {
-        return new ABString(firstValue.FullName!, secondValue);
+        return new ABString(type.FullName!, secondValue);
     }
 
     /// <summary>
-    /// Retrieves the specified portion or data from the string.
+    /// Creates a new <see cref="ABString"/> from a string key and a value.
     /// </summary>
+    /// <param name="firstValue">The first component (key).</param>
+    /// <param name="secondValue">The second component (value).</param>
     public static ABString Get(string firstValue, object secondValue)
     {
         return new ABString(firstValue, secondValue);
     }
 
     /// <summary>
-    /// Performs an operation.
+    /// Returns a string representation in the format "A:B".
     /// </summary>
     public override string ToString()
     {

@@ -1,20 +1,22 @@
 namespace SunamoString._public.SunamoData.Data;
 
 /// <summary>
-/// Provides string helper methods for various text operations.
+/// Represents a word with its position (from-to indices) in a text.
 /// </summary>
 public class FromToWordString
 {
     /// <summary>
-    /// Performs an operation.
+    /// The starting index of the word.
     /// </summary>
     public int From { get; set; } = 0;
+
     /// <summary>
-    /// Performs an operation.
+    /// The ending index of the word.
     /// </summary>
     public int To { get; set; } = 0;
+
     /// <summary>
-    /// Performs an operation.
+    /// The word text.
     /// </summary>
     public string Word { get; set; } = "";
 }

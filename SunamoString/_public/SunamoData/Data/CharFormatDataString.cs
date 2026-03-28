@@ -1,99 +1,102 @@
 namespace SunamoString._public.SunamoData.Data;
 
 /// <summary>
-/// Provides string helper methods for various text operations.
+/// Defines formatting rules for character validation including case, required characters, and length constraints.
 /// </summary>
 public class CharFormatDataString
 {
     /// <summary>
-    /// EN: Indicates if characters should be uppercase.
-    /// CZ: Indikuje, zda by znaky měly být velkými písmeny.
+    /// Indicates if characters should be uppercase. Null means no constraint.
     /// </summary>
     public bool? Upper { get; set; } = false;
 
     /// <summary>
-    /// EN: Array of characters that must be present.
-    /// CZ: Pole znaků, které musí být přítomny.
+    /// Array of characters that must be present.
     /// </summary>
     public char[]? MustBe { get; set; } = null;
+
     /// <summary>
-    /// Performs an operation.
+    /// Provides predefined character format templates.
     /// </summary>
     public static class Templates
     {
-        static char notNumberChar = (char)9;
+        static char nonNumericChar = (char)9;
+
         /// <summary>
-        /// Performs an operation.
+        /// Template that matches a single dash character.
         /// </summary>
         public static CharFormatDataString Dash { get; set; } = Get(null, new FromToString(1, 1), '-');
+
         /// <summary>
-        /// Performs an operation.
+        /// Template that matches a single non-numeric character.
         /// </summary>
-        public static CharFormatDataString NotNumber { get; set; } = Get(null, new FromToString(1, 1), notNumberChar);
-
-
+        public static CharFormatDataString NotNumber { get; set; } = Get(null, new FromToString(1, 1), nonNumericChar);
 
         /// <summary>
-        /// Performs an operation.
+        /// Template that matches a one or two digit number.
         /// </summary>
         public static CharFormatDataString TwoLetterNumber { get; set; }
+
         static Templates()
         {
             FromToString requiredLength = new FromToString(1, 2);
             TwoLetterNumber = GetOnlyNumbers(requiredLength);
             Any = Get(null, new FromToString(0, int.MaxValue));
         }
+
         /// <summary>
-        /// Performs an operation.
+        /// Template that matches any characters with no constraints.
         /// </summary>
-        public static CharFormatDataString Any;
+        public static CharFormatDataString Any { get; set; } = null!;
     }
 
     /// <summary>
-    /// EN: Range specification for character formatting.
-    /// CZ: Specifikace rozsahu pro formátování znaků.
+    /// Range specification for character count (min/max length).
     /// </summary>
     public FromToString? FromTo { get; set; } = null;
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new instance with the specified case constraint and required characters.
     /// </summary>
-    public CharFormatDataString(bool? upper, char[] mustBe)
+    /// <param name="isUpper">Whether characters should be uppercase. Null means no constraint.</param>
+    /// <param name="mustBe">Array of characters that must be present.</param>
+    public CharFormatDataString(bool? isUpper, char[] mustBe)
     {
-        this.Upper = upper;
+        this.Upper = isUpper;
         this.MustBe = mustBe;
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new empty instance with default values.
     /// </summary>
     public CharFormatDataString()
     {
     }
+
     /// <summary>
-    /// Retrieves the specified portion or data from the string.
+    /// Creates a <see cref="CharFormatDataString"/> that only allows numeric characters within the specified length range.
     /// </summary>
+    /// <param name="requiredLength">The required length range.</param>
     public static CharFormatDataString GetOnlyNumbers(FromToString requiredLength)
     {
-        LetterAndDigitCharService letterAndDigitChar = new();
+        LetterAndDigitCharService letterAndDigitCharService = new();
 
-        CharFormatDataString data = new CharFormatDataString();
-        data.FromTo = requiredLength;
-        data.MustBe = letterAndDigitChar.NumericChars.ToArray();
-        return data;
+        CharFormatDataString result = new CharFormatDataString();
+        result.FromTo = requiredLength;
+        result.MustBe = letterAndDigitCharService.NumericChars.ToArray();
+        return result;
     }
 
-
-
-
-
-
-
     /// <summary>
-    /// Retrieves the specified portion or data from the string.
+    /// Creates a <see cref="CharFormatDataString"/> with the specified constraints.
     /// </summary>
-    public static CharFormatDataString Get(bool? upper, FromToString fromTo, params char[] mustBe)
+    /// <param name="isUpper">Whether characters should be uppercase. Null means no constraint.</param>
+    /// <param name="fromTo">The required length range.</param>
+    /// <param name="mustBe">Characters that must be present.</param>
+    public static CharFormatDataString Get(bool? isUpper, FromToString fromTo, params char[] mustBe)
     {
-        CharFormatDataString data = new CharFormatDataString(upper, mustBe);
-        data.FromTo = fromTo;
-        return data;
+        CharFormatDataString result = new CharFormatDataString(isUpper, mustBe);
+        result.FromTo = fromTo;
+        return result;
     }
 }

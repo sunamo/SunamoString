@@ -6,12 +6,14 @@ namespace SunamoString.Delegates;
 public class StringDelegates
 {
     /// <summary>
-    /// Checks if the input string contains the specified content.
+    /// Checks if the text contains the specified value.
     /// </summary>
+    /// <param name="text">The text to search in.</param>
+    /// <param name="value">The value to search for.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool Contains(string input, string value)
+    public static bool Contains(string text, string value)
     {
-        return input.Contains(value);
+        return text.Contains(value);
     }
 
 

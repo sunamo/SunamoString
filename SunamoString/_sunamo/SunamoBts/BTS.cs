@@ -1,80 +1,74 @@
 namespace SunamoString._sunamo.SunamoBts;
 
+/// <summary>
+/// Basic type service providing parsing and validation for numeric types.
+/// </summary>
 internal class BTS
 {
-    //        #region  from BTSShared64.cs
     internal static int LastInt = -1;
     internal static long LastLong = -1;
     internal static float LastFloat = -1;
     internal static double LastDouble = -1;
 
-    ///// <summary>
-    /////     Usage: Usage: Exceptions.ArrayElementContainsUnallowedStrings->SH.ContainsAny
-    ///// </summary>
-    ///// <typeparam name="T"></typeparam>
-    ///// <param name="c"></param>
-    ///// <param name="isChar"></param>
-    ///// <returns></returns>
-    //internal static T CastToByT<T>(string c, bool isChar)
-    //{
-    //    return isChar ? (T)(dynamic)c.First() : (T)(dynamic)c;
-    //}
-
-    internal static string Replace(ref string input, bool replaceCommaForDot)
+    /// <summary>
+    /// Optionally replaces comma with dot in the text for numeric parsing.
+    /// </summary>
+    /// <param name="text">The text to process.</param>
+    /// <param name="isReplacingCommaForDot">Whether to replace comma with dot.</param>
+    internal static string Replace(ref string text, bool isReplacingCommaForDot)
     {
-        if (replaceCommaForDot)
+        if (isReplacingCommaForDot)
         {
-            input = input.Replace(",", ".");
+            text = text.Replace(",", ".");
         }
 
-        return input;
+        return text;
     }
-
-    internal static bool IsFloat(string input, bool replace = false)
-    {
-        if (input == null)
-        {
-            return false;
-        }
-
-        Replace(ref input, replace);
-        return float.TryParse(input.Replace(",", "."), out LastFloat);
-    }
-
-
 
     /// <summary>
-    ///     Usage: Exceptions.IsInt
+    /// Checks whether the text represents a valid float value.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="excIfIsFloat"></param>
-    /// <param name="replaceCommaForDot"></param>
-    /// <returns></returns>
-    internal static bool IsInt(string input, bool excIfIsFloat = false, bool replaceCommaForDot = false)
+    /// <param name="text">The text to check.</param>
+    /// <param name="isReplacing">Whether to replace comma with dot before parsing.</param>
+    internal static bool IsFloat(string text, bool isReplacing = false)
     {
-        if (input == null)
+        if (text == null)
         {
             return false;
         }
 
-        input = input.Replace(" ", "");
-        Replace(ref input, replaceCommaForDot);
+        Replace(ref text, isReplacing);
+        return float.TryParse(text.Replace(",", "."), out LastFloat);
+    }
 
+    /// <summary>
+    /// Checks whether the text represents a valid integer value.
+    /// </summary>
+    /// <param name="text">The text to check.</param>
+    /// <param name="isThrowingIfFloat">Whether to throw an exception if the value is a float but not an integer.</param>
+    /// <param name="isReplacingCommaForDot">Whether to replace comma with dot before parsing.</param>
+    internal static bool IsInt(string text, bool isThrowingIfFloat = false, bool isReplacingCommaForDot = false)
+    {
+        if (text == null)
+        {
+            return false;
+        }
 
-        bool isValid = int.TryParse(input, out LastInt);
+        text = text.Replace(" ", "");
+        Replace(ref text, isReplacingCommaForDot);
+
+        bool isValid = int.TryParse(text, out LastInt);
         if (!isValid)
         {
-            if (IsFloat(input))
+            if (IsFloat(text))
             {
-                if (excIfIsFloat)
+                if (isThrowingIfFloat)
                 {
-                    throw new Exception(input + " is float but is calling IsInt");
+                    throw new Exception(text + " is float but is calling IsInt");
                 }
             }
         }
 
         return isValid;
     }
-
-    //        #endregion
 }

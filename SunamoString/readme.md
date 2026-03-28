@@ -1,20 +1,36 @@
-### SunamoString
+# SunamoString
 
-Part of PlatformIndependentNuGetPackages:
+A comprehensive .NET library providing a large number of string manipulation, parsing, and formatting utility methods.
 
-- [nuget.org](https://www.nuget.org/profiles/sunamo)
-- [github.org](https://github.com/sunamo/PlatformIndependentNuGetPackages)
+## Features
 
-Another links:
+- **String search and matching** - Contains, ContainsAll, ContainsAny with multiple search strategies (FixedSpace, AnySpaces, ExactlyName)
+- **Text extraction** - GetFirstWord, GetLastWord, GetTextBetween, TextAfter, RemovePrefix
+- **String formatting** - FirstCharUpper, WrapWith, PadRight, ShortForLettersCount
+- **Bracket handling** - Balanced bracket checking, bracket content extraction, bracket insertion
+- **Diacritics** - Removal, detection, and encoding of diacritical characters
+- **Whitespace management** - Normalization, trimming, line counting
+- **Lorem Ipsum generation** - Placeholder text generation with configurable length
+- **Wildcard matching** - Pattern matching with * and ? wildcards
+- **String replacement** - Bulk replace, mapping-based replace from definition strings
+- **Text analysis** - Chinese character detection, character range checking, letter statistics
 
-- [Developer site](https://sunamo.cz)
+## Installation
 
-Request for new features / bug report / etc: [Mail](mailto:radek.jancik@sunamo.cz) or on GitHub
+```bash
+dotnet add package SunamoString
+```
+
 ## Target Frameworks
 
-**TargetFrameworks:** `net10.0;net9.0;net8.0`
+`net10.0`, `net9.0`, `net8.0`
 
-**Reason:** Code uses C# 12.0 features (collection expressions, primary constructors) or dependencies requiring .NET 8.0+:
-- Collection expressions `[]` syntax requires C# 12.0 (net8.0+)
-- Primary constructors require C# 12.0 (net8.0+) 
-- Entity Framework Core 9.x requires net8.0+
+## Links
+
+- [NuGet](https://www.nuget.org/profiles/sunamo)
+- [GitHub](https://github.com/sunamo/PlatformIndependentNuGetPackages)
+- [Developer site](https://sunamo.cz)
+
+## License
+
+MIT

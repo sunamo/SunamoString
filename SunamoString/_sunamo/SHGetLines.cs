@@ -1,10 +1,17 @@
 namespace SunamoString._sunamo;
 
+/// <summary>
+/// Splits text into lines handling all newline conventions (CRLF, LFCR, CR, LF).
+/// </summary>
 internal class SHGetLines
 {
-    internal static List<string> GetLines(string input)
+    /// <summary>
+    /// Splits the text into lines handling all newline formats.
+    /// </summary>
+    /// <param name="text">The text to split into lines.</param>
+    internal static List<string> GetLines(string text)
     {
-        var parts = input.Split(new[] { "\r\n", "\n\r" }, StringSplitOptions.None).ToList();
+        var parts = text.Split(new[] { "\r\n", "\n\r" }, StringSplitOptions.None).ToList();
         SplitByUnixNewline(parts);
         return parts;
     }
@@ -29,19 +36,18 @@ internal class SHGetLines
                 else if (newlineCarriageReturn.Length > 1) ThrowEx.Custom("cannot contain any \n\r, pass already split by this pattern");
             }
 
-            var name = lines[i].Split(new[] { separator }, StringSplitOptions.None);
+            var parts = lines[i].Split(new[] { separator }, StringSplitOptions.None);
 
-            if (name.Length > 1) InsertOnIndex(lines, name.ToList(), i);
+            if (parts.Length > 1) InsertOnIndex(lines, parts.ToList(), i);
         }
     }
 
-    private static void InsertOnIndex(List<string> lines, List<string> splitLines, int i)
+    private static void InsertOnIndex(List<string> lines, List<string> splitLines, int index)
     {
         splitLines.Reverse();
 
-        lines.RemoveAt(i);
+        lines.RemoveAt(index);
 
-        foreach (var item in splitLines) lines.Insert(i, item);
+        foreach (var line in splitLines) lines.Insert(index, line);
     }
-
 }

@@ -3,57 +3,64 @@ namespace SunamoString._public.SunamoData.Data;
 using SunamoString.Enums;
 
 /// <summary>
-/// Provides string helper methods for various text operations.
+/// Stores positions of brackets (curly, square, normal) found in a text, including both opening and closing positions.
 /// </summary>
 public class SquareMap
 {
     /// <summary>
-    /// Performs an operation.
+    /// Positions of opening curly braces.
     /// </summary>
     public List<int> CurlyBrackets { get; set; } = new List<int>();
+
     /// <summary>
-    /// Performs an operation.
+    /// Positions of opening square brackets.
     /// </summary>
     public List<int> SquareBrackets { get; set; } = new List<int>();
+
     /// <summary>
-    /// Performs an operation.
+    /// Positions of opening parentheses.
     /// </summary>
     public List<int> Brackets { get; set; } = new List<int>();
+
     /// <summary>
-    /// Performs an operation.
+    /// Positions of closing curly braces.
     /// </summary>
     public List<int> EndingCurlyBrackets { get; set; } = new List<int>();
+
     /// <summary>
-    /// Performs an operation.
+    /// Positions of closing square brackets.
     /// </summary>
     public List<int> EndingSquareBrackets { get; set; } = new List<int>();
+
     /// <summary>
-    /// Performs an operation.
+    /// Positions of closing parentheses.
     /// </summary>
     public List<int> EndingBrackets { get; set; } = new List<int>();
-    // EN: Add bracket index to appropriate list based on bracket type and whether it's an ending bracket
-    // CZ: Přidat index závorky do příslušného listu podle typu závorky a zda je to uzavírací závorka
+
     /// <summary>
-    /// Performs an operation.
+    /// Adds a bracket position to the appropriate list based on bracket type and direction.
     /// </summary>
-    public void Add(Enums.Brackets bracketType, bool end, int index)
+    /// <param name="bracketType">The type of bracket (curly, square, or normal).</param>
+    /// <param name="isEnding">Whether this is a closing bracket.</param>
+    /// <param name="index">The position index in the text.</param>
+    public void Add(Enums.Brackets bracketType, bool isEnding, int index)
     {
         switch (bracketType)
         {
             case Enums.Brackets.Curly:
-                if (end)
+                if (isEnding)
                     this.EndingCurlyBrackets.Add(index);
                 else
                     this.CurlyBrackets.Add(index);
                 break;
             case Enums.Brackets.Square:
-                if (end)
+                if (isEnding)
                     this.EndingSquareBrackets.Add(index);
                 else
                     this.SquareBrackets.Add(index);
                 break;
             case Enums.Brackets.Normal:
-                if (end)
+                if (isEnding)
                     this.EndingBrackets.Add(index);
                 else
                     this.Brackets.Add(index);

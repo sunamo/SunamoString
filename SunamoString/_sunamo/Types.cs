@@ -1,5 +1,8 @@
 namespace SunamoString._sunamo;
 
+/// <summary>
+/// Provides cached Type references for commonly used .NET types.
+/// </summary>
 internal class Types
 {
     internal static Type ObjectType => typeof(object);
@@ -20,18 +23,12 @@ internal class Types
     internal static Type DateTimeType => typeof(DateTime);
     internal static Type BinaryType => typeof(byte[]);
     internal static Type CharType => typeof(char);
-    internal static readonly List<Type> allBasicTypes = new()
-{
-ObjectType, StringType, StringBuilderType, IntType, DateTimeType,
-DoubleType, FloatType, CharType, BinaryType, ByteType, ShortType, BinaryType, LongType, DecimalType, SbyteType, UshortType, UintType, UlongType
-};
+    internal static readonly List<Type> AllBasicTypes = new()
+    {
+        ObjectType, StringType, StringBuilderType, IntType, DateTimeType,
+        DoubleType, FloatType, CharType, BinaryType, ByteType, ShortType, BinaryType, LongType, DecimalType, SbyteType, UshortType, UintType, UlongType
+    };
     internal static Type ListType => typeof(IList);
-    #region Same seria as in DefaultValueForTypeT
     internal static Type BoolType => typeof(bool);
-    #region Signed numbers
-    #endregion
-    #region Unsigned numbers
-    #endregion
     internal static Type GuidType => typeof(Guid);
-    #endregion
 }

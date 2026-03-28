@@ -1,21 +1,20 @@
 namespace SunamoString;
 
 /// <summary>
-/// Performs an operation.
+/// Provides string encoding methods for non-translatable escape sequences.
 /// </summary>
 public static class SHNotTranslateAble
 {
     /// <summary>
-    ///     Due to app take to2 which is \\\\" and first line dont have ending quote
+    /// Encodes backslashes, double quotes, and single quotes with escape sequences.
+    /// Due to app taking to2 which is \\" and first line does not have ending quote.
     /// </summary>
-    /// <param name="value"></param>
-    public static string DecodeSlashEncodedString(string value)
+    /// <param name="text">The text to encode.</param>
+    public static string DecodeSlashEncodedString(string text)
     {
-        // was added ; after 1,2 line and  after 2,3
-        // keep as was writte
-        value = SHReplace.ReplaceAll(value, "\\", "\\\\");
-        value = SHReplace.ReplaceAll(value, "\"", "\\\"");
-        value = SHReplace.ReplaceAll(value, "\'", "\\\'");
-        return value;
+        text = SHReplace.ReplaceAll(text, "\\", "\\\\");
+        text = SHReplace.ReplaceAll(text, "\"", "\\\"");
+        text = SHReplace.ReplaceAll(text, "\'", "\\\'");
+        return text;
     }
 }

@@ -1,34 +1,40 @@
 namespace SunamoString._public;
 
 /// <summary>
-/// Provides string helper methods for various text operations.
+/// Wraps either a single string or a list of strings, with lazy conversion between the two.
 /// </summary>
 public class StringOrStringList
 {
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new instance wrapping a single string.
     /// </summary>
-    public StringOrStringList(string stringValue)
+    /// <param name="text">The string value.</param>
+    public StringOrStringList(string text)
     {
-        String = stringValue;
+        String = text;
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new instance wrapping a list of strings.
     /// </summary>
+    /// <param name="list">The list of strings.</param>
     public StringOrStringList(List<string> list)
     {
         List = list;
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// The stored string value, or null if initialized with a list.
     /// </summary>
     public string String { get; private set; } = null!;
+
     /// <summary>
-    /// Performs an operation.
+    /// The stored list of strings, or null if initialized with a string.
     /// </summary>
     public List<string> List { get; private set; } = null!;
+
     /// <summary>
-    /// Performs an operation.
+    /// Gets the value as a single string. If initialized with a list, joins the list elements with spaces.
     /// </summary>
     public string GetString()
     {
@@ -46,8 +52,9 @@ public class StringOrStringList
         }
         throw new Exception("Both is null");
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Gets the value as a list of strings. If initialized with a string, splits it by non-letter-or-digit characters.
     /// </summary>
     public List<string> GetList()
     {
@@ -55,7 +62,7 @@ public class StringOrStringList
         {
             if (List == null)
             {
-                var nonLetterNumberChars = String.Where(ch => !char.IsLetterOrDigit(ch)).ToArray();
+                var nonLetterNumberChars = String.Where(character => !char.IsLetterOrDigit(character)).ToArray();
                 List = SHSplit.SplitChar(String, nonLetterNumberChars);
             }
             return List;

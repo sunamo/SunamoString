@@ -1,77 +1,74 @@
 namespace SunamoString._sunamo.SunamoStringReplace;
 
-//namespace SunamoString;
+/// <summary>
+/// String replacement helper methods.
+/// </summary>
 internal class SHReplace
 {
-    //internal static Func<string, string, string, string> ReplaceAll;
-    internal static string ReplaceAll(string input, string replacement, params string[] values)
+    /// <summary>
+    /// Replaces all occurrences of the specified values in the text with the replacement string.
+    /// </summary>
+    /// <param name="text">The text to process.</param>
+    /// <param name="replacement">The replacement string.</param>
+    /// <param name="values">The values to replace.</param>
+    internal static string ReplaceAll(string text, string replacement, params string[] values)
     {
-        //Stupid, replacement can be null
-
-        //if (string.IsNullOrEmpty(replacement))
-        //{
-        //    return input;
-        //}
-
-        foreach (var item in values)
+        foreach (var value in values)
         {
-            if (string.IsNullOrEmpty(item))
+            if (string.IsNullOrEmpty(value))
             {
-                return input;
+                return text;
             }
         }
 
-        foreach (var item in values)
+        foreach (var value in values)
         {
-            input = input.Replace(item, replacement);
+            text = text.Replace(value, replacement);
         }
-        return input;
+        return text;
     }
 
-    internal static string ReplaceManyFromString(string input, string mappingDefinition, string delimiter)
+    /// <summary>
+    /// Replaces multiple substrings in the text based on a mapping definition where each line contains a what/replacement pair separated by the delimiter.
+    /// </summary>
+    /// <param name="text">The text to process.</param>
+    /// <param name="mappingDefinition">The multi-line mapping definition (each line: what + delimiter + replacement).</param>
+    /// <param name="delimiter">The delimiter separating what and replacement in each line.</param>
+    internal static string ReplaceManyFromString(string text, string mappingDefinition, string delimiter)
     {
         var list = SHGetLines.GetLines(mappingDefinition);
-        foreach (var item in list)
+        foreach (var line in list)
         {
-            var parameter = SHSplit.Split(item, delimiter);
-            parameter = parameter.ConvertAll(d => d.Trim());
-            string? from, to;
-            from = to = null;
-            if (parameter.Count > 0)
+            var parts = SHSplit.Split(line, delimiter);
+            parts = parts.ConvertAll(part => part.Trim());
+            string? what, replacement;
+            what = replacement = null;
+            if (parts.Count > 0)
             {
-                from = parameter[0];
+                what = parts[0];
             }
             else
             {
-                throw new Exception(item + " hasn't from");
+                throw new Exception(line + " hasn't from");
             }
-            if (parameter.Count > 1)
+            if (parts.Count > 1)
             {
-                to = parameter[1];
+                replacement = parts[1];
             }
             else
             {
-                throw new Exception(item + " hasn't to");
+                throw new Exception(line + " hasn't to");
             }
-            if (WildcardHelper.IsWildcard(item))
+            if (WildcardHelper.IsWildcard(line))
             {
-                Wildcard wildcardPattern = new Wildcard(from);
+                Wildcard wildcardPattern = new Wildcard(what);
                 ThrowEx.NotImplementedMethod();
-                //var occurences = wildcardPattern.Matches(input);
-                //foreach (Match match in occurences)
-                //{
-                //    var result = match.Result();
-                //    var groups = match.Groups;
-                //    var captues = match.Captures;
-                //    var value = match.Value;
-                //}
             }
             else
             {
-                //Wildcard wildcard = new Wildcard();
-                input = ReplaceAll(input, to, from);
+                text = ReplaceAll(text, replacement, what);
             }
         }
-        return input;
+        return text;
     }
 }

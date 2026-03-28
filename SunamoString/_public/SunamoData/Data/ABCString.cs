@@ -1,22 +1,24 @@
 namespace SunamoString._public.SunamoData.Data;
 
 /// <summary>
-/// Provides string helper methods for various text operations.
+/// Represents a collection of <see cref="ABString"/> key-value pairs.
 /// </summary>
 public class ABCString : List<ABString>
 {
     /// <summary>
-    /// Performs an operation.
+    /// An empty <see cref="ABCString"/> collection.
     /// </summary>
     public static ABCString Empty = new ABCString();
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new empty <see cref="ABCString"/> collection.
     /// </summary>
     public ABCString()
     {
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Returns a comma-separated string representation of all key-value pairs.
     /// </summary>
     public override string ToString()
     {
@@ -27,8 +29,9 @@ public class ABCString : List<ABString>
         }
         return stringBuilder.ToString();
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Gets the number of elements in the collection (alias for Count).
     /// </summary>
     public int Length
     {
@@ -37,9 +40,11 @@ public class ABCString : List<ABString>
             return Count;
         }
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new <see cref="ABCString"/> with a specified capacity, filled with null entries.
     /// </summary>
+    /// <param name="capacity">The number of null entries to pre-fill.</param>
     public ABCString(int capacity) : base(capacity)
     {
         for (int i = 0; i < capacity; i++)
@@ -47,9 +52,11 @@ public class ABCString : List<ABString>
             this.Add(null!);
         }
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new <see cref="ABCString"/> from name-value pairs or existing ABString instances.
     /// </summary>
+    /// <param name="nameValuePairs">Array of objects interpreted as name-value pairs or ABString instances.</param>
     public ABCString(params Object[] nameValuePairs)
     {
         if (nameValuePairs.Length == 0)
@@ -68,25 +75,21 @@ public class ABCString : List<ABString>
 
         if (actualType == typeof(ABString))
         {
-
-
-
-
             for (int i = 0; i < nameValuePairs.Length; i++)
             {
-                var currentItem = nameValuePairs[i];
-                actualType = currentItem.GetType();
+                var currentElement = nameValuePairs[i];
+                actualType = currentElement.GetType();
                 if (actualType == ABString.Type)
                 {
-                    this.Add((ABString)currentItem);
+                    this.Add((ABString)currentElement);
                 }
                 else
                 {
-                    var itemList = (IList)currentItem;
-                    foreach (var abStringElement in itemList)
+                    var elementList = (IList)currentElement;
+                    foreach (var abStringElement in elementList)
                     {
-                        var abStringItem = (ABString)abStringElement;
-                        Add(abStringItem);
+                        var abString = (ABString)abStringElement;
+                        Add(abString);
                     }
                 }
             }
@@ -98,34 +101,32 @@ public class ABCString : List<ABString>
         }
         else
         {
-
-
             for (int i = 0; i < nameValuePairs.Length; i++)
             {
                 this.Add(ABString.Get(nameValuePairs[i].ToString()!, nameValuePairs[++i]));
             }
         }
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Initializes a new <see cref="ABCString"/> from an array of <see cref="ABString"/> items.
     /// </summary>
+    /// <param name="abStringItems">The ABString items to add to the collection.</param>
     public ABCString(params ABString[] abStringItems)
     {
-
         this.AddRange(abStringItems);
     }
-    
-    
-    
+
     /// <summary>
-    /// Performs an operation.
+    /// Returns an array containing only the B (value) components.
     /// </summary>
     public Object[] OnlyBs()
     {
         return OnlyBsList().ToArray();
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Returns a list containing only the B (value) components.
     /// </summary>
     public List<object> OnlyBsList()
     {
@@ -136,24 +137,26 @@ public class ABCString : List<ABString>
         }
         return values;
     }
+
     /// <summary>
-    /// Performs an operation.
+    /// Returns a list containing only the A (key) components.
     /// </summary>
     public List<string> OnlyAs()
     {
         List<string> keys = new List<string>(this.Count);
-        //CA.InitFillWith(keys, this.Count);
         for (int i = 0; i < this.Count; i++)
         {
             keys[i] = this[i].A;
         }
         return keys;
     }
+
     /// <summary>
-    /// Only Bs operation on the input.
+    /// Returns a list containing only the B (value) components from the specified list.
     /// </summary>
-    public static List<object> OnlyBs(List<ABString> abStringList)
+    /// <param name="list">The list of ABString items to extract values from.</param>
+    public static List<object> OnlyBs(List<ABString> list)
     {
-        return abStringList.Select(abString => abString.B).ToList();
+        return list.Select(abString => abString.B).ToList();
     }
 }
