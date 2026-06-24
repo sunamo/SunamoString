@@ -1,8 +1,5 @@
 namespace SunamoString._sunamo;
 
-/// <summary>
-/// Provides cached Type references for commonly used .NET types.
-/// </summary>
 internal class Types
 {
     internal static Type ObjectType => typeof(object);

@@ -1,20 +1,11 @@
 namespace SunamoString.Enums;
 
-/// <summary>
-/// Defines the strategy for searching within strings.
-/// </summary>
 public enum SearchStrategy
 {
-    /// <summary>
-    /// Contains
-    /// </summary>
+    // Contains
     FixedSpace,
-    /// <summary>
-    /// split input by spaces and A1 must contains all parts
-    /// </summary>
+    // split input by spaces and A1 must contains all parts
     AnySpaces,
-    /// <summary>
-    /// Is exactly the same
-    /// </summary>
+    // Is exactly the same
     ExactlyName
 }

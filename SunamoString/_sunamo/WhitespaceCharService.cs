@@ -1,8 +1,5 @@
 namespace SunamoString._sunamo;
 
-/// <summary>
-/// Provides lists of whitespace characters and their Unicode code points.
-/// </summary>
 internal class WhitespaceCharService
 {
     internal List<char> WhitespaceChars = null!;
