@@ -1,8 +1,5 @@
 namespace SunamoString._sunamo;
 
-/// <summary>
-/// Provides categorized lists of special characters for text processing.
-/// </summary>
 internal class SpecialCharsService
 {
     internal readonly List<char> SpecialChars = new(new[]
@@ -16,6 +13,7 @@ internal class SpecialCharsService
     /// <summary>
     /// Combined list of all special characters. Used in enigma.
     /// </summary>
+    // Combined list of all special characters. Used in enigma.
     internal readonly List<char> SpecialCharsAll = null!;
     internal readonly List<char> SpecialCharsWhite = new(new[] { space });
     internal readonly List<char> SpecialCharsNotEnigma = new(new[] { nonBreakingSpace, copyright });
