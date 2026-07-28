@@ -2268,4 +2268,11 @@ public class SH
         if (text.EndsWith(append)) return text;
         return text + append;
     }
+    public static string Substring(string input, int startIndex, int length, bool untilEndIfShorter)
+    {
+        if (input == null) return input;
+        if (startIndex >= input.Length) return string.Empty;
+        if (untilEndIfShorter && startIndex + length > input.Length) length = input.Length - startIndex;
+        return input.Substring(startIndex, length);
+    }
 }
