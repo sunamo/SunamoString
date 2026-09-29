@@ -833,6 +833,12 @@ public class SH
                         else
                             break;
                     previousIndent = stringBuilder.ToString();
+
+                    // Line consists only of whitespace - collapse it to empty instead of leaving stray whitespace
+                    if (previousIndent.Length == line.Length)
+                    {
+                        lines[i] = string.Empty;
+                    }
                 }
             }
         }
