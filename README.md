@@ -1,5 +1,10 @@
 # SunamoString
 
+## Short description
+
+Rozsáhlá sbírka metod pro práci s řetězci. Obsahuje Runner a testy.
+
+
 A large number of methods for string operations
 
 ## Overview
