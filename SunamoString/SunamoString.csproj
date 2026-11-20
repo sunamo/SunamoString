@@ -34,7 +34,7 @@
     <None Remove="_sunamo\SunamoEnums\**" />
     <None Remove="_sunamo\SunamoStringShared\**" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" Pack="True" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="11.0.100" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Diacritics" Version="4.1.4" />
