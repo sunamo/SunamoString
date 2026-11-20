@@ -1,5 +1,8 @@
 namespace SunamoString.Generators;
 
+/// <summary>
+/// Represents the lorem ipsum generator type.
+/// </summary>
 public static class LoremIpsumGenerator
 {
     private static List<string> words = new List<string>{"consetetur", "sadipscing", "elitr", "sed", "diam", "nonumy", "eirmod",
@@ -49,6 +52,11 @@ public static class LoremIpsumGenerator
 "rebum", "stet", "clita", "kasd", "gubergren", "no", "sea", "takimata", "sanctus", "est", "lorem", "ipsum"};
 
 
+    /// <summary>
+    /// Generate.
+    /// </summary>
+    /// <param name="maxChars">The max chars.</param>
+    /// <returns>The generate result.</returns>
     public static string Generate(int maxChars)
     {
         var stringBuilder = new StringBuilder();

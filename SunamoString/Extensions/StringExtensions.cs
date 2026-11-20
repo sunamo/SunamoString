@@ -1,7 +1,15 @@
 namespace SunamoString.Extensions;
 
+/// <summary>
+/// Represents the string extensions type.
+/// </summary>
 public static class StringExtensions
 {
+    /// <summary>
+    /// Remove invisible chars.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>The remove invisible chars result.</returns>
     public static string RemoveInvisibleChars(this string input)
     {
         int[] charsToRemove = [8205];
@@ -10,6 +18,11 @@ public static class StringExtensions
             .ToArray());
     }
 
+    /// <summary>
+    /// Remove whitespace chars.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>The remove whitespace chars result.</returns>
     public static string RemoveWhitespaceChars(this string input)
     {
         // https://g.co/gemini/share/b47b0b16b54f
@@ -19,11 +32,22 @@ public static class StringExtensions
             .ToArray());
     }
 
+    /// <summary>
+    /// From space 160 to 32.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>The from space 160 to 32 result.</returns>
     public static string FromSpace160To32(this string text)
     {
         return Regex.Replace(text, @"\p{Z}", " ");
     }
 
+    /// <summary>
+    /// Split and keep.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <param name="delims">The delims.</param>
+    /// <returns>The split and keep result.</returns>
     public static IEnumerable<string> SplitAndKeep(this string input, char[] delims)
     {
         //delims allow only char[], not List<string>
