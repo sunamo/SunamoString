@@ -1,5 +1,4 @@
 namespace RunnerString;
-// variables names: ok
 internal class Program
 {
     static void Main()

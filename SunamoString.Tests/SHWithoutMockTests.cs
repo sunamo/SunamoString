@@ -1,5 +1,4 @@
 namespace sunamo.Tests.Helpers.Text;
-// variables names: ok
 
 /// <summary>
 /// Tests for string helper methods that do not require mocking.

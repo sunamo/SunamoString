@@ -1,7 +1,5 @@
 namespace SunamoString.Extensions;
 
-// variables names: ok
-// Variable names have been checked and replaced with self-descriptive names
 public static class StringExtensions
 {
     public static string RemoveInvisibleChars(this string input)
