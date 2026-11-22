@@ -1,5 +1,8 @@
 namespace SunamoString;
 
+/// <summary>
+/// Represents the balanced brackets type.
+/// </summary>
 public class BalancedBrackets
 {
     private static bool IsMatchingPair(char openingChar,
@@ -14,6 +17,11 @@ public class BalancedBrackets
         return false;
     }
 
+    /// <summary>
+    /// Are brackets balanced.
+    /// </summary>
+    /// <param name="list">The list.</param>
+    /// <returns>The are brackets balanced result.</returns>
     public static bool AreBracketsBalanced(List<char> list)
     {
         var stack = new Stack<char>();
