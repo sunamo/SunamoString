@@ -1192,17 +1192,18 @@ public partial class SH
         return ShortForLettersCount(text, maxLetterCount, out shouldAddEllipsis);
     }
     /// <summary>
-    /// Telephone prefix to brackets.
+    /// Wraps the international prefix of a telephone number (the part starting with '+' up to the first space) in brackets; a number without such a prefix is returned only trimmed.
     /// </summary>
-    /// <param name="!char.IsLower(character)">The char is lower character.</param>
-    /// <returns>The telephone prefix to brackets result.</returns>
+    /// <param name="input">The telephone number.</param>
+    /// <returns>The telephone number with the prefix in brackets.</returns>
     public static string TelephonePrefixToBrackets(string input)
     {
         if (string.IsNullOrWhiteSpace(input)) return string.Empty;
-        input = NormalizeString(input);
-        var parts = SHSplit.Split(input, " ");
-        parts[0] = "(" + parts[0] + ")";
-        return string.Join(" ", parts);
+        input = NormalizeString(input).Trim();
+        if (!input.StartsWith("+")) return input;
+        var spaceIndex = input.IndexOf(' ');
+        if (spaceIndex == -1) return input;
+        return "(" + input.Substring(0, spaceIndex) + ")" + input.Substring(spaceIndex);
     }
     /// <summary>
     /// Contains variable.

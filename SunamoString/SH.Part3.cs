@@ -317,6 +317,22 @@ public partial class SH
         return result;
     }
     /// <summary>
+    /// Returns the text between two delimiters without throwing: the whole text when the opening delimiter is missing, the rest after the opening delimiter when the closing one is missing, an empty string for null.
+    /// </summary>
+    /// <param name="text">The text to search in.</param>
+    /// <param name="after">The opening delimiter.</param>
+    /// <param name="before">The closing delimiter.</param>
+    /// <returns>The text between the delimiters.</returns>
+    public static string GetTextBetweenOrRest(string text, string after, string before)
+    {
+        if (text == null) return string.Empty;
+        var startIndex = text.IndexOf(after, StringComparison.Ordinal);
+        if (startIndex == -1) return text;
+        startIndex += after.Length;
+        var endIndex = text.IndexOf(before, startIndex, StringComparison.Ordinal);
+        return endIndex == -1 ? text.Substring(startIndex) : text.Substring(startIndex, endIndex - startIndex);
+    }
+    /// <summary>
     /// Get text between.
     /// </summary>
     /// <param name="input.Length">The input length.</param>
