@@ -29,7 +29,6 @@ global using System.Reflection;
 global using System.Net;
 global using System.Diagnostics.CodeAnalysis;
 global using SunamoString;
-global using SunamoString.Delegates;
 global using SunamoString.Generators;
 global using SunamoString._public;
 global using SunamoString.Extensions;
