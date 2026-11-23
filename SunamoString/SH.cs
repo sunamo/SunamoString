@@ -1182,13 +1182,24 @@ public partial class SH
         return stringBuilder.ToString();
     }
     /// <summary>
-    /// Multi whitespace line to single.
+    /// Joins the lines with the platform newline and keeps only the first line of every run of empty or whitespace lines.
     /// </summary>
-    /// <returns>The multi whitespace line to single result.</returns>
+    /// <param name="lines">The lines to join.</param>
+    /// <returns>The joined text without consecutive blank lines.</returns>
     public static string MultiWhitespaceLineToSingle(List<string> lines)
     {
-        var joinedText = string.Join(Environment.NewLine, lines);
-        return joinedText;
+        var kept = new List<string>(lines.Count);
+        var isPreviousBlank = false;
+        foreach (var line in lines)
+        {
+            var isBlank = string.IsNullOrWhiteSpace(line);
+            if (isBlank && isPreviousBlank)
+                continue;
+            kept.Add(line);
+            isPreviousBlank = isBlank;
+        }
+
+        return string.Join(Environment.NewLine, kept);
     }
     /// <summary>
     /// Indent as previous line.
